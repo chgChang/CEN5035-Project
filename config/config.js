@@ -64,48 +64,13 @@ export default defineConfig({
       ],
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      icon: 'dashboard',
-      routes: [
-        {
-          path: '/dashboard',
-          redirect: '/dashboard/analysis',
-        },
-        {
-          name: 'analysis',
-          icon: 'smile',
-          path: '/dashboard/analysis',
-          component: './dashboard/analysis',
-        },
-        {
-          name: 'monitor',
-          icon: 'smile',
-          path: '/dashboard/monitor',
-          component: './dashboard/monitor',
-        },
-        {
-          name: 'workplace',
-          icon: 'smile',
-          path: '/dashboard/workplace',
-          component: './dashboard/workplace',
-        },
-      ],
-    },
-    {
       path: '/form',
       icon: 'form',
       name: 'form',
       routes: [
         {
           path: '/form',
-          redirect: '/form/basic-form',
-        },
-        {
-          name: 'basic-form',
-          icon: 'smile',
-          path: '/form/basic-form',
-          component: './form/basic-form',
+          redirect: '/form/step-form',
         },
         {
           name: 'step-form',
@@ -132,16 +97,6 @@ export default defineConfig({
           component: './list/search',
           routes: [
             {
-              path: '/list/search',
-              redirect: '/list/search/articles',
-            },
-            {
-              name: 'articles',
-              icon: 'smile',
-              path: '/list/search/articles',
-              component: './list/search/articles',
-            },
-            {
               name: 'projects',
               icon: 'smile',
               path: '/list/search/projects',
@@ -157,13 +112,7 @@ export default defineConfig({
         },
         {
           path: '/list',
-          redirect: '/list/table-list',
-        },
-        {
-          name: 'table-list',
-          icon: 'smile',
-          path: '/list/table-list',
-          component: './list/table-list',
+          redirect: '/list/basic-list',
         },
         {
           name: 'basic-list',
@@ -179,29 +128,29 @@ export default defineConfig({
         },
       ],
     },
-    {
-      path: '/profile',
-      name: 'profile',
-      icon: 'profile',
-      routes: [
-        {
-          path: '/profile',
-          redirect: '/profile/basic',
-        },
-        {
-          name: 'basic',
-          icon: 'smile',
-          path: '/profile/basic',
-          component: './profile/basic',
-        },
-        {
-          name: 'advanced',
-          icon: 'smile',
-          path: '/profile/advanced',
-          component: './profile/advanced',
-        },
-      ],
-    },
+    // {
+    //   path: '/profile',
+    //   name: 'profile',
+    //   icon: 'profile',
+    //   routes: [
+    //     {
+    //       path: '/profile',
+    //       redirect: '/profile/basic',
+    //     },
+    //     {
+    //       name: 'basic',
+    //       icon: 'smile',
+    //       path: '/profile/basic',
+    //       component: './profile/basic',
+    //     },
+    //     {
+    //       name: 'advanced',
+    //       icon: 'smile',
+    //       path: '/profile/advanced',
+    //       component: './profile/advanced',
+    //     },
+    //   ],
+    // },
     {
       name: 'result',
       icon: 'CheckCircleOutlined',
@@ -278,37 +227,8 @@ export default defineConfig({
       ],
     },
     {
-      name: 'editor',
-      icon: 'highlight',
-      path: '/editor',
-      routes: [
-        {
-          path: '/editor',
-          redirect: '/editor/flow',
-        },
-        {
-          name: 'flow',
-          icon: 'smile',
-          path: '/editor/flow',
-          component: './editor/flow',
-        },
-        {
-          name: 'mind',
-          icon: 'smile',
-          path: '/editor/mind',
-          component: './editor/mind',
-        },
-        {
-          name: 'koni',
-          icon: 'smile',
-          path: '/editor/koni',
-          component: './editor/koni',
-        },
-      ],
-    },
-    {
       path: '/',
-      redirect: '/dashboard/analysis',
+      redirect: '/list/card-list',
     },
     {
       component: '404',

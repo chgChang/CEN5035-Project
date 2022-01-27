@@ -17,7 +17,13 @@ var (
 func main() {
 	defer userDao.CloseDB()
 	server := gin.New()
+
+	//store := cookie.NewStore([]byte("amazon"))
+	//userSession := sessions.Sessions("userSession", store)
+	//server.Use(gin.Recovery(), gin.Logger(), userSession)
+
 	server.Use(gin.Recovery(), gin.Logger())
+
 	userApiGroup := server.Group("/")
 	{
 		userApiGroup.POST("/register", func(context *gin.Context) {

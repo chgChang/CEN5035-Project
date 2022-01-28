@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Project01/main/controller"
-	"Project01/main/dao"
-	"Project01/main/service"
+	"backend/main/controller"
+	"backend/main/dao"
+	"backend/main/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -22,6 +22,14 @@ func main() {
 	defer userDao.CloseDB()
 	server := gin.New()
 	server.Use(gin.Recovery(), gin.Logger())
+
+	itemApiGroup := server.Group("/")
+	{
+		itemApiGroup.GET("/getItems", func(context *gin.Context) {
+			ERR := itemController.
+		}
+		)
+	}
 
 	apiGroup := server.Group("/user")
 	{
@@ -57,6 +65,11 @@ func main() {
 				context.JSON(http.StatusOK, gin.H{"message": "Success!"})
 			}
 		})
+	}
+
+	itemApiGroup := server.Group("/")
+	{
+
 	}
 	server.Run()
 }

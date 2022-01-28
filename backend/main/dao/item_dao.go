@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"Project01/main/models"
+	"backend/main/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -11,6 +11,8 @@ type ItemDao interface {
 	UpdateItem(item models.Item)
 	DeleteItem(item models.Item)
 	FindAllItem() []models.Item
+	FindItemByName(itemName string) []models.Item
+	FindItemById(itemId int) models.Item
 	CloseDB()
 }
 
@@ -34,6 +36,18 @@ func (db *DatabaseItem) FindAllItem() []models.Item {
 	var itemList []models.Item
 	db.connection.Find(&itemList)
 	return itemList
+}
+
+func (db *DatabaseItem) FindItemByName(itemName string) []models.Item {
+	var itemList []models.Item
+	db.connection.Where("name LIKE ?", "%"+itemName+"%").Find(&itemList)
+	return itemList
+}
+
+func (db *DatabaseItem) FindItemById(itemId int) models.Item {
+	var item models.Item
+	db.connection.Where("name = ?", itemId).First(&item)
+	return item
 }
 
 func InitItemDao() ItemDao {

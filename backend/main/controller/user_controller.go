@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"Project01/main/models"
-	"Project01/main/service"
+	"backend/main/models"
+	"backend/main/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"strconv"

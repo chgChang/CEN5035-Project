@@ -1,8 +1,8 @@
 package service
 
 import (
-	"Project01/main/dao"
-	"Project01/main/models"
+	"backend/main/dao"
+	"backend/main/models"
 )
 
 type UserService interface {

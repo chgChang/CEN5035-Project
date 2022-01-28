@@ -1,9 +1,10 @@
-module Project01
+module backend
 
 go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.7.7
+	github.com/go-playground/validator/v10 v10.4.1
 	gorm.io/driver/mysql v1.2.3
 	gorm.io/gorm v1.22.4
 )
@@ -12,7 +13,6 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
-	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

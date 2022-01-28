@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"Project01/main/models"
-	"Project01/main/service"
+	"backend/main/models"
+	"backend/main/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"strconv"
@@ -13,6 +13,8 @@ type ItemController interface {
 	UpdateItem(c *gin.Context) error
 	DeleteItem(c *gin.Context) error
 	FindAllItem() []models.Item
+	FindItemByName(c *gin.Context) []models.Item
+	FindItemById(c *gin.Context) models.Item
 }
 
 type itemController struct {
@@ -59,6 +61,14 @@ func (controller *itemController) DeleteItem(c *gin.Context) error {
 
 func (controller *itemController) FindAllItem() []models.Item {
 	return controller.itemService.FindAllItem()
+}
+
+func (controller *itemController) FindItemByName() []models.Item {
+	return controller.itemService.FindItemByName()
+}
+
+func (controller *itemController) FindItemById() models.Item {
+	return controller.itemService.FindItemById()
 }
 
 func NewItem(itemService service.ItemService) ItemController {

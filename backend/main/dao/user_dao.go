@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"Project01/main/models"
+	"backend/main/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

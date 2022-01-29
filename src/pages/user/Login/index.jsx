@@ -1,17 +1,17 @@
 import {
-  AlipayCircleOutlined,
+  AmazonOutlined,
   LockOutlined,
+  MailOutlined,
   MobileOutlined,
-  TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
 } from "@ant-design/icons";
-import { Alert, message, Tabs } from "antd";
+import { Form, Alert, message, Tabs, Popover, Progress, Input } from "antd";
 import React, { useState } from "react";
 import {
   ProFormCaptcha,
   ProFormCheckbox,
   ProFormText,
+  ProForm,
   LoginForm,
 } from "@ant-design/pro-form";
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from "umi";
@@ -31,11 +31,21 @@ const LoginMessage = ({ content }) => (
   />
 );
 
+const passwordProgressMap = {
+  ok: "success",
+  pass: "normal",
+  poor: "exception",
+};
+
 const Login = () => {
   const [userLoginState, setUserLoginState] = useState({});
   const [type, setType] = useState("account");
+  const [visible, setVisible] = useState(false);
   const { initialState, setInitialState } = useModel("@@initialState");
   const intl = useIntl();
+  const [popover, setPopover] = useState(false);
+  const confirmDirty = false;
+  const [form] = Form.useForm();
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
@@ -79,61 +89,127 @@ const Login = () => {
   };
 
   const { status, type: loginType } = userLoginState;
+
+  const checkPassword = (_, value) => {
+    const promise = Promise; // 没有值的情况
+
+    if (!value) {
+      setVisible(!!value);
+      return promise.reject("Please input Password!");
+    } // 有值的情况
+
+    if (!visible) {
+      setVisible(!!value);
+    }
+
+    setPopover(!popover);
+
+    if (value.length < 6) {
+      return promise.reject("");
+    }
+
+    if (value && confirmDirty) {
+      form.validateFields(["confirm"]);
+    }
+
+    return promise.resolve();
+  };
+
+  const getPasswordStatus = () => {
+    const value = form.getFieldValue("registerPassword");
+
+    if (value && value.length > 9) {
+      return "ok";
+    }
+
+    if (value && value.length > 5) {
+      return "pass";
+    }
+
+    return "poor";
+  };
+
+  const renderPasswordProgress = () => {
+    const value = form.getFieldValue("registerPassword");
+    const passwordStatus = getPasswordStatus();
+    return value && value.length ? (
+      <div className={styles[`progress-${passwordStatus}`]}>
+        <Progress
+          status={passwordProgressMap[passwordStatus]}
+          className={styles.progress}
+          strokeWidth={6}
+          percent={value.length * 10 > 100 ? 100 : value.length * 10}
+          showInfo={false}
+        />
+      </div>
+    ) : null;
+  };
+
+  const passwordStatusMap = {
+    ok: (
+      <div className={styles.success}>
+        <span>Safety：Strong</span>
+      </div>
+    ),
+    pass: (
+      <div className={styles.warning}>
+        <span>Safety：Medium</span>
+      </div>
+    ),
+    poor: (
+      <div className={styles.error}>
+        <span>Saftey：Short</span>
+      </div>
+    ),
+  };
+
+  const checkConfirm = (_, value) => {
+    const promise = Promise;
+    console.log(value);
+
+    if (value && value !== form.getFieldValue("registerPassword")) {
+      return promise.reject("Two passwords are not same!");
+    }
+
+    return promise.resolve();
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang>
         {SelectLang && <SelectLang />}
       </div>
       <div className={styles.content}>
+        <Tabs activeKey={type} onChange={setType}>
+          <Tabs.TabPane
+            key="account"
+            tab={intl.formatMessage({
+              id: "pages.login.accountLogin.tab",
+              defaultMessage: "账户密码登录",
+            })}
+          />
+          <Tabs.TabPane
+            key="register"
+            tab={intl.formatMessage({
+              id: "pages.login.phoneLogin.tab",
+              defaultMessage: "Register",
+            })}
+          />
+        </Tabs>
         <LoginForm
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
+          form={form}
+          logo={<img alt="" src="/logo.svg" />}
+          title="Gator Amazon"
           subTitle={intl.formatMessage({
             id: "pages.layouts.userLayout.title",
           })}
           initialValues={{
             autoLogin: true,
           }}
-          actions={[
-            <FormattedMessage
-              key="loginWith"
-              id="pages.login.loginWith"
-              defaultMessage="其他登录方式"
-            />,
-            <AlipayCircleOutlined
-              key="AlipayCircleOutlined"
-              className={styles.icon}
-            />,
-            <TaobaoCircleOutlined
-              key="TaobaoCircleOutlined"
-              className={styles.icon}
-            />,
-            <WeiboCircleOutlined
-              key="WeiboCircleOutlined"
-              className={styles.icon}
-            />,
-          ]}
           onFinish={async (values) => {
             await handleSubmit(values);
           }}
         >
-          <Tabs activeKey={type} onChange={setType}>
-            <Tabs.TabPane
-              key="account"
-              tab={intl.formatMessage({
-                id: "pages.login.accountLogin.tab",
-                defaultMessage: "账户密码登录",
-              })}
-            />
-            <Tabs.TabPane
-              key="mobile"
-              tab={intl.formatMessage({
-                id: "pages.login.phoneLogin.tab",
-                defaultMessage: "Register",
-              })}
-            />
-          </Tabs>
-
           {status === "error" && loginType === "account" && (
             <LoginMessage
               content={intl.formatMessage({
@@ -148,7 +224,7 @@ const Login = () => {
                 name="username"
                 fieldProps={{
                   size: "large",
-                  prefix: <UserOutlined className={styles.prefixIcon} />,
+                  prefix: <MailOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder={intl.formatMessage({
                   id: "pages.login.username.placeholder",
@@ -191,90 +267,116 @@ const Login = () => {
             </>
           )}
 
-          {status === "error" && loginType === "mobile" && (
-            <LoginMessage content="验证码错误" />
-          )}
-          {type === "mobile" && (
+          {type === "register" && (
             <>
-              <ProFormText
+              <ProFormText //Input email address
                 fieldProps={{
                   size: "large",
-                  prefix: <MobileOutlined className={styles.prefixIcon} />,
+                  prefix: <MailOutlined className={styles.prefixIcon} />,
                 }}
-                name="mobile"
                 placeholder={intl.formatMessage({
-                  id: "pages.login.phoneNumber.placeholder",
-                  defaultMessage: "手机号",
+                  id: "pages.login.emailAddress.required",
+                  defaultMessage: "Input email",
                 })}
+                name="email"
                 rules={[
                   {
                     required: true,
                     message: (
                       <FormattedMessage
-                        id="pages.login.phoneNumber.required"
-                        defaultMessage="请输入手机号！"
+                        id="pages.login.emailAddress.required"
+                        defaultMessage="Input email"
                       />
                     ),
                   },
                   {
-                    pattern: /^1\d{10}$/,
+                    type: "email",
                     message: (
                       <FormattedMessage
-                        id="pages.login.phoneNumber.invalid"
-                        defaultMessage="手机号格式错误！"
+                        id="pages.login.emailAddress.invalid"
+                        defaultMessage="Valid email"
                       />
                     ),
                   },
                 ]}
               />
-              <ProFormCaptcha
+              <Popover
+                getPopupContainer={(node) => {
+                  if (node && node.parentNode) {
+                    return node.parentNode;
+                  }
+
+                  return node;
+                }}
+                content={
+                  visible && (
+                    <div
+                      style={{
+                        padding: "4px 0",
+                      }}
+                    >
+                      {passwordStatusMap[getPasswordStatus()]}
+                      {renderPasswordProgress()}
+                      <div
+                        style={{
+                          marginTop: 10,
+                        }}
+                      >
+                        <span>
+                          Please use at least 6 characters. Do not use easy
+                          password.
+                        </span>
+                      </div>
+                    </div>
+                  )
+                }
+                overlayStyle={{
+                  width: 240,
+                }}
+                placement="right"
+                visible={visible}
+              >
+                <ProFormText.Password
+                  fieldProps={{
+                    size: "large",
+                    prefix: <LockOutlined className={styles.prefixIcon} />,
+                  }}
+                  placeholder={intl.formatMessage({
+                    id: "pages.login.captcha.placeholder",
+                    defaultMessage: "至少6位密码，区分大小写",
+                  })}
+                  name="registerPassword"
+                  // className={
+                  //   form.getFieldValue('registerPassword') &&
+                  //   form.getFieldValue('registerPassword').length > 0 &&
+                  //   styles.password
+                  // }
+                  rules={[
+                    {
+                      validator: checkPassword,
+                    },
+                  ]}
+                />
+              </Popover>
+              <ProFormText.Password
                 fieldProps={{
                   size: "large",
                   prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
-                captchaProps={{
-                  size: "large",
-                }}
                 placeholder={intl.formatMessage({
                   id: "pages.login.captcha.placeholder",
-                  defaultMessage: "请输入验证码",
+                  defaultMessage: "Input password!",
                 })}
-                captchaTextRender={(timing, count) => {
-                  if (timing) {
-                    return `${count} ${intl.formatMessage({
-                      id: "pages.getCaptchaSecondText",
-                      defaultMessage: "获取验证码",
-                    })}`;
-                  }
-
-                  return intl.formatMessage({
-                    id: "pages.login.phoneLogin.getVerificationCode",
-                    defaultMessage: "获取验证码",
-                  });
-                }}
-                name="captcha"
+                name="confirmPassword"
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <FormattedMessage
-                        id="pages.login.captcha.required"
-                        defaultMessage="请输入验证码！"
-                      />
-                    ),
+                    message: "确认密码",
+                  },
+                  {
+                    validator: checkConfirm,
                   },
                 ]}
-                onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-
-                  if (result === false) {
-                    return;
-                  }
-
-                  message.success("获取验证码成功！验证码为：1234");
-                }}
               />
             </>
           )}
@@ -289,16 +391,6 @@ const Login = () => {
                 defaultMessage="自动登录"
               />
             </ProFormCheckbox>
-            <a
-              style={{
-                float: "right",
-              }}
-            >
-              <FormattedMessage
-                id="pages.login.forgotPassword"
-                defaultMessage="忘记密码"
-              />
-            </a>
           </div>
         </LoginForm>
       </div>

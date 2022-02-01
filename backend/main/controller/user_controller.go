@@ -35,7 +35,7 @@ func (controller *userController) Logout(c *gin.Context) error {
 		return errors.New("user not logged in")
 	}
 	//if cookie.Value != user.Email {
-	//	err = errors.New("user not logged in")
+	//	err = errors.NewUserService("user not logged in")
 	//	return err
 	//}
 	err = controller.userService.Logout(user)
@@ -89,9 +89,7 @@ func (controller *userController) Login(c *gin.Context) error {
 	return nil
 }
 
-var validate *validator.Validate
-
-func New(userService service.UserService) UserController {
+func NewUserController(userService service.UserService) UserController {
 	validate = validator.New()
 	return &userController{
 		userService: userService,

@@ -10,8 +10,14 @@ import (
 
 var (
 	userDao        = dao.InitUserDao()
-	userService    = service.New(userDao)
-	userController = controller.New(userService)
+	userService    = service.NewUserService(userDao)
+	userController = controller.NewUserController(userService)
+
+	itemDao = dao.InitItemDao()
+
+	cartDao        = dao.InitCartDao()
+	cartService    = service.NewCartService(itemDao, cartDao)
+	cartController = controller.NewCartController(cartService)
 )
 
 func main() {
@@ -65,6 +71,37 @@ func main() {
 			}
 		})
 	}
+
+	cartApiGroup := server.Group("/")
+	{
+		cartApiGroup.POST("/addtoCart", func(context *gin.Context) {
+			err := cartController.AddToCart(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"error": err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+				})
+			}
+		})
+
+		cartApiGroup.GET("/getCartItems", func(context *gin.Context) {
+			cartVo, err := cartController.GetCartList(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"error": err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"cart":   cartVo,
+				})
+			}
+		})
+	}
+
 	err := server.Run()
 	if err != nil {
 		return

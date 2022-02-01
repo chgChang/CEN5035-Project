@@ -7,24 +7,12 @@ import (
 )
 
 type UserDao interface {
-	Insert(user pojo.User)
+	InsertUser(user pojo.User)
 	FindUserByEmail(email string) pojo.User
 	CloseDB()
 }
 
-type Database struct {
-	connection *gorm.DB
-}
-
-func (db *Database) CloseDB() {
-	database, _ := db.connection.DB()
-	err := database.Close()
-	if err != nil {
-		panic("Failed to close database")
-	}
-}
-
-func (db *Database) Insert(user pojo.User) {
+func (db *Database) InsertUser(user pojo.User) {
 	db.connection.Create(&user)
 }
 

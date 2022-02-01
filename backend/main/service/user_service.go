@@ -34,7 +34,7 @@ func (service *userService) Register(user pojo.User) error {
 		err := errors.New("email already exists")
 		return err
 	} else {
-		service.userDao.Insert(user)
+		service.userDao.InsertUser(user)
 		return nil
 	}
 }
@@ -57,7 +57,7 @@ func (service *userService) Login(user pojo.User) error {
 	}
 }
 
-func New(dao dao.UserDao) UserService {
+func NewUserService(dao dao.UserDao) UserService {
 	return &userService{
 		userDao: dao,
 	}

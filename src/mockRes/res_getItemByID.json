@@ -1,0 +1,10 @@
+{
+  "item": {
+    "id": 1,
+    "name": "Apple iPhone 13",
+    "price": 829,
+    "pic_url": "https://m.media-amazon.com/images/I/71GLMJ7TQiL.jpg",
+    "description": "6.1-inch Super Retina XDR display"
+  },
+  "status": "success"
+}

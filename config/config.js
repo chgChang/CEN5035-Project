@@ -19,10 +19,10 @@ export default defineConfig({
   // https://umijs.org/zh-CN/plugins/plugin-locale
   locale: {
     // default zh-CN
-    default: 'zh-CN',
+    default: 'en-US',
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: true,
+    baseNavigator: false,
   },
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',
@@ -64,6 +64,24 @@ export default defineConfig({
       ],
     },
     {
+      name: 'Welcome',
+      path: '/welcome',
+      icon: 'shop',
+      component: './welcome/index',
+      routes: [
+        {
+          path: '/welcome',
+          redirect: '/welcome/Items',
+        },
+        {
+          // name: 'projects',
+          // icon: 'smile',
+          path: '/welcome/Items',
+          component: './welcome/projects',
+        },
+      ],
+    },
+    {
       path: '/form',
       icon: 'form',
       name: 'form',
@@ -78,12 +96,12 @@ export default defineConfig({
           path: '/form/step-form',
           component: './form/step-form',
         },
-        {
-          name: 'advanced-form',
-          icon: 'smile',
-          path: '/form/advanced-form',
-          component: './form/advanced-form',
-        },
+        // {
+        //   name: 'advanced-form',
+        //   icon: 'smile',
+        //   path: '/form/advanced-form',
+        //   component: './form/advanced-form',
+        // },
       ],
     },
     {

@@ -28,26 +28,26 @@ const Search = (props) => {
   const handleTabChange = (key) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
-
+    history.push(`${url}/Items`);
     switch (key) {
       case 'Clothing/Shoes':
-        history.push(`${url}/applications`);
+        // history.push(`${url}/Items`);
         break;
 
       case 'All':
-        history.push(`${url}/projects`);
+        // history.push(`${url}/projects`);
         break;
 
       case 'Books':
-        history.push(`${url}/applications`);
+        // history.push(`${url}/applications`);
         break;
 
       case 'Movie/Music/Games':
-        history.push(`${url}/applications`);
+        // history.push(`${url}/applications`);
         break;
 
       case 'Electronics':
-        history.push(`${url}/applications`);
+        // history.push(`${url}/applications`);
         break;
 
       default:

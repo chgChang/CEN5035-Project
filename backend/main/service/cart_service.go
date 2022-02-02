@@ -20,7 +20,7 @@ type cartService struct {
 
 func (service *cartService) GetCartList(email string) vo.CartVo {
 	cartList := service.cartDao.FindCartByEmail(email)
-	itemList := service.itemDao.FindAllItem()
+	itemList := service.itemDao.FindAllItems()
 	var cartVo vo.CartVo
 	if len(cartList) == 0 {
 		var itemVoList []vo.ItemVo

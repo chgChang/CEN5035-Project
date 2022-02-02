@@ -8,10 +8,18 @@ import (
 
 type ItemDao interface {
 	FindItemById(id int) pojo.Item
-	FindAllItem() []pojo.Item
+	FindAllItems() []pojo.Item
+	FindItemByIdList(idList []int) []pojo.Item
+	FindItemByKeyword(keyword string) []pojo.Item
 }
 
-func (db *Database) FindAllItem() []pojo.Item {
+func (db *Database) FindItemByKeyword(keyword string) []pojo.Item {
+	var itemList []pojo.Item
+	db.connection.Where("name LIKE ?", "%"+keyword+"%").Find(&itemList)
+	return itemList
+}
+
+func (db *Database) FindAllItems() []pojo.Item {
 	var itemList []pojo.Item
 	db.connection.Find(&itemList)
 	return itemList
@@ -21,6 +29,12 @@ func (db *Database) FindItemById(id int) pojo.Item {
 	var item pojo.Item
 	db.connection.Where("id = ?", id).First(&item)
 	return item
+}
+
+func (db *Database) FindItemByIdList(idList []int) []pojo.Item {
+	var itemList []pojo.Item
+	db.connection.Where(idList).Find(&itemList)
+	return itemList
 }
 
 func InitItemDao() ItemDao {

@@ -11,6 +11,11 @@ type CartDao interface {
 	FindCartByEmailAndItemId(email string, itemId int) pojo.Cart
 	UpdateCart(cart pojo.Cart)
 	FindCartByEmail(email string) []pojo.Cart
+	DeleteCartByEmail(email string)
+}
+
+func (db *Database) DeleteCartByEmail(email string) {
+	db.connection.Where("email = ?", email).Delete(pojo.Cart{})
 }
 
 func (db *Database) FindCartByEmail(email string) []pojo.Cart {

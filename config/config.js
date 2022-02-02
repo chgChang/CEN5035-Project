@@ -109,7 +109,7 @@ export default defineConfig({
           redirect: "/list/basic-list",
         },
         {
-          name: "basic-list",
+          name: "cart",
           icon: "smile",
           path: "/list/basic-list",
           component: "./list/basic-list",

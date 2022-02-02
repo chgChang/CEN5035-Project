@@ -180,22 +180,6 @@ const Login = () => {
         {SelectLang && <SelectLang />}
       </div>
       <div className={styles.content}>
-        <Tabs activeKey={type} onChange={setType}>
-          <Tabs.TabPane
-            key="account"
-            tab={intl.formatMessage({
-              id: "pages.login.accountLogin.tab",
-              defaultMessage: "账户密码登录",
-            })}
-          />
-          <Tabs.TabPane
-            key="register"
-            tab={intl.formatMessage({
-              id: "pages.login.phoneLogin.tab",
-              defaultMessage: "Register",
-            })}
-          />
-        </Tabs>
         <LoginForm
           form={form}
           logo={<img alt="" src="/logo.svg" />}
@@ -218,6 +202,22 @@ const Login = () => {
               })}
             />
           )}
+          <Tabs activeKey={type} onChange={setType}>
+            <Tabs.TabPane
+              key="account"
+              tab={intl.formatMessage({
+                id: "pages.login.accountLogin.tab",
+                defaultMessage: "账户密码登录",
+              })}
+            />
+            <Tabs.TabPane
+              key="register"
+              tab={intl.formatMessage({
+                id: "pages.login.phoneLogin.tab",
+                defaultMessage: "Register",
+              })}
+            />
+          </Tabs>
           {type === "account" && (
             <>
               <ProFormText

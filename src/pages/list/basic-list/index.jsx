@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { DownOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -7,19 +7,25 @@ import {
   Col,
   Dropdown,
   Input,
+  InputNumber,
   List,
   Menu,
   Modal,
   Progress,
   Radio,
   Row,
-} from 'antd';
-import { PageContainer } from '@ant-design/pro-layout';
-import { useRequest } from 'umi';
-import moment from 'moment';
-import OperationModal from './components/OperationModal';
-import { addFakeList, queryFakeList, removeFakeList, updateFakeList } from './service';
-import styles from './style.less';
+} from "antd";
+import { PageContainer } from "@ant-design/pro-layout";
+import { useRequest } from "umi";
+import moment from "moment";
+import OperationModal from "./components/OperationModal";
+import {
+  addFakeList,
+  queryFakeList,
+  removeFakeList,
+  updateFakeList,
+} from "./service";
+import styles from "./style.less";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
@@ -32,25 +38,10 @@ const Info = ({ title, value, bordered }) => (
   </div>
 );
 
-const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
+const ListContent = ({ data: { owner, createdAt, percent, itemNumber } }) => (
   <div className={styles.listContent}>
     <div className={styles.listContentItem}>
-      <span>Owner</span>
-      <p>{owner}</p>
-    </div>
-    <div className={styles.listContentItem}>
-      <span>开始时间</span>
-      <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
-    </div>
-    <div className={styles.listContentItem}>
-      <Progress
-        percent={percent}
-        status={status}
-        strokeWidth={6}
-        style={{
-          width: 180,
-        }}
-      />
+      <InputNumber min={1} max={100} defaultValue={itemNumber} />
     </div>
   </div>
 );
@@ -70,11 +61,11 @@ export const BasicList = () => {
   });
   const { run: postRun } = useRequest(
     (method, params) => {
-      if (method === 'remove') {
+      if (method === "remove") {
         return removeFakeList(params);
       }
 
-      if (method === 'update') {
+      if (method === "update") {
         return updateFakeList(params);
       }
 
@@ -85,7 +76,7 @@ export const BasicList = () => {
       onSuccess: (result) => {
         mutate(result);
       },
-    },
+    }
   );
   const list = listData?.list || [];
   const paginationProps = {
@@ -101,19 +92,19 @@ export const BasicList = () => {
   };
 
   const deleteItem = (id) => {
-    postRun('remove', {
+    postRun("remove", {
       id,
     });
   };
 
   const editAndDelete = (key, currentItem) => {
-    if (key === 'edit') showEditModal(currentItem);
-    else if (key === 'delete') {
+    if (key === "edit") showEditModal(currentItem);
+    else if (key === "delete") {
       Modal.confirm({
-        title: '删除任务',
-        content: '确定删除该任务吗？',
-        okText: '确认',
-        cancelText: '取消',
+        title: "Delete item",
+        content: "Are you sure to delete this item？",
+        okText: "Ok",
+        cancelText: "Cancel",
         onOk: () => deleteItem(currentItem.id),
       });
     }
@@ -121,12 +112,15 @@ export const BasicList = () => {
 
   const extraContent = (
     <div className={styles.extraContent}>
-      <RadioGroup defaultValue="all">
-        <RadioButton value="all">全部</RadioButton>
-        <RadioButton value="progress">进行中</RadioButton>
-        <RadioButton value="waiting">等待中</RadioButton>
-      </RadioGroup>
-      <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
+      <Button
+        type="primary"
+        onClick={() => {
+          setVisible(true);
+        }}
+      >
+        Proceed to checkout
+      </Button>
+      {/* <Search className={styles.extraContentSearch} placeholder="Input item name" onSearch={() => ({})} /> */}
     </div>
   );
 
@@ -134,13 +128,13 @@ export const BasicList = () => {
     <Dropdown
       overlay={
         <Menu onClick={({ key }) => editAndDelete(key, item)}>
-          <Menu.Item key="edit">编辑</Menu.Item>
-          <Menu.Item key="delete">删除</Menu.Item>
+          <Menu.Item key="edit">xxx</Menu.Item>
+          <Menu.Item key="delete">Delete</Menu.Item>
         </Menu>
       }
     >
       <a>
-        更多 <DownOutlined />
+        More <DownOutlined />
       </a>
     </Dropdown>
   );
@@ -153,7 +147,7 @@ export const BasicList = () => {
 
   const handleSubmit = (values) => {
     setDone(true);
-    const method = values?.id ? 'update' : 'add';
+    const method = values?.id ? "update" : "add";
     postRun(method, values);
   };
 
@@ -161,29 +155,15 @@ export const BasicList = () => {
     <div>
       <PageContainer>
         <div className={styles.standardList}>
-          <Card bordered={false}>
-            <Row>
-              <Col sm={8} xs={24}>
-                <Info title="我的待办" value="8个任务" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周任务平均处理时间" value="32分钟" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周完成任务数" value="24个任务" />
-              </Col>
-            </Row>
-          </Card>
-
           <Card
             className={styles.listCard}
             bordered={false}
-            title="基本列表"
+            title="Items"
             style={{
               marginTop: 24,
             }}
             bodyStyle={{
-              padding: '0 32px 40px 32px',
+              padding: "0 32px 40px 32px",
             }}
             extra={extraContent}
           >
@@ -203,13 +183,15 @@ export const BasicList = () => {
                         showEditModal(item);
                       }}
                     >
-                      编辑
+                      Details
                     </a>,
                     <MoreBtn key="more" item={item} />,
                   ]}
                 >
                   <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                    avatar={
+                      <Avatar src={item.logo} shape="square" size="large" />
+                    }
                     title={<a href={item.href}>{item.title}</a>}
                     description={item.subDescription}
                   />
@@ -220,19 +202,6 @@ export const BasicList = () => {
           </Card>
         </div>
       </PageContainer>
-      <Button
-        type="dashed"
-        onClick={() => {
-          setVisible(true);
-        }}
-        style={{
-          width: '100%',
-          marginBottom: 8,
-        }}
-      >
-        <PlusOutlined />
-        添加
-      </Button>
       <OperationModal
         done={done}
         visible={visible}

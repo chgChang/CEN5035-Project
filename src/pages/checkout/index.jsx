@@ -7,11 +7,11 @@ import {
   Divider,
   Alert,
   Statistic,
-  InputNumber,
+  List,
+  Avatar,
 } from "antd";
 import { PageContainer } from "@ant-design/pro-layout";
 import ProForm, {
-  ProFormDigit,
   ProFormSelect,
   ProFormText,
   StepsForm,
@@ -19,22 +19,19 @@ import ProForm, {
 } from "@ant-design/pro-form";
 import styles from "./style.less";
 
+const lists = require("./res_cartItem.json");
+const list = lists["cart"]["itemList"];
+const amount = lists["cart"]["totalPrice"];
+
 const StepDescriptions = ({ stepData, bordered }) => {
-  const { shipAddress, payAccount, receiverAccount, receiverName, amount } =
-    stepData;
+  const { shipAddress, payAccount, receiverAccount, receiverName } = stepData;
   return (
     <Descriptions column={1} bordered={bordered}>
       <Descriptions.Item label="Shipping address">
-        {" "}
         {shipAddress}
-      </Descriptions.Item>
-      <Descriptions.Item label="Item list">
-        {" "}
-        {receiverAccount}
       </Descriptions.Item>
       <Descriptions.Item label="Order amount">
         <Statistic
-          value={amount}
           suffix={
             <span
               style={{
@@ -44,6 +41,7 @@ const StepDescriptions = ({ stepData, bordered }) => {
               $
             </span>
           }
+          value={amount}
           precision={2}
         />
       </Descriptions.Item>
@@ -75,7 +73,6 @@ const StepForm = () => {
     payAccount: "ant-design@alipay.com",
     receiverAccount: "test@example.com",
     receiverName: "Alex",
-    amount: "500",
     receiverMode: "alipay",
   });
   const [current, setCurrent] = useState(0);
@@ -105,6 +102,7 @@ const StepForm = () => {
             title="Shipping address"
             onFinish={async (values) => {
               setStepData(values);
+              console.log(stepData);
               return true;
             }}
           >
@@ -148,7 +146,7 @@ const StepForm = () => {
             />
             <ProFormText
               label="Address"
-              name="address"
+              name="shipAddress"
               rules={[
                 {
                   required: true,
@@ -250,6 +248,23 @@ const StepForm = () => {
                 style={{
                   marginBottom: 24,
                 }}
+              />
+              <List
+                size="large"
+                rowKey="id"
+                dataSource={list}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar src={item.picUrl} shape="square" size="large" />
+                      }
+                      title={<a href={item.href}>{item.itemName}</a>}
+                      description={item.description}
+                    />
+                    <div>Qty:{item.quantity}</div>
+                  </List.Item>
+                )}
               />
               <StepDescriptions stepData={stepData} bordered />
               <Divider

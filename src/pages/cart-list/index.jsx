@@ -18,7 +18,6 @@ import {
 } from "antd";
 import { PageContainer } from "@ant-design/pro-layout";
 import { useRequest } from "umi";
-import moment from "moment";
 import OperationModal from "./components/OperationModal";
 import {
   addFakeList,
@@ -30,22 +29,6 @@ import styles from "./style.less";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
-
-const Info = ({ title, value, bordered }) => (
-  <div className={styles.headerInfo}>
-    <span>{title}</span>
-    <p>{value}</p>
-    {bordered && <em />}
-  </div>
-);
-
-const ListContent = ({ data: { owner, createdAt, percent, itemNumber } }) => (
-  <div className={styles.listContent}>
-    <div className={styles.listContentItem}>
-      <InputNumber min={1} max={100} defaultValue={itemNumber} />
-    </div>
-  </div>
-);
 
 export const BasicList = () => {
   const [done, setDone] = useState(false);
@@ -79,11 +62,14 @@ export const BasicList = () => {
       },
     }
   );
-  const list = listData?.list || [];
+  // const list = listData?.list || [];
+
+  const lists = require("./res_cartItem.json");
+  const list = lists["cart"]["itemList"];
+
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
-    pageSize: 5,
     total: list.length,
   };
 
@@ -190,12 +176,12 @@ export const BasicList = () => {
                 >
                   <List.Item.Meta
                     avatar={
-                      <Avatar src={item.logo} shape="square" size="large" />
+                      <Avatar src={item.picUrl} shape="square" size="large" />
                     }
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
+                    title={<a href={item.href}>{item.itemName}</a>}
+                    description={item.description}
                   />
-                  <ListContent data={item} />
+                  <InputNumber min={1} max={100} defaultValue={item.quantity} />
                 </List.Item>
               )}
             />

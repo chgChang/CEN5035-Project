@@ -152,6 +152,45 @@ func main() {
 				})
 			}
 		})
+
+		cartApiGroup.POST("/removeCart", func(context *gin.Context) {
+			err := cartController.RemoveCart(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"error": err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+				})
+			}
+		})
+
+		cartApiGroup.POST("/deleteCartByItemId", func(context *gin.Context) {
+			err := cartController.DeleteCartByItemId(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"error": err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+				})
+			}
+		})
+
+		cartApiGroup.POST("/updateCart", func(context *gin.Context) {
+			err := cartController.UpdateCart(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"error": err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+				})
+			}
+		})
 	}
 
 	orderApiGroup := server.Group("/")

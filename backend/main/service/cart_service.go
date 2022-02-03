@@ -11,11 +11,54 @@ import (
 type CartService interface {
 	AddToCart(cartAdd form.CartAddForm, email string) error
 	GetCartList(email string) vo.CartVo
+	RemoveCart(email string) error
+	DeleteCartByItemId(email string, cartDeleteForm form.CartDeleteForm) error
+	UpdateCart(email string, cartUpdateForm form.CartUpdateForm) error
 }
 
 type cartService struct {
 	itemDao dao.ItemDao
 	cartDao dao.CartDao
+}
+
+func (service *cartService) UpdateCart(email string, cartUpdateForm form.CartUpdateForm) error {
+	itemId := cartUpdateForm.ItemId
+	quantity := cartUpdateForm.Quantity
+
+	cart := service.cartDao.FindCartByEmailAndItemId(email, itemId)
+	if cart == (pojo.Cart{}) {
+		err := errors.New("this item is not in the cart")
+		return err
+	}
+	if quantity == 0 {
+		service.cartDao.DeleteCartByEmailAndItemId(email, itemId)
+		return nil
+	}
+	//cart.Quantity = quantity
+	service.cartDao.UpdateCart(email, itemId, quantity)
+	return nil
+}
+
+func (service *cartService) DeleteCartByItemId(email string, cartDeleteForm form.CartDeleteForm) error {
+	itemId := cartDeleteForm.ItemId
+
+	cart := service.cartDao.FindCartByEmailAndItemId(email, itemId)
+	if cart == (pojo.Cart{}) {
+		err := errors.New("this item is not in the cart")
+		return err
+	}
+	service.cartDao.DeleteCartByEmailAndItemId(email, itemId)
+	return nil
+}
+
+func (service *cartService) RemoveCart(email string) error {
+	cartList := service.cartDao.FindCartByEmail(email)
+	if len(cartList) == 0 {
+		err := errors.New("cart is empty, cannot remove")
+		return err
+	}
+	service.cartDao.DeleteCartByEmail(email)
+	return nil
 }
 
 func (service *cartService) GetCartList(email string) vo.CartVo {
@@ -70,8 +113,8 @@ func (service *cartService) AddToCart(cartAdd form.CartAddForm, email string) er
 		}
 		service.cartDao.InsertCart(cart)
 	} else {
-		cart.Quantity = cart.Quantity + quantity
-		service.cartDao.UpdateCart(cart)
+		//cart.Quantity = cart.Quantity + quantity
+		service.cartDao.UpdateCart(email, id, cart.Quantity+quantity)
 	}
 	return nil
 }

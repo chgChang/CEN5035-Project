@@ -9,9 +9,10 @@ import (
 type CartDao interface {
 	InsertCart(cart pojo.Cart)
 	FindCartByEmailAndItemId(email string, itemId int) pojo.Cart
-	UpdateCart(cart pojo.Cart)
+	UpdateCart(email string, itemId int, quantity int)
 	FindCartByEmail(email string) []pojo.Cart
 	DeleteCartByEmail(email string)
+	DeleteCartByEmailAndItemId(email string, itemId int)
 }
 
 func (db *Database) DeleteCartByEmail(email string) {
@@ -24,8 +25,8 @@ func (db *Database) FindCartByEmail(email string) []pojo.Cart {
 	return cartList
 }
 
-func (db *Database) UpdateCart(cart pojo.Cart) {
-	db.connection.Save(cart)
+func (db *Database) UpdateCart(email string, itemId int, quantity int) {
+	db.connection.Model(&pojo.Cart{}).Where("email = ? AND item_id = ?", email, itemId).Update("quantity", quantity)
 }
 
 func (db *Database) InsertCart(cart pojo.Cart) {
@@ -38,8 +39,12 @@ func (db *Database) FindCartByEmailAndItemId(email string, itemId int) pojo.Cart
 	return cart
 }
 
+func (db *Database) DeleteCartByEmailAndItemId(email string, itemId int) {
+	db.connection.Where("email = ? AND item_id = ?", email, itemId).Delete(pojo.Cart{})
+}
+
 func InitCartDao() CartDao {
-	dsn := "root:software@tcp(127.0.0.1:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:softwareengineering@tcp(34.73.22.78:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")

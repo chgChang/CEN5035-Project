@@ -25,6 +25,13 @@ func (service *cartService) UpdateCart(email string, cartUpdateForm form.CartUpd
 	itemId := cartUpdateForm.ItemId
 	quantity := cartUpdateForm.Quantity
 
+	//quantity must not be less than 0
+	if quantity < 0 {
+		err := errors.New("please input the correct quantity")
+		return err
+	}
+
+	//item to be updated must in the cart
 	cart := service.cartDao.FindCartByEmailAndItemId(email, itemId)
 	if cart == (pojo.Cart{}) {
 		err := errors.New("this item is not in the cart")
@@ -34,7 +41,6 @@ func (service *cartService) UpdateCart(email string, cartUpdateForm form.CartUpd
 		service.cartDao.DeleteCartByEmailAndItemId(email, itemId)
 		return nil
 	}
-	//cart.Quantity = quantity
 	service.cartDao.UpdateCart(email, itemId, quantity)
 	return nil
 }
@@ -42,6 +48,7 @@ func (service *cartService) UpdateCart(email string, cartUpdateForm form.CartUpd
 func (service *cartService) DeleteCartByItemId(email string, cartDeleteForm form.CartDeleteForm) error {
 	itemId := cartDeleteForm.ItemId
 
+	//item to be deleted must in the cart
 	cart := service.cartDao.FindCartByEmailAndItemId(email, itemId)
 	if cart == (pojo.Cart{}) {
 		err := errors.New("this item is not in the cart")
@@ -53,6 +60,8 @@ func (service *cartService) DeleteCartByItemId(email string, cartDeleteForm form
 
 func (service *cartService) RemoveCart(email string) error {
 	cartList := service.cartDao.FindCartByEmail(email)
+
+	//only non-empty cart can be removed
 	if len(cartList) == 0 {
 		err := errors.New("cart is empty, cannot remove")
 		return err
@@ -65,15 +74,18 @@ func (service *cartService) GetCartList(email string) vo.CartVo {
 	cartList := service.cartDao.FindCartByEmail(email)
 	itemList := service.itemDao.FindAllItems()
 	var cartVo vo.CartVo
+	var itemVoList []vo.ItemVo
+	var totalPrice float64 = 0
+
+	//cart is empty
 	if len(cartList) == 0 {
-		var itemVoList []vo.ItemVo
 		return vo.CartVo{
 			ItemList:   itemVoList,
-			TotalPrice: 0,
+			TotalPrice: totalPrice,
 		}
 	}
-	var itemVoList []vo.ItemVo
-	var totalPrice float64
+
+	//match itemId in cartList to item in itemList
 	for i := 0; i < len(cartList); i++ {
 		itemId := cartList[i].ItemId
 		quantity := cartList[i].Quantity
@@ -99,11 +111,20 @@ func (service *cartService) GetCartList(email string) vo.CartVo {
 func (service *cartService) AddToCart(cartAdd form.CartAddForm, email string) error {
 	id := cartAdd.ItemId
 	quantity := cartAdd.Quantity
+
+	//quantity must be greater than 0
+	if quantity <= 0 {
+		err := errors.New("please input the correct quantity")
+		return err
+	}
 	itemInDb := service.itemDao.FindItemById(id)
+
+	//item to be added must exist
 	if itemInDb == (pojo.Item{}) {
 		err := errors.New("item doesn't exist")
 		return err
 	}
+
 	cart := service.cartDao.FindCartByEmailAndItemId(email, id)
 	if cart == (pojo.Cart{}) {
 		cart := pojo.Cart{

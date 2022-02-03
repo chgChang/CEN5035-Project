@@ -60,6 +60,8 @@ func (service *orderService) GetHistory(email string) ([]vo.OrderHistoryVo, erro
 
 func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email string) error {
 	cartItemList := service.cartDao.FindCartByEmail(email)
+
+	//cart must not be empty
 	if len(cartItemList) == 0 {
 		err := errors.New("cart is empty")
 		return err
@@ -68,6 +70,7 @@ func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email stri
 	var order pojo.Order
 	var orderItemList []pojo.OrderItem
 
+	//generate an order number randomly
 	orderNo := uuid.New().String()
 
 	order.OrderNo = orderNo
@@ -105,6 +108,7 @@ func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email stri
 	}
 	service.orderItemDao.InsertOrderItemList(orderItemList)
 
+	//after place the order, remove all items in the cart
 	service.cartDao.DeleteCartByEmail(email)
 	return nil
 }

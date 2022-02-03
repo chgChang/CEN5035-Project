@@ -1,8 +1,9 @@
-import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
+import { AudioTwoTone } from '@ant-design/icons';
+import { Card, Col, Form, List, Row, Select, Typography, Button } from 'antd';
 import moment from 'moment';
 import { useRequest } from 'umi';
 import AvatarList from './components/AvatarList';
-import { queryFakeList } from './service';
+import { queryItemList, queryFakeList } from './service';
 import styles from './style.less';
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -12,12 +13,13 @@ const getKey = (id, index) => `${id}-${index}`;
 
 const Projects = () => {
   const { data, loading, run } = useRequest((values) => {
-    console.log('form data', values);
-    return queryFakeList({
+    return queryItemList({
       count: 8,
     });
   });
+  console.log(data);
   const list = data?.list || [];
+  console.log(list);
   const cardList = list && (
     <List
       rowKey="id"
@@ -34,9 +36,20 @@ const Projects = () => {
       dataSource={list}
       renderItem={(item) => (
         <List.Item>
-          <Card className={styles.card} hoverable cover={<img alt={item.title} src={item.cover} />}>
+          <Card
+            className={styles.card}
+            style={{ height: 350 }}
+            hoverable
+            cover={
+              <img
+                style={{ margin: '0 auto', maxHeight: 200, width: 'auto', maxWidth: '100%' }}
+                alt={item.itemName}
+                src={item.picurl}
+              />
+            }
+          >
             <Card.Meta
-              title={<a>{item.title}</a>}
+              title={<a>{item.itemName}</a>}
               description={
                 <Paragraph
                   className={styles.item}
@@ -44,12 +57,16 @@ const Projects = () => {
                     rows: 2,
                   }}
                 >
-                  {item.subDescription}
+                  {item.description}
                 </Paragraph>
               }
             />
-            {/* <div className={styles.cardItemContent}>
-              <span>{moment(item.updatedAt).fromNow()}</span>
+
+            <div className={styles.cardItemContent}>
+              <Button shape="round" className={styles.addcartbtn}>
+                Add to Cart
+              </Button>
+              {/* <span>{moment(item.updatedAt).fromNow()}</span>
               <div className={styles.avatarList}>
                 <AvatarList size="small">
                   {item.members.map((member, i) => (
@@ -60,14 +77,23 @@ const Projects = () => {
                     />
                   ))}
                 </AvatarList>
-              </div>
-            </div> */}
+              </div> */}
+            </div>
           </Card>
         </List.Item>
       )}
     />
   );
-
+  const formItemLayout = {
+    wrapperCol: {
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 16,
+      },
+    },
+  };
   return (
     <div className={styles.coverCardList}>
       <div className={styles.cardList}>{cardList}</div>

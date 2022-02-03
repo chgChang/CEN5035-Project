@@ -64,7 +64,7 @@ export default defineConfig({
       ],
     },
     {
-      name: 'Welcome',
+      name: 'welcome',
       path: '/welcome',
       icon: 'shop',
       component: './welcome/index',

@@ -1,6 +1,5 @@
-import { getTextOfJSDocComment } from 'typescript';
-import { itemlist } from './getItemList.json';
-import { searchlist } from './searchItem';
+// import mocres from 'src\pages\welcome\projects\res_mianPageList.json'
+const mocres = require('./res_mianPageList.json');
 
 const titles = [
   'Alipay',
@@ -50,8 +49,6 @@ const user = [
 
 function fakeList(count) {
   const list = [];
-  // console.log(itemlist);
-  // console.log(searchlist);
   for (let i = 0; i < count; i += 1) {
     list.push({
       id: `fake-list-${i}`,
@@ -73,8 +70,8 @@ function fakeList(count) {
       star: Math.ceil(Math.random() * 100) + 100,
       like: Math.ceil(Math.random() * 100) + 100,
       message: Math.ceil(Math.random() * 10) + 10,
-      content: itemlist,
-      // '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
+      content:
+        '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
       members: [
         {
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png',
@@ -109,18 +106,16 @@ function getFakeList(req, res) {
   });
 }
 
-function getTest(req, res) {
+function getItems(req, res) {
   const params = req.query;
   const count = params.count * 1 || 20;
-  console.log(count);
+  const result = mocres;
   return res.json({
-    data: {
-      test: 'test',
-    },
+    data: result,
   });
 }
 
 export default {
   'GET  /api/fake_list': getFakeList,
-  // 'GET  /test': getTest,
+  'GET  /api/getItems': getItems,
 };

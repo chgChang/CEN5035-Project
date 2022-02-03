@@ -4,9 +4,9 @@ import {
   ProFormDateTimePicker,
   ProFormText,
   ProFormTextArea,
-} from '@ant-design/pro-form';
-import styles from '../style.less';
-import { Button, Result } from 'antd';
+} from "@ant-design/pro-form";
+import styles from "../style.less";
+import { Button, Result } from "antd";
 
 const OperationModal = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
@@ -18,7 +18,7 @@ const OperationModal = (props) => {
   return (
     <ModalForm
       visible={visible}
-      title={done ? null : `任务${current ? '编辑' : '添加'}`}
+      title={done ? null : `任务${current ? "编辑" : "添加"}`}
       className={styles.standardListForm}
       width={640}
       onFinish={async (values) => {
@@ -34,7 +34,7 @@ const OperationModal = (props) => {
         destroyOnClose: true,
         bodyStyle: done
           ? {
-              padding: '72px 0',
+              padding: "72px 0",
             }
           : {},
       }}
@@ -47,7 +47,7 @@ const OperationModal = (props) => {
             rules={[
               {
                 required: true,
-                message: '请输入任务名称',
+                message: "请输入任务名称",
               },
             ]}
             placeholder="请输入"
@@ -58,12 +58,12 @@ const OperationModal = (props) => {
             rules={[
               {
                 required: true,
-                message: '请选择开始时间',
+                message: "请选择开始时间",
               },
             ]}
             fieldProps={{
               style: {
-                width: '100%',
+                width: "100%",
               },
             }}
             placeholder="请选择"
@@ -74,17 +74,17 @@ const OperationModal = (props) => {
             rules={[
               {
                 required: true,
-                message: '请选择任务负责人',
+                message: "请选择任务负责人",
               },
             ]}
             options={[
               {
-                label: '付晓晓',
-                value: 'xiao',
+                label: "付晓晓",
+                value: "xiao",
               },
               {
-                label: '周毛毛',
-                value: 'mao',
+                label: "周毛毛",
+                value: "mao",
               },
             ]}
             placeholder="请选择管理员"
@@ -94,7 +94,7 @@ const OperationModal = (props) => {
             label="产品描述"
             rules={[
               {
-                message: '请输入至少五个字符的产品描述！',
+                message: "请输入至少五个字符的产品描述！",
                 min: 5,
               },
             ]}

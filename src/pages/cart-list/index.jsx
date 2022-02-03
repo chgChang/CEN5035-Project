@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { history } from "umi";
 import { DownOutlined } from "@ant-design/icons";
 import {
   Avatar,
@@ -110,14 +111,13 @@ export const BasicList = () => {
     }
   };
 
+  function handleClick() {
+    history.push("/checkout");
+  }
+
   const extraContent = (
     <div className={styles.extraContent}>
-      <Button
-        type="primary"
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
+      <Button type="primary" onClick={handleClick}>
         Proceed to checkout
       </Button>
       {/* <Search className={styles.extraContentSearch} placeholder="Input item name" onSearch={() => ({})} /> */}

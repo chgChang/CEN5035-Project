@@ -58,27 +58,14 @@ export default defineConfig({
       ],
     },
     {
-      path: "/form",
-      icon: "form",
-      name: "form",
-      routes: [
-        {
-          path: "/form",
-          redirect: "/form/step-form",
-        },
-        {
-          name: "step-form",
-          icon: "smile",
-          path: "/form/step-form",
-          component: "./form/step-form",
-        },
-        // {
-        //   name: 'advanced-form',
-        //   icon: 'smile',
-        //   path: '/form/advanced-form',
-        //   component: './form/advanced-form',
-        // },
-      ],
+      path: "/cart-list",
+      name: "cart-list",
+      icon: "shopping-cart",
+      component: "./cart-list",
+    },
+    {
+      path: "/checkout",
+      component: "./checkout",
     },
     {
       path: "/list",
@@ -106,13 +93,7 @@ export default defineConfig({
         },
         {
           path: "/list",
-          redirect: "/list/basic-list",
-        },
-        {
-          name: "cart",
-          icon: "smile",
-          path: "/list/basic-list",
-          component: "./list/basic-list",
+          redirect: "/list/card-list",
         },
         {
           name: "card-list",

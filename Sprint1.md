@@ -1,9 +1,13 @@
 # Sprint 1
 
 Wei Wu (UFID: 8028-5179)
+
 Chang Zhou (UFID: 70697466)
+
 Jianan He (UFID: 68530029)
+
 Chi Zhang (UFID: 91832967)
+
 Github Link: https://github.com/chgChang/CEN5035-Project
 
 ---

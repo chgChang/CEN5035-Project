@@ -119,3 +119,16 @@ In order module, there are 2 apis which match the functions including checkout a
 
     The request parameter and body can be null. The response will be the list of the order history including the shipping information, the item information and the total price.
 
+## Frontend
+
+1. Use react, umi, ant design components library, ant design pro for front-end page design and development of Amazon like shopping website
+2. Use json file to simulate backend data transfer
+3. Implemented pages: login interface, registration interface, shopping home page, shopping cart interface, checkout interface, account setting interface
+4. Function:
+   1. Users can log in or register a new account on the login interface
+   2. After logging in to the account, users can select the page they want to enter through the side navigation bar. The current navigation bar has three pages: shopping homepage, shopping cart and account management
+   3. On the shopping homepage, users can browse the product list and add to the shopping cart
+   4. In the shopping cart interface, the user can change the quantity of the product and delete the product
+   5. In the account management interface, users can set their own account 
+   6. On the right side of the header of the page, you can log out of the current user login
+   7. Click proceed to checkout on the shopping cart interface to enter the checkout interface. The checkout interface is divided into four parts, mailing address/payment method/order confirmation/order success interface

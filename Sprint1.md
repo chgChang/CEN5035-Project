@@ -14,13 +14,12 @@ Github Link: https://github.com/chgChang/CEN5035-Project
 
 ## Application Description
 
-Wikipedia says:
+[Wikipedia](https://en.wikipedia.org/wiki/E-commerce):
 
-```
 E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems. 
-```
 
-The application is an e-commercial web application like Amazon.
+
+This project builds an Amazon-like E-commercial web application.
 
 ## Backend
 
@@ -36,8 +35,7 @@ Approach to start the backend:
    go run main.go
    ```
 
-Below is the technology and environment of the backend.
-
+The technologies and environments of the backend.
 ```
 Go v1.17.5
 Gin v1.7.7
@@ -45,31 +43,36 @@ Gorm v1.22.5
 MySQL 8.0
 ```
 
-We choose `Gin` as our web application framework. Below is the description of `Gin`.
+We choose [Gin](https://github.com/gin-gonic/gin) as our web application framework. Below is the description of it:
 
-```
-Gin is a web framework written in Go (Golang). It features a martini-like API with performance that is up to 40 times faster thanks to httprouter. If you need performance and good productivity, you will love Gin.
-```
+Gin is a web framework written in Go (Golang). It features a martini-like API with performance that is up to 40 times faster thanks to httprouter. 
 
-In sprint 1, we have developed 4 function modules, including user module, item module, cart module, order module.
+In sprint 1, we have developed 4 function modules including user module, item module, cart module and order module.
 
 The link of Api Document: https://documenter.getpostman.com/view/12317519/UVeGpQY8
 
 ### User Module
 
-In user module, there are 3 apis which match functions of register, login and logout.
+The user module has 3 APIs for functions of **register**, **login** and **logout**.
 
-1. User Register Api
+1. User Register API
 
-   The request body needs to include username, email and password. If someone has used the email to register an account, the server will respond an error including the message `"email already exists"`. Otherwise, the response will be "success".
+   The request body includes username, email and password. The email must be **unquie**. 
+   - If someone uses a duplicated email to register, the server responds an error including the message `"email already exists"`. 
+   - Otherwise, the server responses "success".
 
-2. User Login Api
+2. User Login API
 
-   The request body needs to include email and password. If the email matches the password, the server will respond a success message. Otherwise, the response will be `"email or password is wrong"`. After logging in, the email will be saved into a cookie.
+   The request body includes email and password. 
+   - If the user's credential (email and password) doesn't matche, the server responds a success message. 
+   - Otherwise, the server responses `""`. 
+   After logging in, the email is saved into a cookie.
 
 3. User Logout Api
 
-   The request body needs to include email. The response will be "success" success only if the email matches the value of the cookie.
+   The request body includes email. The response is "success" success only if the email matches the value of the cookie.
+   - If the email doesn't match that of the cookie, the servers responses `"email is wrong"`.
+   - Otherwise, the server response `"log on"`
 
 ### Item Module
 

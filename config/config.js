@@ -76,6 +76,16 @@ export default defineConfig({
       ],
     },
     {
+      path: "/cart-list",
+      name: "cart-list",
+      icon: "shopping-cart",
+      component: "./cart-list",
+    },
+    {
+      path: "/checkout",
+      component: "./checkout",
+    },
+    {
       path: '/form',
       icon: 'form',
       name: 'form',

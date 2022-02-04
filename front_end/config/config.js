@@ -87,8 +87,8 @@ export default defineConfig({
     },
     {
       path: '/form',
-      icon: 'form',
-      name: 'form',
+      // icon: 'form',
+      // name: 'form',
       routes: [
         {
           path: '/form',
@@ -110,8 +110,8 @@ export default defineConfig({
     },
     {
       path: '/list',
-      icon: 'table',
-      name: 'list',
+      // icon: 'table',
+      // name: 'list',
       routes: [
         {
           path: '/list/search',
@@ -168,8 +168,8 @@ export default defineConfig({
     //   ],
     // },
     {
-      name: 'result',
-      icon: 'CheckCircleOutlined',
+      // name: 'result',
+      // icon: 'CheckCircleOutlined',
       path: '/result',
       routes: [
         {
@@ -191,8 +191,8 @@ export default defineConfig({
       ],
     },
     {
-      name: 'exception',
-      icon: 'warning',
+      // name: 'exception',
+      // icon: 'warning',
       path: '/exception',
       routes: [
         {

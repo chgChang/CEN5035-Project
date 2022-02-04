@@ -83,6 +83,11 @@ func (controller *userController) Login(c *gin.Context) error {
 	}
 
 	expiration := time.Now()
+	expiration = expiration.AddDate(0, 0, -1)
+	cookieNew := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
+	http.SetCookie(c.Writer, &cookieNew)
+
+	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, 1)
 	cookie := http.Cookie{Name: "currentUser", Value: user.Email, Expires: expiration}
 	http.SetCookie(c.Writer, &cookie)

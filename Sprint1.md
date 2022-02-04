@@ -14,16 +14,19 @@ Github Link: https://github.com/chgChang/CEN5035-Project
 
 ## Application Description
 
-[Wikipedia](https://en.wikipedia.org/wiki/E-commerce):
+From [Wikipedia](https://en.wikipedia.org/wiki/E-commerce):
 
 E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems. 
 
-
-This project builds an Amazon-like E-commercial web application.
+This project is an Amazon-like E-commercial web application.
 
 ## Backend
 
-- Demo Video Link: https://youtu.be/l16GmmpDJmc
+In sprint 1, we have developed 4 function modules including user module, item module, cart module and order module.
+
+- [The link of the Api Document](https://documenter.getpostman.com/view/12317519/UVeGpQY8)
+
+- [The link of the Demo Video](https://youtu.be/l16GmmpDJmc)
 
 Approach to start the backend:
 
@@ -47,9 +50,7 @@ We choose [Gin](https://github.com/gin-gonic/gin) as our web application framewo
 
 Gin is a web framework written in Go (Golang). It features a martini-like API with performance that is up to 40 times faster thanks to httprouter. 
 
-In sprint 1, we have developed 4 function modules including user module, item module, cart module and order module.
 
-The link of Api Document: https://documenter.getpostman.com/view/12317519/UVeGpQY8
 
 ### User Module
 
@@ -58,73 +59,94 @@ The user module has 3 APIs for functions of **register**, **login** and **logout
 1. User Register API
 
    The request body includes username, email and password. The email must be **unquie**. 
+   - If the register successes, the server returns a message `"success"`
    - If someone uses a duplicated email to register, the server responds an error including the message `"email already exists"`. 
-   - Otherwise, the server responses "success".
+
 
 2. User Login API
 
    The request body includes email and password. 
-   - If the user's credential (email and password) doesn't matche, the server responds a success message. 
-   - Otherwise, the server responses `""`. 
+   - If the user's credential (email and password) matches, the server responds a message `"success"`. 
+   - Otherwise, the server responses `"email or password is wrong"`. 
    After logging in, the email is saved into a cookie.
 
-3. User Logout Api
+3. User Logout API
 
    The request body includes email. The response is "success" success only if the email matches the value of the cookie.
-   - If the email doesn't match that of the cookie, the servers responses `"email is wrong"`.
-   - Otherwise, the server response `"log on"`
+   - If the email matches that of the cookie, the servers responses `"success"`.
+   - Otherwise, the server response `"user not logged in"`
 
 ### Item Module
 
-In user module, there are 3 apis which match functions including getting the full item list, searching specific products and search product by item id.
+The item module has 3 APIs for functions of **getting the full item list**, **fuzzy searching by name** and **exact searching id**.
 
-4. Get Item List Api
+4. Get Item List API
 
-   The request body or parameters is not needed, because both logged-in users and visitors can browse the products. The server will respond a list of all the products.
+   The request body or parameters is not needed. 
+   - The server responds by returning a list of all the products.
 
-5. Search Item Api
+5. Search Item API
 
-   The request needs to include the keyword of searching. The server will respond the list of products that has the keyword  in their names.
+   The request includes the keyword to be searched. 
+   - The server responds by returning a list of products having the keyword in their names.
+   - If the given pattern doesn't match any item names, the server returns an error message.
 
-6. Use ID to Get Item Api
+6. Use ID to Get Item API
 
-   The request needs to include the ID of the item. The server will respond the detail imformation of the result product. If the ID doesn't exist, the response will be an error.
+   The request includes the item ID to be searched. 
+   - The server returns the detailed information of the result product. 
+   - If the ID doesn't exist, the response will be an error.
 
 ### Cart Module
 
-In cart module, there are 5 apis which match functions including adding products to cart, getting the list of products, updating the quantity of products, deleting specific item and remove all products from the cart. The server will get the email of the current user from the cookie.
+The cart module has 5 APIs which match functions of **adding products to cart**, **getting the list of products**, **updating the quantity of products**, **deleting a specific item** and **remove all the products from the cart**. The server will get the email of the current user from the cookie.
 
-7. Add Product into Cart Api
+7. Add Product into Cart API
 
-   Users need to send the request including item ID and quantity that they want to add. The legal quantity must be greater than 0 and the item ID must exist.
+   The request includes item ID and the quantity to be added. The quantity must be a positive integer and the item ID must exist.
+   - The server returns the message `"success"`
+   - If the item ID doesn't exist, the server returns `"item doesn't exist"`
+   - If the item quantity is not a positive integer, the server returns `"please input the correct quantity"`
 
-8. Get the Cart List Api
+8. Get the Cart List API
 
-   The request can be null. The response will be the list of products in the cart.
+   The request body or parameters is not needed.
+   - The server response by returning the list of products in the cart.
 
-9. Update Cart Api
+9. Update Cart API
 
-   The request needs to include the item ID and the quantity to be updated. The item ID must match the item in the cart and the quantity must not be less than 0. If the quantity equals to 0, the item will be deleted from the cart.
+   The request includes the item ID and the quantity to be updated. The item ID must match an item in the cart and the quantity must be an integer no less than 0. If the quantity equals to 0, the item will be deleted from the cart.
+   - The server returns the message `"success"`
+   - If the item ID doesn't exist in the cart, the server returns `"this item is not in the cart"`
+   - If the item quantity is not a natural number, the server returns `"please input the correct quantity"`
 
-10. Delete Item from Cart Api
+10. Delete Item from Cart API
 
-    The request only needs to include the item ID to be deleted. The item ID must match the item in the cart.
+    The request includes the item ID to be deleted. The item ID must match an item in the cart.
+    - The server returns the message `"success"`
+    - If the item ID not in the cart, the server returns `"this item is not in the cart"`
 
-11. Remove All Items from Cart Api
+11. Remove All Items from Cart API
 
-    The request parameter and body can be null. If the cart is not empty before, the items in cart will be all removed.
+    The request body or parameters is not needed. If the current cart is not empty, all the items in cart will be removed.
+    - The server returns the message `"success"`
+    - If the cart is empty, the server returns `"cart is empty, cannot remove"`
 
 ### Order Module
 
-In order module, there are 2 apis which match the functions including checkout and getting the order history.
+The order module has 2 APIs for functions of **checkout** and **getting the order history**.
 
-12. Checkout Api
+12. Checkout API
 
-    The request body needs to include the shipping information of the user and the cart must not be empty. The server will generate a unique order ID randomly for each order and save the information of the products in cart into database. After that, all items will be removed from the cart.
+    The request body includes the shipping information (shipping address, phone number and name) of the receiver and the cart must not be empty. The server randomly generates an unique order ID for each order and save the information of the products in the cart into the database. Next, all the items will be removed from the cart.
+    - The server returns `"success"`
+    - If the cart is empty, the server returns `"cart is empty"`
 
-13. Get Order History Api
+13. Get Order History API
 
-    The request parameter and body can be null. The response will be the list of the order history including the shipping information, the item information and the total price.
+    The request body or parameters is not needed. The server returns the list of the preveious order including the shipping information, the item information and the total price.
+    - The server returns a list of previous orders.
+    - If the current user has no previous order, the server returns `"order history is empty"`
 
 ## Frontend
 

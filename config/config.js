@@ -82,6 +82,12 @@ export default defineConfig({
       ],
     },
     {
+      name: 'history',
+      path: '/history',
+      icon: 'history',
+      component: './history',
+    },
+    {
       path: '/form',
       icon: 'form',
       name: 'form',
@@ -96,12 +102,12 @@ export default defineConfig({
           path: '/form/step-form',
           component: './form/step-form',
         },
-        // {
-        //   name: 'advanced-form',
-        //   icon: 'smile',
-        //   path: '/form/advanced-form',
-        //   component: './form/advanced-form',
-        // },
+        {
+          name: 'advanced-form',
+          icon: 'smile',
+          path: '/form/advanced-form',
+          component: './form/advanced-form',
+        },
       ],
     },
     {

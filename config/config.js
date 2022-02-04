@@ -33,27 +33,27 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: "/user",
+      path: '/user',
       layout: false,
       routes: [
         {
-          path: "/user/login",
+          path: '/user/login',
           layout: false,
-          name: "login",
-          component: "./user/Login",
+          name: 'login',
+          component: './user/Login',
         },
         {
-          path: "/user",
-          redirect: "/user/login",
+          path: '/user',
+          redirect: '/user/login',
         },
         {
-          name: "register",
-          icon: "smile",
-          path: "/user/register",
-          component: "./user/register",
+          name: 'register',
+          icon: 'smile',
+          path: '/user/register',
+          component: './user/register',
         },
         {
-          component: "404",
+          component: '404',
         },
       ],
     },
@@ -76,10 +76,14 @@ export default defineConfig({
       ],
     },
     {
-      name: 'history',
-      path: '/history',
-      icon: 'history',
-      component: './history',
+      path: '/cart-list',
+      name: 'cart-list',
+      icon: 'shopping-cart',
+      component: './cart-list',
+    },
+    {
+      path: '/checkout',
+      component: './checkout',
     },
     {
       path: '/form',
@@ -129,14 +133,14 @@ export default defineConfig({
           ],
         },
         {
-          path: "/list",
-          redirect: "/list/card-list",
+          path: '/list',
+          redirect: '/list/card-list',
         },
         {
-          name: "card-list",
-          icon: "smile",
-          path: "/list/card-list",
-          component: "./list/card-list",
+          name: 'card-list',
+          icon: 'smile',
+          path: '/list/card-list',
+          component: './list/card-list',
         },
       ],
     },

@@ -1,0 +1,24 @@
+{
+  "cart": {
+    "itemList": [
+      {
+        "itemId": 1,
+        "itemName": "Apple iPhone 13",
+        "price": 829,
+        "picUrl": "https://m.media-amazon.com/images/I/71GLMJ7TQiL.jpg",
+        "description": "6.1-inch Super Retina XDR display",
+        "quantity": 4
+      },
+      {
+        "itemId": 2,
+        "itemName": "Apple MacBook Air - 13.3 inches - 8 GB RAM",
+        "price": 999,
+        "picUrl": "https://m.media-amazon.com/images/I/71TPda7cwUL._AC_SL1500_.jpg",
+        "description": "All-Day Battery Life – Go longer than ever with up to 18 hours of battery life.",
+        "quantity": 1
+      }
+    ],
+    "totalPrice": 4315
+  },
+  "status": "success"
+}

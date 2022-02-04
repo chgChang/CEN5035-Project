@@ -3,6 +3,7 @@ import { Input } from 'antd';
 import { history } from 'umi';
 const tabList = [
   {
+<<<<<<< HEAD
     key: 'All',
     tab: 'All',
   },
@@ -21,6 +22,18 @@ const tabList = [
   {
     key: 'Electronics',
     tab: 'Electronics',
+=======
+    key: 'articles',
+    tab: '文章',
+  },
+  {
+    key: 'projects',
+    tab: '项目',
+  },
+  {
+    key: 'applications',
+    tab: '应用',
+>>>>>>> changzhou
   },
 ];
 
@@ -30,6 +43,7 @@ const Search = (props) => {
     const url = match.url === '/' ? '' : match.url;
 
     switch (key) {
+<<<<<<< HEAD
       case 'Clothing/Shoes':
         history.push(`${url}/applications`);
         break;
@@ -48,6 +62,18 @@ const Search = (props) => {
 
       case 'Electronics':
         history.push(`${url}/applications`);
+=======
+      case 'articles':
+        history.push(`${url}/articles`);
+        break;
+
+      case 'applications':
+        history.push(`${url}/applications`);
+        break;
+
+      case 'projects':
+        history.push(`${url}/projects`);
+>>>>>>> changzhou
         break;
 
       default:
@@ -56,8 +82,12 @@ const Search = (props) => {
   };
 
   const handleFormSubmit = (value) => {
+<<<<<<< HEAD
     // search function
 
+=======
+    // eslint-disable-next-line no-console
+>>>>>>> changzhou
     console.log(value);
   };
 
@@ -70,7 +100,11 @@ const Search = (props) => {
       return tabKey;
     }
 
+<<<<<<< HEAD
     return 'projects';
+=======
+    return 'articles';
+>>>>>>> changzhou
   };
 
   return (

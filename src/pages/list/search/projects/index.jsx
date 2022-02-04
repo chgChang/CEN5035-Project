@@ -2,8 +2,13 @@ import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
 import moment from 'moment';
 import { useRequest } from 'umi';
 import AvatarList from './components/AvatarList';
+<<<<<<< HEAD
 // import StandardFormRow from './components/StandardFormRow';
 // import TagSelect from './components/TagSelect';
+=======
+import StandardFormRow from './components/StandardFormRow';
+import TagSelect from './components/TagSelect';
+>>>>>>> changzhou
 import { queryFakeList } from './service';
 import styles from './style.less';
 const { Option } = Select;
@@ -90,7 +95,11 @@ const Projects = () => {
             run(values);
           }}
         >
+<<<<<<< HEAD
           {/* <StandardFormRow
+=======
+          <StandardFormRow
+>>>>>>> changzhou
             title="所属类目"
             block
             style={{
@@ -113,8 +122,13 @@ const Projects = () => {
                 <TagSelect.Option value="cat12">类目十二</TagSelect.Option>
               </TagSelect>
             </FormItem>
+<<<<<<< HEAD
           </StandardFormRow> */}
           {/* <StandardFormRow title="其它选项" grid last>
+=======
+          </StandardFormRow>
+          <StandardFormRow title="其它选项" grid last>
+>>>>>>> changzhou
             <Row gutter={16}>
               <Col lg={8} md={10} sm={10} xs={24}>
                 <FormItem {...formItemLayout} label="作者" name="author">
@@ -144,7 +158,11 @@ const Projects = () => {
                 </FormItem>
               </Col>
             </Row>
+<<<<<<< HEAD
           </StandardFormRow> */}
+=======
+          </StandardFormRow>
+>>>>>>> changzhou
         </Form>
       </Card>
       <div className={styles.cardList}>{cardList}</div>

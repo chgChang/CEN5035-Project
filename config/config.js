@@ -33,33 +33,27 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: '/user',
+      path: "/user",
       layout: false,
       routes: [
         {
-          path: '/user/login',
+          path: "/user/login",
           layout: false,
-          name: 'login',
-          component: './user/Login',
+          name: "login",
+          component: "./user/Login",
         },
         {
-          path: '/user',
-          redirect: '/user/login',
+          path: "/user",
+          redirect: "/user/login",
         },
         {
-          name: 'register-result',
-          icon: 'smile',
-          path: '/user/register-result',
-          component: './user/register-result',
+          name: "register",
+          icon: "smile",
+          path: "/user/register",
+          component: "./user/register",
         },
         {
-          name: 'register',
-          icon: 'smile',
-          path: '/user/register',
-          component: './user/register',
-        },
-        {
-          component: '404',
+          component: "404",
         },
       ],
     },
@@ -129,20 +123,14 @@ export default defineConfig({
           ],
         },
         {
-          path: '/list',
-          redirect: '/list/basic-list',
+          path: "/list",
+          redirect: "/list/card-list",
         },
         {
-          name: 'basic-list',
-          icon: 'smile',
-          path: '/list/basic-list',
-          component: './list/basic-list',
-        },
-        {
-          name: 'card-list',
-          icon: 'smile',
-          path: '/list/card-list',
-          component: './list/card-list',
+          name: "card-list",
+          icon: "smile",
+          path: "/list/card-list",
+          component: "./list/card-list",
         },
       ],
     },

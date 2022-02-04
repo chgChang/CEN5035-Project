@@ -20,7 +20,17 @@ The application is an e-commercial web application like Amazon.
 
 ## Backend
 
-- Demo Video: 
+- Demo Video Link:
+
+Approach to start the backend:
+
+1. ```shell
+   cd backend/main
+   ```
+
+2. ```shell
+   go run main.go
+   ```
 
 Below is the technology and environment of the backend.
 

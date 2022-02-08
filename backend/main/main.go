@@ -43,11 +43,13 @@ func main() {
 			err := userController.Register(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "register success",
 				})
 			}
 		})
@@ -56,11 +58,13 @@ func main() {
 			err := userController.Login(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "login success",
 				})
 			}
 		})
@@ -69,11 +73,13 @@ func main() {
 			err := userController.Logout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "success",
+					"error":  err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "logout success",
 				})
 			}
 		})
@@ -85,11 +91,13 @@ func main() {
 			itemList, err := itemController.GetItemList(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "get item success",
 					"list":   itemList,
 				})
 			}
@@ -99,11 +107,13 @@ func main() {
 			itemList, err := itemController.SearchItem(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "search success",
 					"list":   itemList,
 				})
 			}
@@ -113,11 +123,13 @@ func main() {
 			item, err := itemController.SearchItemById(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "get item by id success",
 					"item":   item,
 				})
 			}
@@ -130,11 +142,13 @@ func main() {
 			err := cartController.AddToCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "add to cart success",
 				})
 			}
 		})
@@ -143,11 +157,13 @@ func main() {
 			cartVo, err := cartController.GetCartList(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"error":  err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "get cart items success",
 					"cart":   cartVo,
 				})
 			}
@@ -157,11 +173,13 @@ func main() {
 			err := cartController.RemoveCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "remove cart success",
 				})
 			}
 		})
@@ -170,11 +188,13 @@ func main() {
 			err := cartController.DeleteCartByItemId(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "delete cart by item id success",
 				})
 			}
 		})
@@ -183,11 +203,13 @@ func main() {
 			err := cartController.UpdateCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "update cart success",
 				})
 			}
 		})
@@ -199,11 +221,13 @@ func main() {
 			err := orderController.Checkout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status": "success",
+					"msg":    "checkout success",
 				})
 			}
 		})
@@ -212,11 +236,13 @@ func main() {
 			orderHistoryVoList, err := orderController.GetHistory(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"error": err.Error(),
+					"status": "error",
+					"msg":    err.Error(),
 				})
 			} else {
 				context.JSON(http.StatusOK, gin.H{
 					"status":    "success",
+					"msg":       "get order history success",
 					"histories": orderHistoryVoList,
 				})
 			}

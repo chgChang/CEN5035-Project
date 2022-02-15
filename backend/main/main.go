@@ -27,8 +27,8 @@ var (
 	orderController = controller.NewOrderController(orderService)
 )
 
-func main() {
-	defer userDao.CloseDB()
+func setUpServer() *gin.Engine {
+	//defer userDao.CloseDB()
 	server := gin.New()
 
 	//store := cookie.NewStore([]byte("amazon"))
@@ -248,6 +248,13 @@ func main() {
 			}
 		})
 	}
+
+	return server
+}
+
+func main() {
+	defer userDao.CloseDB()
+	server := setUpServer()
 
 	err := server.Run()
 	if err != nil {

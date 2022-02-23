@@ -3,18 +3,22 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/assert/v2"
 	_ "gorm.io/gorm/schema"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
 	"testing"
 )
 
+var (
+	server = setUpServer()
+	//w      = httptest.NewRecorder()
+)
+
 func TestGetItem(t *testing.T) {
-	server := setUpServer()
+	//server := setUpServer()
+	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/getItems", nil)
 	server.ServeHTTP(w, req)
@@ -26,59 +30,61 @@ func TestGetItem(t *testing.T) {
 }
 
 func TestUserLogin(t *testing.T) {
-	server := setUpServer()
+	//server := setUpServer()
+	//server.Use(gin.Recovery(), gin.Logger(), userSession)
+	//email, _, server := login()
 
 	// Failed Register: Email Already Exists
-	w := httptest.NewRecorder()
-	param := make(map[string]string)
-	param["username"] = "czhang"
-	param["email"] = "czhang@qy"
-	param["password"] = "123"
-	jsonByte, _ := json.Marshal(param)
-	req, _ := http.NewRequest("POST", "/register", bytes.NewReader(jsonByte))
-	server.ServeHTTP(w, req)
-	response := "{\"msg\":\"email already exists\",\"status\":\"error\"}"
-	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, w.Body.String(), response)
-	fmt.Print(1)
+	//w := httptest.NewRecorder()
+	//param := make(map[string]string)
+	//param["username"] = "czhang"
+	//param["email"] = "czhang@qy"
+	//param["password"] = "123"
+	//jsonByte, _ := json.Marshal(param)
+	//req, _ := http.NewRequest("POST", "/register", bytes.NewReader(jsonByte))
+	//server.ServeHTTP(w, req)
+	//response := "{\"msg\":\"email already exists\",\"status\":\"error\"}"
+	//assert.Equal(t, 200, w.Code)
+	//assert.Equal(t, w.Body.String(), response)
+	//fmt.Print(1)
 
 	// Register
-	w4 := httptest.NewRecorder()
-	param4 := make(map[string]string)
-	param4["username"] = "cz"
-	param4["email"] = "czhang@5"
-	param4["password"] = "123"
-	jsonByte4, _ := json.Marshal(param4)
-	req4, _ := http.NewRequest("POST", "/register", bytes.NewReader(jsonByte4))
-	server.ServeHTTP(w4, req4)
-	response4 := "{\"msg\":\"register success\",\"status\":\"success\"}"
-	assert.Equal(t, 200, w4.Code)
-	assert.Equal(t, w4.Body.String(), response4)
+	//w4 := httptest.NewRecorder()
+	//param4 := make(map[string]string)
+	//param4["username"] = "cz"
+	//param4["email"] = "czhang@5"
+	//param4["password"] = "123"
+	//jsonByte4, _ := json.Marshal(param4)
+	//req4, _ := http.NewRequest("POST", "/register", bytes.NewReader(jsonByte4))
+	//server.ServeHTTP(w4, req4)
+	//response4 := "{\"msg\":\"register success\",\"status\":\"success\"}"
+	//assert.Equal(t, 200, w4.Code)
+	//assert.Equal(t, w4.Body.String(), response4)
 
 	// Failed Login: Not registered
-	w2 := httptest.NewRecorder()
-	param2 := make(map[string]string)
-	param2["email"] = "czdcnm@qy"
-	param2["password"] = "123412"
-	jsonByte2, _ := json.Marshal(param2)
-	req2, _ := http.NewRequest("POST", "/login", bytes.NewReader(jsonByte2))
-	server.ServeHTTP(w2, req2)
-	response2 := "{\"msg\":\"email or password is wrong\",\"status\":\"error\"}"
-	assert.Equal(t, 200, w2.Code)
-	assert.Equal(t, w2.Body.String(), response2)
-	fmt.Print(2)
+	//w2 := httptest.NewRecorder()
+	//param2 := make(map[string]string)
+	//param2["email"] = "czdcnm@qy"
+	//param2["password"] = "123412"
+	//jsonByte2, _ := json.Marshal(param2)
+	//req2, _ := http.NewRequest("POST", "/login", bytes.NewReader(jsonByte2))
+	//server.ServeHTTP(w2, req2)
+	//response2 := "{\"msg\":\"email or password is wrong\",\"status\":\"error\"}"
+	//assert.Equal(t, 200, w2.Code)
+	//assert.Equal(t, w2.Body.String(), response2)
+	//fmt.Print(2)
 
 	// Failed Login: Email or Password is wrong.
-	w5 := httptest.NewRecorder()
-	param5 := make(map[string]string)
-	param5["email"] = "czhang@qy"
-	param5["password"] = "1234x"
-	jsonByte5, _ := json.Marshal(param5)
-	req5, _ := http.NewRequest("POST", "/login", bytes.NewReader(jsonByte5))
-	server.ServeHTTP(w5, req5)
-	response5 := "{\"msg\":\"email or password is wrong\",\"status\":\"error\"}"
-	assert.Equal(t, 200, w5.Code)
-	assert.Equal(t, w5.Body.String(), response5)
+	//w5 := httptest.NewRecorder()
+	//param5 := make(map[string]string)
+	//param5["email"] = "czhang@qy"
+	//param5["password"] = "1234x"
+	//jsonByte5, _ := json.Marshal(param5)
+	//req5, _ := http.NewRequest("POST", "/login", bytes.NewReader(jsonByte5))
+	//server.ServeHTTP(w5, req5)
+	//response5 := "{\"msg\":\"email or password is wrong\",\"status\":\"error\"}"
+	//assert.Equal(t, 200, w5.Code)
+	//assert.Equal(t, w5.Body.String(), response5)
 
 	// Success Login
 	w3 := httptest.NewRecorder()
@@ -91,6 +97,7 @@ func TestUserLogin(t *testing.T) {
 	response3 := "{\"msg\":\"login success\",\"status\":\"success\"}"
 	assert.Equal(t, 200, w3.Code)
 	assert.Equal(t, w3.Body.String(), response3)
+	//return param3["email"], param3["password"]
 
 	// Failed Logout: Not log in.
 	//w = httptest.NewRecorder()
@@ -103,57 +110,63 @@ func TestUserLogin(t *testing.T) {
 	//assert.Equal(t, 200, w.Code)
 	//assert.Equal(t, w.Body.String(), response)
 	//
-	//// Success Logout
-	//w = httptest.NewRecorder()
-	//param = make(map[string]string)
-	//param["email"] = "czhang@qy"
-	//jsonByte, _ = json.Marshal(param)
-	//req, _ = http.NewRequest("POST", "/logout", bytes.NewReader(jsonByte))
-	//server.ServeHTTP(w, req)
-	//response = "{\"msg\":\"logout success\",\"status\":\"success\"}"
-	//assert.Equal(t, 200, w.Code)
-	//assert.Equal(t, w.Body.String(), response)
 
+}
+
+func TestUserLogout(t *testing.T) {
+	// Success Logout
+	w := httptest.NewRecorder()
+	param := make(map[string]string)
+	param["email"] = "czhang@qy"
+	//param["email"] = email
+	jsonByte, _ := json.Marshal(param)
+	req, _ := http.NewRequest("POST", "/logout", bytes.NewReader(jsonByte))
+	cookie := &http.Cookie{Name: "currentUser", Value: param["email"]}
+	req.AddCookie(cookie)
+	server.ServeHTTP(w, req)
+	response := "{\"msg\":\"logout success\",\"status\":\"success\"}"
+	assert.Equal(t, 200, w.Code)
+	assert.Equal(t, w.Body.String(), response)
 }
 
 func Printf(s string, i int) {
 
 }
 
-func TestSearchItemById(t *testing.T) {
-	server := setUpServer()
-	w := httptest.NewRecorder()
-	var id int = 1
-	req, _ := http.NewRequest("GET", "/getItemByID?id="+strconv.Itoa(id), nil)
-	server.ServeHTTP(w, req)
-	response := ""
-
-	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, w.Body.String(), response)
-}
-
-func TestCart(t *testing.T) {
-	server := setUpServer()
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/getCartItems", nil)
-	server.ServeHTTP(w, req)
-	//itemList, _ := itemService.GetItemList()
-	response := "{\"cart\":{\"itemList\":null,\"totalPrice\":0},\"msg\":\"get cart items success\",\"status\":\"success\"}"
-	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, w.Body.String(), response)
-
-	// add to cart
-	param := make(map[string]int)
-	param["itemId"] = 1
-	param["quantity"] = 1
-	jsonByte, _ := json.Marshal(param)
-	req, _ = http.NewRequest("POST", "/addtoCart?1=1", bytes.NewReader(jsonByte))
-	server.ServeHTTP(w, req)
-	//itemList, _ := itemService.GetItemList()
-	response = "{\"msg\":\"add to cart success\",\"status\":\"success\"}"
-	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, w.Body.String(), response)
-}
+//func TestSearchItemById(t *testing.T) {
+//	server := setUpServer()
+//	w := httptest.NewRecorder()
+//	var id int = 1
+//	req, _ := http.NewRequest("GET", "/getItemByID?id="+strconv.Itoa(id), nil)
+//	server.ServeHTTP(w, req)
+//	response := ""
+//
+//	assert.Equal(t, 200, w.Code)
+//	assert.Equal(t, w.Body.String(), response)
+//}
+//
+//func TestCart(t *testing.T) {
+//	server := setUpServer()
+//	w := httptest.NewRecorder()
+//	req, _ := http.NewRequest("GET", "/getCartItems", nil)
+//	server.ServeHTTP(w, req)
+//	//itemList, _ := itemService.GetItemList()
+//	response := "{\"cart\":{\"itemList\":null,\"totalPrice\":0},\"msg\":\"get cart items success\",\"status\":\"success\"}"
+//	assert.Equal(t, 200, w.Code)
+//	assert.Equal(t, w.Body.String(), response)
+//
+//	// add to cart
+//	param := make(map[string]int)
+//	param["itemId"] = 1
+//	param["quantity"] = 1
+//	jsonByte, _ := json.Marshal(param)
+//	req, _ = http.NewRequest("POST", "/addtoCart?1=1", bytes.NewReader(jsonByte))
+//	server.ServeHTTP(w, req)
+//	//itemList, _ := itemService.GetItemList()
+//	response = "{\"msg\":\"add to cart success\",\"status\":\"success\"}"
+//	assert.Equal(t, 200, w.Code)
+//	assert.Equal(t, w.Body.String(), response)
+//}
 
 func StringEqual(a, b []string) bool {
 	if len(a) != len(b) {

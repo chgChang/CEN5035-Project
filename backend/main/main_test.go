@@ -111,6 +111,7 @@ func TestUserLogin(t *testing.T) {
 	//assert.Equal(t, w.Body.String(), response)
 	//
 
+
 }
 
 func TestUserLogout(t *testing.T) {
@@ -127,6 +128,28 @@ func TestUserLogout(t *testing.T) {
 	response := "{\"msg\":\"logout success\",\"status\":\"success\"}"
 	assert.Equal(t, 200, w.Code)
 	assert.Equal(t, w.Body.String(), response)
+
+}
+
+func TestUserLogout(t *testing.T) {
+	// Success Logout
+	w := httptest.NewRecorder()
+	param := make(map[string]string)
+	param["email"] = "czhang@qy"
+	//param["email"] = email
+	jsonByte, _ := json.Marshal(param)
+	req, _ := http.NewRequest("POST", "/logout", bytes.NewReader(jsonByte))
+	cookie := &http.Cookie{Name: "currentUser", Value: param["email"]}
+	req.AddCookie(cookie)
+	server.ServeHTTP(w, req)
+	response := "{\"msg\":\"logout success\",\"status\":\"success\"}"
+	assert.Equal(t, 200, w.Code)
+	assert.Equal(t, w.Body.String(), response)
+}
+
+func Printf(s string, i int) {
+
+
 }
 
 //func TestSearchItemById(t *testing.T) {

@@ -129,10 +129,6 @@ func TestUserLogout(t *testing.T) {
 	assert.Equal(t, w.Body.String(), response)
 }
 
-func Printf(s string, i int) {
-
-}
-
 //func TestSearchItemById(t *testing.T) {
 //	server := setUpServer()
 //	w := httptest.NewRecorder()

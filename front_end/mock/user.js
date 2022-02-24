@@ -119,7 +119,7 @@ export default {
     const { password, username, type } = req.body;
     await waitTime(2000);
 
-    if (password === 'ant.design' && username === 'admin') {
+    if (password === 'ant.design' && username === 'admin@ufl.edu') {
       res.send({
         status: 'ok',
         type,

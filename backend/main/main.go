@@ -31,6 +31,8 @@ func setUpServer() *gin.Engine {
 	//defer userDao.CloseDB()
 	server := gin.New()
 
+	//store := cookie.NewStore([]byte("amazon"))
+	//userSession := sessions.Sessions("userSession", store)
 	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 
 	server.Use(gin.Recovery(), gin.Logger())
@@ -71,7 +73,7 @@ func setUpServer() *gin.Engine {
 			err := userController.Logout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"status": "error",
+					"status": "success",
 					"error":  err.Error(),
 				})
 			} else {

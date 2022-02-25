@@ -39,7 +39,7 @@ func setUpServer() *gin.Engine {
 
 	userApiGroup := server.Group("/")
 	{
-		userApiGroup.POST("/register", func(context *gin.Context) {
+		userApiGroup.POST("/api/register", func(context *gin.Context) {
 			err := userController.Register(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -54,7 +54,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		userApiGroup.POST("/login", func(context *gin.Context) {
+		userApiGroup.POST("/api/login", func(context *gin.Context) {
 			err := userController.Login(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -69,7 +69,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		userApiGroup.POST("/logout", func(context *gin.Context) {
+		userApiGroup.POST("/api/logout", func(context *gin.Context) {
 			err := userController.Logout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -87,7 +87,7 @@ func setUpServer() *gin.Engine {
 
 	itemApiGroup := server.Group("/")
 	{
-		itemApiGroup.GET("/getItems", func(context *gin.Context) {
+		itemApiGroup.GET("/api/getItems", func(context *gin.Context) {
 			itemList, err := itemController.GetItemList(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -103,7 +103,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		itemApiGroup.GET("/search", func(context *gin.Context) {
+		itemApiGroup.GET("/api/search", func(context *gin.Context) {
 			itemList, err := itemController.SearchItem(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -119,7 +119,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		itemApiGroup.GET("/getItemByID", func(context *gin.Context) {
+		itemApiGroup.GET("/api/getItemByID", func(context *gin.Context) {
 			item, err := itemController.SearchItemById(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -138,7 +138,7 @@ func setUpServer() *gin.Engine {
 
 	cartApiGroup := server.Group("/")
 	{
-		cartApiGroup.POST("/addtoCart", func(context *gin.Context) {
+		cartApiGroup.POST("/api/addtoCart", func(context *gin.Context) {
 			err := cartController.AddToCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -153,7 +153,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		cartApiGroup.GET("/getCartItems", func(context *gin.Context) {
+		cartApiGroup.GET("/api/getCartItems", func(context *gin.Context) {
 			cartVo, err := cartController.GetCartList(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -169,7 +169,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		cartApiGroup.POST("/removeCart", func(context *gin.Context) {
+		cartApiGroup.POST("/api/removeCart", func(context *gin.Context) {
 			err := cartController.RemoveCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -184,7 +184,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		cartApiGroup.POST("/deleteCartByItemId", func(context *gin.Context) {
+		cartApiGroup.POST("/api/deleteCartByItemId", func(context *gin.Context) {
 			err := cartController.DeleteCartByItemId(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -199,7 +199,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		cartApiGroup.POST("/updateCart", func(context *gin.Context) {
+		cartApiGroup.POST("/api/updateCart", func(context *gin.Context) {
 			err := cartController.UpdateCart(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -217,7 +217,7 @@ func setUpServer() *gin.Engine {
 
 	orderApiGroup := server.Group("/")
 	{
-		orderApiGroup.POST("/checkout", func(context *gin.Context) {
+		orderApiGroup.POST("/api/checkout", func(context *gin.Context) {
 			err := orderController.Checkout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
@@ -232,7 +232,7 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		orderApiGroup.GET("/getOrderHistory", func(context *gin.Context) {
+		orderApiGroup.GET("/api/getOrderHistory", func(context *gin.Context) {
 			orderHistoryVoList, err := orderController.GetHistory(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{

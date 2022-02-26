@@ -45,8 +45,13 @@ func (controller *userController) Logout(c *gin.Context) error {
 
 	expiration := time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
-	cookieNew := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
+	cookieNew := http.Cookie{Name: "currentUserName", Value: "", Expires: expiration}
 	http.SetCookie(c.Writer, &cookieNew)
+
+	expiration = time.Now()
+	expiration = expiration.AddDate(0, 0, -1)
+	cookieNew2 := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
+	http.SetCookie(c.Writer, &cookieNew2)
 	return nil
 }
 
@@ -77,20 +82,32 @@ func (controller *userController) Login(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	err = controller.userService.Login(user)
+
+	var currUser pojo.User
+	currUser, err = controller.userService.Login(user)
 	if err != nil {
 		return err
 	}
-
+	//fmt.Println(currUser.Username)
 	expiration := time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
-	cookieNew := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
+	cookieNew := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
 	http.SetCookie(c.Writer, &cookieNew)
 
 	expiration = time.Now()
+	expiration = expiration.AddDate(0, 0, -1)
+	cookieNew2 := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
+	http.SetCookie(c.Writer, &cookieNew2)
+
+	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, 1)
-	cookie := http.Cookie{Name: "currentUser", Value: user.Email, Expires: expiration}
+	cookie := http.Cookie{Name: "currentUserEmail", Value: currUser.Email, Expires: expiration}
 	http.SetCookie(c.Writer, &cookie)
+	
+	expiration = time.Now()
+	expiration = expiration.AddDate(0, 0, 1)
+	cookie2 := http.Cookie{Name: "currentUserName", Value: currUser.Username, Expires: expiration}
+	http.SetCookie(c.Writer, &cookie2)
 	return nil
 }
 

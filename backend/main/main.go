@@ -83,6 +83,23 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
+
+		userApiGroup.GET("/api/currentUser", func(c *gin.Context) {
+			cookie, err := c.Request.Cookie("currentUserName")
+			cookie2, err := c.Request.Cookie("currentUserEmail")
+			if err != nil {
+				c.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				c.JSON(http.StatusOK, gin.H{
+					"userName":  cookie.Value,
+					"userEmail": cookie2.Value,
+				})
+			}
+		})
+
 	}
 
 	itemApiGroup := server.Group("/")

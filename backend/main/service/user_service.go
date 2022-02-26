@@ -8,7 +8,7 @@ import (
 
 type UserService interface {
 	Register(user pojo.User) error
-	Login(user pojo.User) error
+	Login(user pojo.User) (pojo.User, error)
 	Logout(user pojo.User) error
 }
 
@@ -39,20 +39,21 @@ func (service *userService) Register(user pojo.User) error {
 	}
 }
 
-func (service *userService) Login(user pojo.User) error {
+func (service *userService) Login(user pojo.User) (pojo.User, error) {
 	email := user.Email
 	password := user.Password
 	userInDB := service.userDao.FindUserByEmail(email)
+
 	if userInDB == (pojo.User{}) {
 		err := errors.New("email or password is wrong")
-		return err
+		return pojo.User{}, err
 	} else {
 		passwordInDB := userInDB.Password
 		if password != passwordInDB {
 			err := errors.New("email or password is wrong！")
-			return err
+			return pojo.User{}, err
 		} else {
-			return nil
+			return userInDB, nil
 		}
 	}
 }

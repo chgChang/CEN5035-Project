@@ -37,7 +37,7 @@ func setUpServer() *gin.Engine {
 
 	server.Use(gin.Recovery(), gin.Logger())
 
-	userApiGroup := server.Group("/")
+	userApiGroup := server.Group("/api/")
 	{
 		userApiGroup.POST("/api/register", func(context *gin.Context) {
 			err := userController.Register(context)
@@ -84,9 +84,8 @@ func setUpServer() *gin.Engine {
 			}
 		})
 
-		userApiGroup.GET("/api/currentUser", func(c *gin.Context) {
-			cookie, err := c.Request.Cookie("currentUserName")
-			cookie2, err := c.Request.Cookie("currentUserEmail")
+		userApiGroup.GET("/currentUser", func(c *gin.Context) {
+			user, err := userController.GetUserInfo(c)
 			if err != nil {
 				c.JSON(http.StatusOK, gin.H{
 					"status": "error",
@@ -94,16 +93,15 @@ func setUpServer() *gin.Engine {
 				})
 			} else {
 				c.JSON(http.StatusOK, gin.H{
-					"status":    "succss",
-					"userName":  cookie.Value,
-					"userEmail": cookie2.Value,
+					"status": "success",
+					"data":   user,
 				})
 			}
 		})
 
 	}
 
-	itemApiGroup := server.Group("/")
+	itemApiGroup := server.Group("/api/")
 	{
 		itemApiGroup.GET("/api/getItems", func(context *gin.Context) {
 			itemList, err := itemController.GetItemList(context)
@@ -152,9 +150,10 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
+
 	}
 
-	cartApiGroup := server.Group("/")
+	cartApiGroup := server.Group("/api/")
 	{
 		cartApiGroup.POST("/api/addtoCart", func(context *gin.Context) {
 			err := cartController.AddToCart(context)
@@ -233,7 +232,7 @@ func setUpServer() *gin.Engine {
 		})
 	}
 
-	orderApiGroup := server.Group("/")
+	orderApiGroup := server.Group("/api/")
 	{
 		orderApiGroup.POST("/api/checkout", func(context *gin.Context) {
 			err := orderController.Checkout(context)

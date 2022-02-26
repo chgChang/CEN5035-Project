@@ -14,10 +14,26 @@ type UserController interface {
 	Register(c *gin.Context) error
 	Login(c *gin.Context) error
 	Logout(c *gin.Context) error
+	GetUserInfo(c *gin.Context) (pojo.User, error)
 }
 
 type userController struct {
 	userService service.UserService
+}
+
+func (controller *userController) GetUserInfo(c *gin.Context) (pojo.User, error) {
+	cookie, err := c.Request.Cookie("currentUserName")
+	if err != nil {
+		return pojo.User{}, errors.New("user not logged in")
+	}
+	cookie2, err := c.Request.Cookie("currentUser")
+	if err != nil {
+		return pojo.User{}, errors.New("user not logged in")
+	}
+	var user pojo.User
+	user.Username = cookie.Value
+	user.Email = cookie2.Value
+	return user, nil
 }
 
 func (controller *userController) Logout(c *gin.Context) error {
@@ -50,7 +66,7 @@ func (controller *userController) Logout(c *gin.Context) error {
 
 	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
-	cookieNew2 := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
+	cookieNew2 := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
 	http.SetCookie(c.Writer, &cookieNew2)
 	return nil
 }
@@ -61,7 +77,7 @@ func (controller *userController) Register(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	err = validate.Struct(user)
+	err = validate.Struct(&user)
 	if err != nil {
 		return err
 	}
@@ -78,32 +94,33 @@ func (controller *userController) Login(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
-	err = validate.Struct(user)
+	err = validate.Struct(&user)
 	if err != nil {
 		return err
 	}
 
-	var currUser pojo.User
-	currUser, err = controller.userService.Login(user)
+
+	currUser, err := controller.userService.Login(user)
 	if err != nil {
 		return err
 	}
 	//fmt.Println(currUser.Username)
 	expiration := time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
-	cookieNew := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
+	cookieNew := http.Cookie{Name: "currentUserName", Value: "", Expires: expiration}
 	http.SetCookie(c.Writer, &cookieNew)
 
 	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
-	cookieNew2 := http.Cookie{Name: "currentUserEmail", Value: "", Expires: expiration}
+	cookieNew2 := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
+
 	http.SetCookie(c.Writer, &cookieNew2)
 
 	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, 1)
-	cookie := http.Cookie{Name: "currentUserEmail", Value: currUser.Email, Expires: expiration}
+	cookie := http.Cookie{Name: "currentUser", Value: currUser.Email, Expires: expiration}
 	http.SetCookie(c.Writer, &cookie)
-	
+
 	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, 1)
 	cookie2 := http.Cookie{Name: "currentUserName", Value: currUser.Username, Expires: expiration}

@@ -99,6 +99,7 @@ func (controller *userController) Login(c *gin.Context) error {
 		return err
 	}
 
+
 	currUser, err := controller.userService.Login(user)
 	if err != nil {
 		return err
@@ -112,6 +113,7 @@ func (controller *userController) Login(c *gin.Context) error {
 	expiration = time.Now()
 	expiration = expiration.AddDate(0, 0, -1)
 	cookieNew2 := http.Cookie{Name: "currentUser", Value: "", Expires: expiration}
+
 	http.SetCookie(c.Writer, &cookieNew2)
 
 	expiration = time.Now()

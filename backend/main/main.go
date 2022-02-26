@@ -31,11 +31,13 @@ func setUpServer() *gin.Engine {
 	//defer userDao.CloseDB()
 	server := gin.New()
 
+	//store := cookie.NewStore([]byte("amazon"))
+	//userSession := sessions.Sessions("userSession", store)
 	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 
 	server.Use(gin.Recovery(), gin.Logger())
 
-	userApiGroup := server.Group("/")
+	userApiGroup := server.Group("/api/")
 	{
 		userApiGroup.POST("/register", func(context *gin.Context) {
 			err := userController.Register(context)
@@ -71,7 +73,7 @@ func setUpServer() *gin.Engine {
 			err := userController.Logout(context)
 			if err != nil {
 				context.JSON(http.StatusOK, gin.H{
-					"status": "error",
+					"status": "success",
 					"error":  err.Error(),
 				})
 			} else {
@@ -81,9 +83,25 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
+
+		userApiGroup.GET("/currentUser", func(c *gin.Context) {
+			user, err := userController.GetUserInfo(c)
+			if err != nil {
+				c.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				c.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"data":   user,
+				})
+			}
+		})
+
 	}
 
-	itemApiGroup := server.Group("/")
+	itemApiGroup := server.Group("/api/")
 	{
 		itemApiGroup.GET("/getItems", func(context *gin.Context) {
 			itemList, err := itemController.GetItemList(context)
@@ -132,9 +150,10 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
+
 	}
 
-	cartApiGroup := server.Group("/")
+	cartApiGroup := server.Group("/api/")
 	{
 		cartApiGroup.POST("/addtoCart", func(context *gin.Context) {
 			err := cartController.AddToCart(context)
@@ -213,7 +232,7 @@ func setUpServer() *gin.Engine {
 		})
 	}
 
-	orderApiGroup := server.Group("/")
+	orderApiGroup := server.Group("/api/")
 	{
 		orderApiGroup.POST("/checkout", func(context *gin.Context) {
 			err := orderController.Checkout(context)

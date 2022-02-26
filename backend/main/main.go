@@ -94,6 +94,7 @@ func setUpServer() *gin.Engine {
 				})
 			} else {
 				c.JSON(http.StatusOK, gin.H{
+					"status":    "succss",
 					"userName":  cookie.Value,
 					"userEmail": cookie2.Value,
 				})

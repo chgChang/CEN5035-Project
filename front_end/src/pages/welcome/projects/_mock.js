@@ -1,3 +1,5 @@
+import { add2Cart } from './service';
+
 // import mocres from 'src\pages\welcome\projects\res_mianPageList.json'
 const mocres = require('./res_mianPageList.json');
 
@@ -115,7 +117,15 @@ function getItems(req, res) {
   });
 }
 
+function add2cart(req, res) {
+  return res.json({
+    msg: "add to cart success",
+    status: "success",
+  });
+}
+
 export default {
   'GET  /api/fake_list': getFakeList,
   'GET  /api/getItems': getItems,
+  'POST /api/addtoCart': add2cart,
 };

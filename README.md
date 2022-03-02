@@ -15,6 +15,6 @@ npm run start
 npm run start:dev
 ```
 
-## sprint 1 video
+## Sprint 1 video
 - backend demo video: https://youtu.be/l16GmmpDJmc
 - frontend demo video: https://youtu.be/-T3KiU0mx1Q

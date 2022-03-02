@@ -38,59 +38,11 @@ export default {
       });
       return;
     }
-
     res.send({
       success: true,
       data: {
-        name: 'Serati Ma',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-        userid: '00000001',
+        username: 'Ferrel W',
         email: 'antdesign@alipay.com',
-        signature: '海纳百川，有容乃大',
-        title: '交互专家',
-        group: '蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED',
-        tags: [
-          {
-            key: '0',
-            label: '很有想法的',
-          },
-          {
-            key: '1',
-            label: '专注设计',
-          },
-          {
-            key: '2',
-            label: '辣~',
-          },
-          {
-            key: '3',
-            label: '大长腿',
-          },
-          {
-            key: '4',
-            label: '川妹子',
-          },
-          {
-            key: '5',
-            label: '海纳百川',
-          },
-        ],
-        notifyCount: 12,
-        unreadCount: 11,
-        country: 'China',
-        access: getAccess(),
-        geographic: {
-          province: {
-            label: '浙江省',
-            key: '330000',
-          },
-          city: {
-            label: '杭州市',
-            key: '330100',
-          },
-        },
-        address: '西湖区工专路 77 号',
-        phone: '0752-268888888',
       },
     });
   },
@@ -115,48 +67,27 @@ export default {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
-  'POST /api/login/account': async (req, res) => {
-    const { password, username, type } = req.body;
+  'POST /api/login': async (req, res) => {
+    const { password, email} = req.body;
     await waitTime(2000);
 
-    if (password === 'ant.design' && username === 'admin@ufl.edu') {
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
-      });
-      access = 'admin';
-      return;
-    }
 
-    if (password === 'ant.design' && username === 'user') {
+    if (password === '123456' && email === '11@111.com') {
       res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'user',
+        status: 'success',
+        msg: 'Login successful!'
       });
       access = 'user';
       return;
     }
 
-    if (type === 'mobile') {
-      res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
-      });
-      access = 'admin';
-      return;
-    }
-
     res.send({
       status: 'error',
-      type,
-      currentAuthority: 'guest',
+      msg: 'email or password is wrong!'
     });
     access = 'guest';
   },
-  'POST /api/login/outLogin': (req, res) => {
+  'POST /api/logout': (req, res) => {
     access = '';
     res.send({
       data: {},
@@ -165,10 +96,13 @@ export default {
   },
   'POST /api/register': (req, res) => {
     res.send({
-      status: 'ok',
-      currentAuthority: 'user',
+      status: 'success',
       success: true,
     });
+    // res.send({
+    //   status: 'error',
+    //   msg: 'email already exists!'
+    // });
   },
   'GET /api/500': (req, res) => {
     res.status(500).send({

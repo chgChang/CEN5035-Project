@@ -6,10 +6,28 @@ export async function queryFakeList(params) {
   return res;
 }
 
-export function queryItemList(params) {
-  const res = request('/api/getItems', {
-    params,
+// export function queryItemList() {
+//   const res = request('/api/getItems', {
+//     method: 'GET',
+//   });
+//   console.log("items");
+//   console.log(res);
+//   return res;
+// }
+export async function queryItemList(options) {
+  return request('/api/getItems', {
+    method: 'GET',
+    ...(options || {}),
   });
-  console.log(res);
-  return res;
+}
+
+export async function add2Cart(body, options) {
+  return request('/api/addtoCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
 }

@@ -69,12 +69,13 @@ const StepResult = (props) => {
 };
 
 const StepForm = () => {
-  const [stepData, setStepData] = useState({
-    payAccount: "ant-design@alipay.com",
-    receiverAccount: "test@example.com",
-    receiverName: "Alex",
-    receiverMode: "alipay",
-  });
+  // const [stepData, setStepData] = useState({
+  //   shipAddress: "",
+  //   payAccount: "ant-design@alipay.com",
+  //   receiverAccount: "test@example.com",
+  //   receiverName: "Alex",
+  // });
+  const [stepData, setStepData] = useState('');
   const [current, setCurrent] = useState(0);
   const formRef = useRef();
   const states_hash = require("./states_hash.json");
@@ -101,7 +102,10 @@ const StepForm = () => {
           <StepsForm.StepForm
             title="Shipping address"
             onFinish={async (values) => {
-              setStepData(values);
+              setStepData(values.shipAddress);
+              console.log(values.shipAddress);
+              // setAddress(values["shipAddress"]);
+              console.log(values);
               console.log(stepData);
               return true;
             }}
@@ -188,11 +192,11 @@ const StepForm = () => {
           <StepsForm.StepForm
             formRef={formRef}
             title="Payment method"
-            initialValues={stepData}
-            onFinish={async (values) => {
-              setStepData(values);
-              return true;
-            }}
+            // initialValues={stepData}
+            // onFinish={async (values) => {
+            //   setStepData(values);
+            //   return true;
+            // }}
           >
             <ProFormText
               label="Card number"
@@ -234,10 +238,10 @@ const StepForm = () => {
           </StepsForm.StepForm>
 
           <StepsForm.StepForm
-            onFinish={async (values) => {
-              setStepData(values);
-              return true;
-            }}
+            // onFinish={async (values) => {
+            //   setStepData(values);
+            //   return true;
+            // }}
             title="Check your order"
           >
             <div className={styles.result}>
@@ -266,7 +270,7 @@ const StepForm = () => {
                   </List.Item>
                 )}
               />
-              <StepDescriptions stepData={stepData} bordered />
+              {/* <StepDescriptions stepData={stepData} bordered /> */}
               <Divider
                 style={{
                   margin: "24px 0",
@@ -281,7 +285,7 @@ const StepForm = () => {
                 formRef.current?.resetFields();
               }}
             >
-              <StepDescriptions stepData={stepData} />
+              {/* <StepDescriptions stepData={stepData} /> */}
             </StepResult>
           </StepsForm.StepForm>
         </StepsForm>

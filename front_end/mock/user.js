@@ -71,6 +71,7 @@ export default {
     const { password, email} = req.body;
     await waitTime(2000);
 
+
     if (password === '123456' && email === '11@111.com') {
       res.send({
         status: 'success',

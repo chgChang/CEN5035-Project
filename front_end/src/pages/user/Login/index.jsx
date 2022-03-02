@@ -13,11 +13,13 @@ import {
   ProFormText,
   ProForm,
   LoginForm,
+  Submit,
 } from "@ant-design/pro-form";
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from "umi";
 import Footer from "@/components/Footer";
 import { login, register } from "@/services/ant-design-pro/api";
 import { getFakeCaptcha } from "@/services/ant-design-pro/login";
+import { fakeRegister } from "./service";
 import styles from "./index.less";
 
 const LoginMessage = ({ content }) => (
@@ -219,6 +221,7 @@ const Login = () => {
 
   const checkConfirm = (_, value) => {
     const promise = Promise;
+    
     if (value && value !== form.getFieldValue("registerPassword")) {
       return promise.reject("Two passwords are not same!");
     }
@@ -474,6 +477,7 @@ const Login = () => {
                 defaultMessage="自动登录"
               />
             </ProFormCheckbox>
+            {/* <Submit>Submit</Submit> */}
           </div>
         </LoginForm>
       </div>

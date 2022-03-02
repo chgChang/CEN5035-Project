@@ -13,11 +13,13 @@ import {
   ProFormText,
   ProForm,
   LoginForm,
+  Submit,
 } from "@ant-design/pro-form";
 import { useIntl, history, FormattedMessage, SelectLang, useModel } from "umi";
 import Footer from "@/components/Footer";
 import { login } from "@/services/ant-design-pro/api";
 import { getFakeCaptcha } from "@/services/ant-design-pro/login";
+import { fakeRegister } from "./service";
 import styles from "./index.less";
 
 const LoginMessage = ({ content }) => (
@@ -60,29 +62,57 @@ const Login = () => {
       // 登录
       const msg = await login({ ...values, type });
 
-      if (msg.status === "ok") {
-        const defaultLoginSuccessMessage = intl.formatMessage({
-          id: "pages.login.success",
-          defaultMessage: "登录成功！",
-        });
-        message.success(defaultLoginSuccessMessage);
-        await fetchUserInfo();
-        /** 此方法会跳转到 redirect 参数所在的位置 */
-
-        if (!history) return;
-        const { query } = history.location;
-        const { redirect } = query;
-        history.push(redirect || "/");
-        return;
+      if(type == "account") {
+        if (msg.status === "ok") {
+          const defaultLoginSuccessMessage = intl.formatMessage({
+            id: "pages.login.success",
+            defaultMessage: "登录成功！",
+          });
+          message.success(defaultLoginSuccessMessage);
+          await fetchUserInfo();
+          /** 此方法会跳转到 redirect 参数所在的位置 */
+  
+          if (!history) return;
+          const { query } = history.location;
+          const { redirect } = query;
+          history.push(redirect || "/");
+          return;
+        }
+  
+        console.log(msg); // 如果失败去设置用户错误信息
+  
+        setUserLoginState(msg);
+      } else if(type == "register") {
+        // const { data, loading, run } = useRequest(fakeRegister, {
+        //   manual: true,
+        //   // onSuccess: (data, params) => {
+        //   //   if (data.status === "ok") {
+        //   //     message.success("注册成功！");
+        //   //     history.push({
+        //   //       pathname: "/user/register-result",
+        //   //       state: {
+        //   //         account: params.email,
+        //   //       },
+        //   //     });
+        //   //   }
+        //   // },
+        // });
+        const { run: postRun } = useRequest(
+          (values) => {
+      
+            return fakeRegister(values);
+          },
+          {
+            manual: true,
+            onSuccess: (result) => {
+              mutate(result);
+            },
+          }
+        );
       }
-
-      console.log(msg); // 如果失败去设置用户错误信息
-
-      setUserLoginState(msg);
     } catch (error) {
       const defaultLoginFailureMessage = intl.formatMessage({
-        id: "pages.login.failure",
-        defaultMessage: "登录失败，请重试！",
+        defaultMessage: "Operation failed, please retry",
       });
       message.error(defaultLoginFailureMessage);
     }
@@ -165,7 +195,6 @@ const Login = () => {
 
   const checkConfirm = (_, value) => {
     const promise = Promise;
-    console.log(value);
 
     if (value && value !== form.getFieldValue("registerPassword")) {
       return promise.reject("Two passwords are not same!");
@@ -391,6 +420,7 @@ const Login = () => {
                 defaultMessage="自动登录"
               />
             </ProFormCheckbox>
+            {/* <Submit>Submit</Submit> */}
           </div>
         </LoginForm>
       </div>

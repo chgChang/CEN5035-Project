@@ -1,0 +1,51 @@
+{
+  "status": "success",
+  "histories": [
+    {
+      "orderId": "4f53a224-dc46-49a0-a5a5-f06ce5647da1",
+      "totalPrice": 4315,
+      "orderDate": "2022-02-01T21:12:15-05:00",
+      "itemList": [
+        {
+          "itemId": 1,
+          "itemName": "Apple iPhone 13",
+          "price": 829,
+          "picUrl": "https://m.media-amazon.com/images/I/71GLMJ7TQiL.jpg",
+          "description": "6.1-inch Super Retina XDR display",
+          "quantity": 4
+        },
+        {
+          "itemId": 2,
+          "itemName": "Apple MacBook Air - 13.3 inches - 8 GB RAM",
+          "price": 999,
+          "picUrl": "https://m.media-amazon.com/images/I/71TPda7cwUL._AC_SL1500_.jpg",
+          "description": "All-Day Battery Life – Go longer than ever with up to 18 hours of battery life.",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "orderId": "6dd0a91d-b05a-41d9-9d12-7c7690c2d8fa",
+      "totalPrice": 1828,
+      "orderDate": "2022-02-01T22:38:07.283-05:00",
+      "itemList": [
+        {
+          "itemId": 1,
+          "itemName": "Apple iPhone 13",
+          "price": 829,
+          "picUrl": "https://m.media-amazon.com/images/I/71GLMJ7TQiL.jpg",
+          "description": "6.1-inch Super Retina XDR display",
+          "quantity": 1
+        },
+        {
+          "itemId": 2,
+          "itemName": "Apple MacBook Air - 13.3 inches - 8 GB RAM",
+          "price": 999,
+          "picUrl": "https://m.media-amazon.com/images/I/71TPda7cwUL._AC_SL1500_.jpg",
+          "description": "All-Day Battery Life – Go longer than ever with up to 18 hours of battery life.",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

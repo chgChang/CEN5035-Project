@@ -86,6 +86,35 @@ export default defineConfig({
       component: './checkout',
     },
     {
+      name: 'account',
+      icon: 'user',
+      path: '/account',
+      routes: [
+        {
+          path: '/account',
+          redirect: '/account/settings',
+        },
+        // {
+        //   name: 'center',
+        //   icon: 'smile',
+        //   path: '/account/center',
+        //   component: './account/center',
+        // },
+        {
+          name: 'settings',
+          icon: 'smile',
+          path: '/account/settings',
+          component: './account/settings',
+        },
+      ],
+    },
+    {
+      name: 'history',
+      path: '/history',
+      icon: 'shop',
+      component: './history/index',
+    },
+    {
       path: '/form',
       icon: 'form',
       name: 'form',
@@ -144,29 +173,29 @@ export default defineConfig({
         },
       ],
     },
-    // {
-    //   path: '/profile',
-    //   name: 'profile',
-    //   icon: 'profile',
-    //   routes: [
-    //     {
-    //       path: '/profile',
-    //       redirect: '/profile/basic',
-    //     },
-    //     {
-    //       name: 'basic',
-    //       icon: 'smile',
-    //       path: '/profile/basic',
-    //       component: './profile/basic',
-    //     },
-    //     {
-    //       name: 'advanced',
-    //       icon: 'smile',
-    //       path: '/profile/advanced',
-    //       component: './profile/advanced',
-    //     },
-    //   ],
-    // },
+    {
+      path: '/profile',
+      name: 'profile',
+      icon: 'profile',
+      routes: [
+        {
+          path: '/profile',
+          redirect: '/profile/basic',
+        },
+        {
+          name: 'basic',
+          icon: 'smile',
+          path: '/profile/basic',
+          component: './profile/basic',
+        },
+        {
+          name: 'advanced',
+          icon: 'smile',
+          path: '/profile/advanced',
+          component: './profile/advanced',
+        },
+      ],
+    },
     {
       name: 'result',
       icon: 'CheckCircleOutlined',
@@ -220,31 +249,8 @@ export default defineConfig({
       ],
     },
     {
-      name: 'account',
-      icon: 'user',
-      path: '/account',
-      routes: [
-        {
-          path: '/account',
-          redirect: '/account/center',
-        },
-        {
-          name: 'center',
-          icon: 'smile',
-          path: '/account/center',
-          component: './account/center',
-        },
-        {
-          name: 'settings',
-          icon: 'smile',
-          path: '/account/settings',
-          component: './account/settings',
-        },
-      ],
-    },
-    {
       path: '/',
-      redirect: '/list/card-list',
+      redirect: '/welcome',
     },
     {
       component: '404',
@@ -259,7 +265,13 @@ export default defineConfig({
   esbuild: {},
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  // proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8080',
+      changeOrigin: true,
+    }
+  },
   manifest: {
     basePath: '/',
   },

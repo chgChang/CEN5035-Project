@@ -12,16 +12,32 @@ export async function currentUser(options) {
 }
 /** 退出登录接口 POST /api/login/outLogin */
 
-export async function outLogin(options) {
-  return request('/api/login/outLogin', {
+export async function outLogin(body, options) {
+  return request('/api/logout', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
     ...(options || {}),
   });
 }
 /** 登录接口 POST /api/login/account */
 
 export async function login(body, options) {
-  return request('/api/login/account', {
+  return request('/api/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+/** 登录接口 POST /api/login/account */
+
+export async function register(body, options) {
+  return request('/api/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -82,8 +82,8 @@ const Search = (props) => {
           }}
         >
           <Input.Search
-            placeholder="请输入"
-            enterButton="搜索"
+            placeholder="Please input"
+            enterButton="Search"
             size="large"
             onSearch={handleFormSubmit}
             style={{

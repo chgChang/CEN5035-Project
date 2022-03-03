@@ -1,7 +1,7 @@
 import { AudioTwoTone } from '@ant-design/icons';
 import { Card, Col, Form, List, Row, Select, Typography, Button, message } from 'antd';
 import moment from 'moment';
-import { useRequest } from 'umi';
+import useRequest from '@ahooksjs/use-request';
 import AvatarList from './components/AvatarList';
 import { queryItemList, add2Cart } from './service';
 import styles from './style.less';
@@ -21,11 +21,7 @@ const Projects = () => {
       message.error(res.msg);
     } 
   };
-  const temp = useRequest(queryItemList);
-  console.log(temp);
   const { data, loading, run } = useRequest(queryItemList);
-  // console.log(res);
-  console.log(data);
   const list = data?.list || [];
   console.log(list);
   const cardList = list && (

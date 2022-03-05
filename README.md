@@ -1,5 +1,6 @@
 # CEN5035-Project Software Engineering
 
+## Sprint 2 
 ## How to run frontend:
 
 ### Compile the code
@@ -24,6 +25,9 @@ npm install cypress --save-dev
 node_modules/.bin/cypress open
 ```
 
+1. front end integrate with back end successfully
+2. use cypress to test the login logout register search and so on
+
 ## How to run backend:
 
 ### Download the file in the release
@@ -44,6 +48,7 @@ node_modules/.bin/cypress open
   ```shell
   start main.exe
   ```
+  
 
 
 ## Sprint 1 video

@@ -5,7 +5,6 @@ import {
   ShareAltOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Col, Dropdown, Form, List, Menu, Row, Select, Tooltip } from 'antd';
-import numeral from 'numeral';
 import React from 'react';
 import { useRequest } from 'umi';
 import StandardFormRow from './components/StandardFormRow';
@@ -195,7 +194,6 @@ export const Applications = () => {
               <div className={styles.cardItemContent}>
                 <CardInfo
                   activeUser={formatWan(item.activeUser)}
-                  newUser={numeral(item.newUser).format('0,0')}
                 />
               </div>
             </Card>

@@ -44,17 +44,7 @@ export default defineConfig({
         },
         {
           path: '/user',
-          redirect: '/user/login',
-        },
-        {
-          name: 'register',
-          icon: 'smile',
-          path: '/user/register',
-          component: './user/register',
-        },
-        {
-          path: '/user/register-result',
-          component: './user/register-result',
+          redirect: '/user/welcome',
         },
         {
           component: '404',

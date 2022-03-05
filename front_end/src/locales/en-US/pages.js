@@ -1,5 +1,9 @@
 export default {
   'pages.layouts.userLayout.title': 'Gator Amazon is the cutest web application for shopping',
+  'pages.register.failure': 'Register failed, please try again!',
+  'pages.register.success': 'Register successful!',
+  'pages.register.username.placeholder': 'Username',
+  'pages.register.username.required': 'Please input your username!',
   'pages.login.accountLogin.tab': 'Account Login',
   'pages.login.accountLogin.errorMessage': 'Incorrect username/password(admin/ant.design)',
   'pages.login.failure': 'Login failed, please try again!',
@@ -19,7 +23,7 @@ export default {
   'pages.getCaptchaSecondText': 'sec(s)',
   'pages.login.rememberMe': 'Remember me',
   'pages.login.forgotPassword': 'Forgot Password ?',
-  'pages.login.submit': 'Login',
+  'pages.login.submit': 'Submit',
   'pages.login.loginWith': 'Login with :',
   'pages.login.registerAccount': 'Register Account',
   'pages.welcome.advancedComponent': 'Advanced Component',

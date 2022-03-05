@@ -1,9 +1,9 @@
 import { AudioTwoTone } from '@ant-design/icons';
-import { Card, Col, Form, List, Row, Select, Typography, Button } from 'antd';
+import { Card, Col, Form, List, Row, Select, Typography, Button, message } from 'antd';
 import moment from 'moment';
 import { useRequest } from 'umi';
 import AvatarList from './components/AvatarList';
-import { queryItemList, queryFakeList } from './service';
+import { queryItemList, add2Cart } from './service';
 import styles from './style.less';
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -12,11 +12,19 @@ const { Paragraph } = Typography;
 const getKey = (id, index) => `${id}-${index}`;
 
 const Projects = () => {
-  const { data, loading, run } = useRequest((values) => {
-    return queryItemList({
-      count: 8,
-    });
-  });
+  const addCart = async (id) => {
+    const res = await add2Cart({itemid: id, quantity: 1});
+    if (res.status === "success") {
+      message.success(res.msg);
+      return;
+    } else {
+      message.error(res.msg);
+    } 
+  };
+  const temp = useRequest(queryItemList);
+  console.log(temp);
+  const { data, loading, run } = useRequest(queryItemList);
+  // console.log(res);
   console.log(data);
   const list = data?.list || [];
   console.log(list);
@@ -43,41 +51,29 @@ const Projects = () => {
             cover={
               <img
                 style={{ margin: '0 auto', maxHeight: 200, width: 'auto', maxWidth: '100%' }}
-                alt={item.itemName}
-                src={item.picurl}
+                alt={item.name}
+                src={item.pic_url}
               />
             }
           >
             <Card.Meta
-              title={<a>{item.itemName}</a>}
+              title={<a>{item.name}</a>}
               description={
                 <Paragraph
                   className={styles.item}
                   ellipsis={{
                     rows: 2,
                   }}
-                >
+                >   
                   {item.description}
                 </Paragraph>
               }
             />
 
             <div className={styles.cardItemContent}>
-              <Button shape="round" className={styles.addcartbtn}>
+              <Button shape="round" className={styles.addcartbtn} onClick = {() => addCart(item.id)}>
                 Add to Cart
               </Button>
-              {/* <span>{moment(item.updatedAt).fromNow()}</span>
-              <div className={styles.avatarList}>
-                <AvatarList size="small">
-                  {item.members.map((member, i) => (
-                    <AvatarList.Item
-                      key={getKey(item.id, i)}
-                      src={member.avatar}
-                      tips={member.name}
-                    />
-                  ))}
-                </AvatarList>
-              </div> */}
             </div>
           </Card>
         </List.Item>
@@ -94,6 +90,7 @@ const Projects = () => {
       },
     },
   };
+  
   return (
     <div className={styles.coverCardList}>
       <div className={styles.cardList}>{cardList}</div>

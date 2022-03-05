@@ -23,7 +23,7 @@ export default {
   'menu.list': 'List',
   'menu.list.table-list': 'Search Table',
   'menu.cart-list': 'Cart List',
-  'menu.list.card-list': 'Card List',
+  'menu.order-history': 'Order History',
   'menu.list.search-list': 'Search List',
   'menu.list.search-list.articles': 'Search List(articles)',
   'menu.list.search-list.projects': 'Search List(projects)',

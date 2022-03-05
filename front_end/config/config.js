@@ -44,13 +44,7 @@ export default defineConfig({
         },
         {
           path: '/user',
-          redirect: '/user/login',
-        },
-        {
-          name: 'register',
-          icon: 'smile',
-          path: '/user/register',
-          component: './user/register',
+          redirect: '/user/welcome',
         },
         {
           component: '404',
@@ -86,64 +80,70 @@ export default defineConfig({
       component: './checkout',
     },
     {
-      path: '/form',
-      // icon: 'form',
-      // name: 'form',
-      routes: [
-        {
-          path: '/form',
-          redirect: '/form/step-form',
-        },
-        {
-          name: 'step-form',
-          icon: 'smile',
-          path: '/form/step-form',
-          component: './form/step-form',
-        },
-        {
-          name: 'advanced-form',
-          icon: 'smile',
-          path: '/form/advanced-form',
-          component: './form/advanced-form',
-        },
-      ],
+      name: 'order-history',
+      icon: 'history',
+      path: '/history',
+      component: './history',
     },
-    {
-      path: '/list',
-      // icon: 'table',
-      // name: 'list',
-      routes: [
-        {
-          path: '/list/search',
-          name: 'search-list',
-          component: './list/search',
-          routes: [
-            {
-              name: 'projects',
-              icon: 'smile',
-              path: '/list/search/projects',
-              component: './list/search/projects',
-            },
-            {
-              name: 'applications',
-              icon: 'smile',
-              path: '/list/search/applications',
-              component: './list/search/applications',
-            },
-          ],
-        },
-        {
-          path: '/list',
-          redirect: '/list/card-list',
-        },
-        {
-          name: 'card-list',
-          icon: 'smile',
-          path: '/list/card-list',
-          component: './list/card-list',
-        },
-      ],
-    },
+    // {
+    //   path: '/form',
+    //   icon: 'form',
+    //   name: 'form',
+    //   routes: [
+    //     {
+    //       path: '/form',
+    //       redirect: '/form/step-form',
+    //     },
+    //     {
+    //       name: 'step-form',
+    //       icon: 'smile',
+    //       path: '/form/step-form',
+    //       component: './form/step-form',
+    //     },
+    //     {
+    //       name: 'advanced-form',
+    //       icon: 'smile',
+    //       path: '/form/advanced-form',
+    //       component: './form/advanced-form',
+    //     },
+    //   ],
+    // },
+    // {
+    //   path: '/list',
+    //   icon: 'table',
+    //   name: 'list',
+    //   routes: [
+    //     {
+    //       path: '/list/search',
+    //       name: 'search-list',
+    //       component: './list/search',
+    //       routes: [
+    //         {
+    //           name: 'projects',
+    //           icon: 'smile',
+    //           path: '/list/search/projects',
+    //           component: './list/search/projects',
+    //         },
+    //         {
+    //           name: 'applications',
+    //           icon: 'smile',
+    //           path: '/list/search/applications',
+    //           component: './list/search/applications',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       path: '/list',
+    //       redirect: '/list/card-list',
+    //     },
+    //     {
+    //       name: 'card-list',
+    //       icon: 'smile',
+    //       path: '/list/card-list',
+    //       component: './list/card-list',
+    //     },
+    //   ],
+    // },
     // {
     //   path: '/profile',
     //   name: 'profile',
@@ -167,58 +167,58 @@ export default defineConfig({
     //     },
     //   ],
     // },
-    {
-      // name: 'result',
-      // icon: 'CheckCircleOutlined',
-      path: '/result',
-      routes: [
-        {
-          path: '/result',
-          redirect: '/result/success',
-        },
-        {
-          name: 'success',
-          icon: 'smile',
-          path: '/result/success',
-          component: './result/success',
-        },
-        {
-          name: 'fail',
-          icon: 'smile',
-          path: '/result/fail',
-          component: './result/fail',
-        },
-      ],
-    },
-    {
-      // name: 'exception',
-      // icon: 'warning',
-      path: '/exception',
-      routes: [
-        {
-          path: '/exception',
-          redirect: '/exception/403',
-        },
-        {
-          name: '403',
-          icon: 'smile',
-          path: '/exception/403',
-          component: './exception/403',
-        },
-        {
-          name: '404',
-          icon: 'smile',
-          path: '/exception/404',
-          component: './exception/404',
-        },
-        {
-          name: '500',
-          icon: 'smile',
-          path: '/exception/500',
-          component: './exception/500',
-        },
-      ],
-    },
+    // {
+    //   name: 'result',
+    //   icon: 'CheckCircleOutlined',
+    //   path: '/result',
+    //   routes: [
+    //     {
+    //       path: '/result',
+    //       redirect: '/result/success',
+    //     },
+    //     {
+    //       name: 'success',
+    //       icon: 'smile',
+    //       path: '/result/success',
+    //       component: './result/success',
+    //     },
+    //     {
+    //       name: 'fail',
+    //       icon: 'smile',
+    //       path: '/result/fail',
+    //       component: './result/fail',
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: 'exception',
+    //   icon: 'warning',
+    //   path: '/exception',
+    //   routes: [
+    //     {
+    //       path: '/exception',
+    //       redirect: '/exception/403',
+    //     },
+    //     {
+    //       name: '403',
+    //       icon: 'smile',
+    //       path: '/exception/403',
+    //       component: './exception/403',
+    //     },
+    //     {
+    //       name: '404',
+    //       icon: 'smile',
+    //       path: '/exception/404',
+    //       component: './exception/404',
+    //     },
+    //     {
+    //       name: '500',
+    //       icon: 'smile',
+    //       path: '/exception/500',
+    //       component: './exception/500',
+    //     },
+    //   ],
+    // },
     {
       name: 'account',
       icon: 'user',
@@ -242,13 +242,13 @@ export default defineConfig({
         },
       ],
     },
-    {
-      path: '/',
-      redirect: '/list/card-list',
-    },
-    {
-      component: '404',
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/list/card-list',
+    // },
+    // {
+    //   component: '404',
+    // },
   ],
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
@@ -259,7 +259,13 @@ export default defineConfig({
   esbuild: {},
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  // proxy: proxy[REACT_APP_ENV || 'dev'],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8080',
+      changeOrigin: true,
+    }
+  },
   manifest: {
     basePath: '/',
   },

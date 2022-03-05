@@ -10,8 +10,10 @@ import { outLogin } from '@/services/ant-design-pro/api';
 /**
  * 退出登录，并且将当前的 url 保存
  */
-const loginOut = async () => {
-  await outLogin();
+const loginOut = async (curemail) => {
+  await outLogin({
+    email: curemail,
+  });
   const { query = {}, pathname } = history.location;
   const { redirect } = query; // Note: There may be security issues, please note
 
@@ -27,13 +29,14 @@ const loginOut = async () => {
 
 const AvatarDropdown = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const { currentUser } = initialState;
   const onMenuClick = useCallback(
     (event) => {
       const { key } = event;
 
       if (key === 'logout') {
         setInitialState((s) => ({ ...s, currentUser: undefined }));
-        loginOut();
+        loginOut(currentUser.email);
         return;
       }
 
@@ -57,9 +60,9 @@ const AvatarDropdown = ({ menu }) => {
     return loading;
   }
 
-  const { currentUser } = initialState;
+  // const { currentUser } = initialState;
 
-  if (!currentUser || !currentUser.name) {
+  if (!currentUser || !currentUser.username) {
     return loading;
   }
 
@@ -88,8 +91,8 @@ const AvatarDropdown = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+        <Avatar size="small" className={styles.avatar} src={'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'} alt="avatar" />
+        <span className={`${styles.name} anticon`}>{currentUser.username}</span>
       </span>
     </HeaderDropdown>
   );

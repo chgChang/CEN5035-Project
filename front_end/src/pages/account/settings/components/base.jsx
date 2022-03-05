@@ -27,7 +27,7 @@ const validatorPhone = (rule, value, callback) => {
 
 const AvatarView = ({ avatar }) => (
   <>
-    <div className={styles.avatar_title}>头像</div>
+    <div className={styles.avatar_title}>Image</div>
     <div className={styles.avatar}>
       <img src={avatar} alt="avatar" />
     </div>
@@ -35,7 +35,7 @@ const AvatarView = ({ avatar }) => (
       <div className={styles.button_view}>
         <Button>
           <UploadOutlined />
-          更换头像
+          Update Image
         </Button>
       </div>
     </Upload>
@@ -61,7 +61,7 @@ const BaseView = () => {
   };
 
   const handleFinish = async () => {
-    message.success('更新基本信息成功');
+    message.success('Update Successfully!');
   };
 
   return (
@@ -79,7 +79,7 @@ const BaseView = () => {
                   },
                 },
                 submitButtonProps: {
-                  children: '更新基本信息',
+                  children: 'Update',
                 },
               }}
               initialValues={{ ...currentUser, phone: currentUser?.phone.split('-') }}
@@ -88,60 +88,60 @@ const BaseView = () => {
               <ProFormText
                 width="md"
                 name="email"
-                label="邮箱"
+                label="email"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的邮箱!',
+                    message: 'Please input your email address!',
                   },
                 ]}
               />
               <ProFormText
                 width="md"
                 name="name"
-                label="昵称"
+                label="name"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的昵称!',
+                    message: 'please input your name!',
                   },
                 ]}
               />
               <ProFormTextArea
                 name="profile"
-                label="个人简介"
+                label="Profile"
                 rules={[
                   {
                     required: true,
-                    message: '请输入个人简介!',
+                    message: 'Please input your Profile!',
                   },
                 ]}
-                placeholder="个人简介"
+                placeholder="Profile"
               />
               <ProFormSelect
                 width="sm"
                 name="country"
-                label="国家/地区"
+                label="country"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的国家或地区!',
+                    message: 'Please input your country!',
                   },
                 ]}
                 options={[
                   {
-                    label: '中国',
+                    label: 'China',
                     value: 'China',
                   },
                 ]}
               />
 
-              <ProForm.Group title="所在省市" size={8}>
+              <ProForm.Group title="State" size={8}>
                 <ProFormSelect
                   rules={[
                     {
                       required: true,
-                      message: '请输入您的所在省!',
+                      message: 'Please input the state!',
                     },
                   ]}
                   width="sm"
@@ -173,7 +173,7 @@ const BaseView = () => {
                         rules={[
                           {
                             required: true,
-                            message: '请输入您的所在城市!',
+                            message: 'Please input your city!',
                           },
                         ]}
                         disabled={!province}
@@ -200,21 +200,21 @@ const BaseView = () => {
               <ProFormText
                 width="md"
                 name="address"
-                label="街道地址"
+                label="address"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的街道地址!',
+                    message: 'Please input your address!',
                   },
                 ]}
               />
               <ProFormFieldSet
                 name="phone"
-                label="联系电话"
+                label="phone"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的联系电话!',
+                    message: 'Please input your phone!',
                   },
                   {
                     validator: validatorPhone,

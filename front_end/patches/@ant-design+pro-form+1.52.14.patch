@@ -1,0 +1,37 @@
+diff --git a/node_modules/@ant-design/pro-form/es/layouts/LoginForm/index.js b/node_modules/@ant-design/pro-form/es/layouts/LoginForm/index.js
+index 23475bb..b6cf53a 100644
+--- a/node_modules/@ant-design/pro-form/es/layouts/LoginForm/index.js
++++ b/node_modules/@ant-design/pro-form/es/layouts/LoginForm/index.js
+@@ -22,7 +22,7 @@ function LoginForm(props) {
+ 
+   var submitter = _objectSpread({
+     searchConfig: {
+-      submitText: intl.getMessage('loginForm.submitText', '登录')
++      submitText: intl.getMessage('Submit')
+     },
+     render: function render(_, dom) {
+       return dom.pop();
+diff --git a/node_modules/@ant-design/pro-form/lib/layouts/LoginForm/index.js b/node_modules/@ant-design/pro-form/lib/layouts/LoginForm/index.js
+index 601fdb7..e89c304 100644
+--- a/node_modules/@ant-design/pro-form/lib/layouts/LoginForm/index.js
++++ b/node_modules/@ant-design/pro-form/lib/layouts/LoginForm/index.js
+@@ -37,16 +37,17 @@ function LoginForm(props) {
+       actions = props.actions,
+       children = props.children,
+       proFormProps = (0, _objectWithoutProperties2.default)(props, _excluded);
++      // buttontext = props.buttontext;
+   var intl = (0, _proProvider.useIntl)();
+   var submitter = (0, _objectSpread2.default)({
+     searchConfig: {
+-      submitText: intl.getMessage('loginForm.submitText', '登录')
++      submitText: "Submit"
+     },
+     render: function render(_, dom) {
+       return dom.pop();
+     },
+     submitButtonProps: {
+-      size: 'large',
++      size: 'small',
+       style: {
+         width: '100%'
+       }

@@ -10,10 +10,10 @@ const { Item } = Menu;
 
 const Settings = () => {
   const menuMap = {
-    base: '基本设置',
-    security: '安全设置',
-    binding: '账号绑定',
-    notification: '新消息通知',
+    base: 'Basic Setting',
+    // security: '安全设置',
+    // binding: '账号绑定',
+    // notification: '新消息通知',
   };
   const [initConfig, setInitConfig] = useState({
     mode: 'inline',

@@ -212,7 +212,7 @@ const Center = () => {
             {!loading && currentUser && (
               <div>
                 <div className={styles.avatarHolder}>
-                  <img alt="" src={currentUser.avatar} />
+                  <img alt="" src={'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'} />
                   <div className={styles.name}>{currentUser.name}</div>
                   <div>{currentUser?.signature}</div>
                 </div>

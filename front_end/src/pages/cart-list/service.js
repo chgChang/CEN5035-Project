@@ -4,6 +4,7 @@ export async function queryFakeList(params) {
     params,
   });
 }
+
 export async function removeFakeList(params) {
   return request("/api/post_fake_list", {
     method: "POST",
@@ -22,3 +23,35 @@ export async function updateFakeList(params) {
     data: { ...params, method: "update" },
   });
 }
+
+
+export async function queryCartList(options) {
+  const temp = request('/api/getCartItems', {
+    method: 'GET',
+    ...(options || {}),
+  });
+  return temp;
+}
+
+export async function updateCart(body, options) {
+  return request('/api/updateCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
+export async function deleteCartByItemId(body, options) {
+  return request('/api/deleteCartByItemId', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+

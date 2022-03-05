@@ -64,84 +64,85 @@ const getUnreadData = (noticeData) => {
 };
 
 const NoticeIconView = () => {
-  const { initialState } = useModel('@@initialState');
-  const { currentUser } = initialState || {};
-  const [notices, setNotices] = useState([]);
-  const { data } = useRequest(getNotices);
-  useEffect(() => {
-    setNotices(data || []);
-  }, [data]);
-  const noticeData = getNoticeData(notices);
-  const unreadMsg = getUnreadData(noticeData || {});
+  // const { initialState } = useModel('@@initialState');
+  // const { currentUser } = initialState || {};
+  // const [notices, setNotices] = useState([]);
+  // const { data } = useRequest(getNotices);
+  // useEffect(() => {
+  //   setNotices(data || []);
+  // }, [data]);
+  // const noticeData = getNoticeData(notices);
+  // const unreadMsg = getUnreadData(noticeData || {});
 
-  const changeReadState = (id) => {
-    setNotices(
-      notices.map((item) => {
-        const notice = { ...item };
+  // const changeReadState = (id) => {
+  //   setNotices(
+  //     notices.map((item) => {
+  //       const notice = { ...item };
 
-        if (notice.id === id) {
-          notice.read = true;
-        }
+  //       if (notice.id === id) {
+  //         notice.read = true;
+  //       }
 
-        return notice;
-      }),
-    );
-  };
+  //       return notice;
+  //     }),
+  //   );
+  // };
 
-  const clearReadState = (title, key) => {
-    setNotices(
-      notices.map((item) => {
-        const notice = { ...item };
+  // const clearReadState = (title, key) => {
+  //   setNotices(
+  //     notices.map((item) => {
+  //       const notice = { ...item };
 
-        if (notice.type === key) {
-          notice.read = true;
-        }
+  //       if (notice.type === key) {
+  //         notice.read = true;
+  //       }
 
-        return notice;
-      }),
-    );
-    message.success(`${'清空了'} ${title}`);
-  };
+  //       return notice;
+  //     }),
+  //   );
+  //   message.success(`${'清空了'} ${title}`);
+  // };
 
   return (
-    <NoticeIcon
-      className={styles.action}
-      count={currentUser && currentUser.unreadCount}
-      onItemClick={(item) => {
-        changeReadState(item.id);
-      }}
-      onClear={(title, key) => clearReadState(title, key)}
-      loading={false}
-      clearText="清空"
-      viewMoreText="查看更多"
-      onViewMore={() => message.info('Click on view more')}
-      clearClose
-    >
-      <NoticeIcon.Tab
-        tabKey="notification"
-        count={unreadMsg.notification}
-        list={noticeData.notification}
-        title="通知"
-        emptyText="你已查看所有通知"
-        showViewMore
-      />
-      <NoticeIcon.Tab
-        tabKey="message"
-        count={unreadMsg.message}
-        list={noticeData.message}
-        title="消息"
-        emptyText="您已读完所有消息"
-        showViewMore
-      />
-      <NoticeIcon.Tab
-        tabKey="event"
-        title="待办"
-        emptyText="你已完成所有待办"
-        count={unreadMsg.event}
-        list={noticeData.event}
-        showViewMore
-      />
-    </NoticeIcon>
+    // <NoticeIcon
+    //   className={styles.action}
+    //   count={currentUser && currentUser.unreadCount}
+    //   onItemClick={(item) => {
+    //     changeReadState(item.id);
+    //   }}
+    //   onClear={(title, key) => clearReadState(title, key)}
+    //   loading={false}
+    //   clearText="清空"
+    //   viewMoreText="查看更多"
+    //   onViewMore={() => message.info('Click on view more')}
+    //   clearClose
+    // >
+    //   <NoticeIcon.Tab
+    //     tabKey="notification"
+    //     count={unreadMsg.notification}
+    //     list={noticeData.notification}
+    //     title="通知"
+    //     emptyText="你已查看所有通知"
+    //     showViewMore
+    //   />
+    //   <NoticeIcon.Tab
+    //     tabKey="message"
+    //     count={unreadMsg.message}
+    //     list={noticeData.message}
+    //     title="消息"
+    //     emptyText="您已读完所有消息"
+    //     showViewMore
+    //   />
+    //   <NoticeIcon.Tab
+    //     tabKey="event"
+    //     title="待办"
+    //     emptyText="你已完成所有待办"
+    //     count={unreadMsg.event}
+    //     list={noticeData.event}
+    //     showViewMore
+    //   />
+    // </NoticeIcon>
+    <div></div>
   );
 };
 

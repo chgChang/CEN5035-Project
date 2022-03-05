@@ -67,6 +67,10 @@ export default defineConfig({
           path: '/welcome/Items',
           component: './welcome/projects',
         },
+        {
+          path: '/welcome/search/:keywords',
+          component: './welcome/search',
+        },
       ],
     },
     {
@@ -108,42 +112,48 @@ export default defineConfig({
     //     },
     //   ],
     // },
-    // {
-    //   path: '/list',
-    //   icon: 'table',
-    //   name: 'list',
-    //   routes: [
-    //     {
-    //       path: '/list/search',
-    //       name: 'search-list',
-    //       component: './list/search',
-    //       routes: [
-    //         {
-    //           name: 'projects',
-    //           icon: 'smile',
-    //           path: '/list/search/projects',
-    //           component: './list/search/projects',
-    //         },
-    //         {
-    //           name: 'applications',
-    //           icon: 'smile',
-    //           path: '/list/search/applications',
-    //           component: './list/search/applications',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       path: '/list',
-    //       redirect: '/list/card-list',
-    //     },
-    //     {
-    //       name: 'card-list',
-    //       icon: 'smile',
-    //       path: '/list/card-list',
-    //       component: './list/card-list',
-    //     },
-    //   ],
-    // },
+    {
+      path: '/list',
+      icon: 'table',
+      name: 'list',
+      routes: [
+        {
+          path: '/list/search',
+          name: 'search-list',
+          component: './list/search',
+          routes: [
+            {
+              name: 'projects',
+              icon: 'smile',
+              path: '/list/search/projects',
+              component: './list/search/projects',
+            },
+            {
+              name: 'applications',
+              icon: 'smile',
+              path: '/list/search/applications',
+              component: './list/search/applications',
+            },
+          ],
+        },
+        {
+          path: '/list',
+          redirect: '/list/card-list',
+        },
+        {
+          name: 'card-list',
+          icon: 'smile',
+          path: '/list/card-list',
+          component: './list/card-list',
+        },
+        {
+          name: 'basic-list',
+          icon: 'smile',
+          path: '/list/basic-list',
+          component: './list/basic-list',
+        },
+      ],
+    },
     // {
     //   path: '/profile',
     //   name: 'profile',
@@ -242,10 +252,10 @@ export default defineConfig({
         },
       ],
     },
-    // {
-    //   path: '/',
-    //   redirect: '/list/card-list',
-    // },
+    {
+      path: '/',
+      redirect: '/welcome',
+    },
     // {
     //   component: '404',
     // },

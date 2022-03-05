@@ -1,11 +1,11 @@
 import { AudioTwoTone } from '@ant-design/icons';
 import { Card, Col, Form, List, Row, Select, Typography, Button, message } from 'antd';
+import { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import useRequest from '@ahooksjs/use-request';
 import AvatarList from './components/AvatarList';
-import { queryItemList, add2Cart } from './service';
+import { searchItem, add2Cart } from './service';
 import styles from './style.less';
-import { useState } from 'react';
 const { Option } = Select;
 const FormItem = Form.Item;
 const { Paragraph } = Typography;
@@ -23,9 +23,12 @@ const Projects = (props) => {
       message.error(res.msg);
     } 
   };
-
-  const { data, loading, run } = useRequest(queryItemList);
+  const { data, loading, run } = useRequest(() => {
+    console.log("loading" + keywords);
+    return searchItem(keywords)
+  });
   const list = data?.list || [];
+  console.log(list);
   const cardList = list && (
     <List
       rowKey="id"

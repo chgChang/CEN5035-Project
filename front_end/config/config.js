@@ -77,6 +77,10 @@ export default defineConfig({
           path: '/welcome/Items',
           component: './welcome/projects',
         },
+        {
+          path: '/welcome/search/:keywords',
+          component: './welcome/search',
+        },
       ],
     },
     {
@@ -151,6 +155,12 @@ export default defineConfig({
           icon: 'smile',
           path: '/list/card-list',
           component: './list/card-list',
+        },
+        {
+          name: 'basic-list',
+          icon: 'smile',
+          path: '/list/basic-list',
+          component: './list/basic-list',
         },
       ],
     },

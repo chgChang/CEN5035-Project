@@ -7,16 +7,20 @@ const tabList = [
     tab: 'All',
   },
   {
-    key: 'Clothing/Shoes',
-    tab: 'Clothing/Shoes',
+    key: 'Apple',
+    tab: 'Apple',
+  },
+  {
+    key: 'Clothing',
+    tab: 'Clothing',
+  },
+  {
+    key: 'Shoes',
+    tab: 'Shoes',
   },
   {
     key: 'Books',
     tab: 'Books',
-  },
-  {
-    key: 'Movie/Music/Games',
-    tab: 'Movie/Music/Games',
   },
   {
     key: 'Electronics',
@@ -24,41 +28,22 @@ const tabList = [
   },
 ];
 
+const searchval = "";
+
 const Search = (props) => {
   const handleTabChange = (key) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
-    history.push(`${url}/Items`);
-    switch (key) {
-      case 'Clothing/Shoes':
-        // history.push(`${url}/Items`);
-        break;
-
-      case 'All':
-        // history.push(`${url}/projects`);
-        break;
-
-      case 'Books':
-        // history.push(`${url}/applications`);
-        break;
-
-      case 'Movie/Music/Games':
-        // history.push(`${url}/applications`);
-        break;
-
-      case 'Electronics':
-        // history.push(`${url}/applications`);
-        break;
-
-      default:
-        break;
-    }
+    window.location.replace(`${url}/search/${key}`);
   };
 
   const handleFormSubmit = (value) => {
     // search function
-
     console.log(value);
+    const { match } = props;
+    const url = match.url === '/' ? '' : match.url;
+    window.location.replace(`${url}/search/${value}`);
+    // history.push(`${url}/search/${value}`);
   };
 
   const getTabKey = () => {

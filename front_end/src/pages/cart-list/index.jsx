@@ -17,15 +17,19 @@ import {
   Row,
 } from "antd";
 import { PageContainer } from "@ant-design/pro-layout";
-import { useRequest } from "umi";
+import useRequest from '@ahooksjs/use-request';
 import OperationModal from "./components/OperationModal";
 import {
   addFakeList,
   queryFakeList,
   removeFakeList,
   updateFakeList,
+  queryCartList,
+  deleteCartByItemId,
+  updateCart,
 } from "./service";
 import styles from "./style.less";
+import { method } from "lodash";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
@@ -34,39 +38,30 @@ export const BasicList = () => {
   const [done, setDone] = useState(false);
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
-  const {
-    data: listData,
-    loading,
-    mutate,
-  } = useRequest(() => {
-    return queryFakeList({
-      count: 50,
-    });
-  });
+  const { data, loading, mutate } = useRequest(queryCartList);
+
   const { run: postRun } = useRequest(
     (method, params) => {
       if (method === "remove") {
-        return removeFakeList(params);
+        console.log("remove");
+        return deleteCartByItemId(params);
       }
-
       if (method === "update") {
         return updateFakeList(params);
       }
-
-      return addFakeList(params);
     },
     {
       manual: true,
       onSuccess: (result) => {
-        mutate(result);
+        window.location.reload();
+  
+        // console.log(data);
+        // mutate(data);
       },
     }
   );
-  // const list = listData?.list || [];
-
-  const lists = require("./res_cartItem.json");
-  const list = lists["cart"]["itemList"];
-
+  // console.log(data);
+  const list = data?.cart.itemList || [];
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
@@ -79,22 +74,20 @@ export const BasicList = () => {
   };
 
   const deleteItem = (id) => {
+    console.log(id);
     postRun("remove", {
-      id,
+      itemId: id,
     });
   };
 
-  const editAndDelete = (key, currentItem) => {
-    if (key === "edit") showEditModal(currentItem);
-    else if (key === "delete") {
-      Modal.confirm({
-        title: "Delete item",
-        content: "Are you sure to delete this item？",
-        okText: "Ok",
-        cancelText: "Cancel",
-        onOk: () => deleteItem(currentItem.id),
-      });
-    }
+  const doDelete = (item) => {
+    Modal.confirm({
+      title: "Delete item",
+      content: "Are you sure to delete this item？",
+      okText: "Ok",
+      cancelText: "Cancel",
+      onOk: () => deleteItem(item.itemId),
+    });
   };
 
   function handleClick() {
@@ -113,8 +106,8 @@ export const BasicList = () => {
   const MoreBtn = ({ item }) => (
     <Dropdown
       overlay={
-        <Menu onClick={({ key }) => editAndDelete(key, item)}>
-          <Menu.Item key="edit">xxx</Menu.Item>
+        <Menu onClick={() => doDelete(item)}>
+          {/* <Menu.Item key="edit">xxx</Menu.Item> */}
           <Menu.Item key="delete">Delete</Menu.Item>
         </Menu>
       }
@@ -135,6 +128,16 @@ export const BasicList = () => {
     setDone(true);
     const method = values?.id ? "update" : "add";
     postRun(method, values);
+  };
+
+  const updateItem = (id, value) => {
+    console.log("id" + id);
+    console.log("quantity" + value);
+    const info = {
+      itemId: id,
+      quantity: value,
+    }
+    updateCart(info);
   };
 
   return (
@@ -166,7 +169,7 @@ export const BasicList = () => {
                       key="edit"
                       onClick={(e) => {
                         e.preventDefault();
-                        showEditModal(item);
+                        //showEditModal(item);
                       }}
                     >
                       Details
@@ -181,7 +184,7 @@ export const BasicList = () => {
                     title={<a href={item.href}>{item.itemName}</a>}
                     description={item.description}
                   />
-                  <InputNumber min={1} max={100} defaultValue={item.quantity} />
+                  <InputNumber min={1} max={100} defaultValue={item.quantity} onChange = {(value) => updateItem(item.itemId, value)}/>
                 </List.Item>
               )}
             />

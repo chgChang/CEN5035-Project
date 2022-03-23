@@ -1,5 +1,13 @@
 # CEN5035-Project Software Engineering
 
+## Group Members:
+### Frontend:
+- Wei Wu
+- Chang Zhou
+### Backend:
+- Jianan He
+- Chi Zhang
+
 ## Sprint 2 
 ## How to run frontend:
 

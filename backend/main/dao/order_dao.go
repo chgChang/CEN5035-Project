@@ -22,7 +22,7 @@ func (db *Database) FindOrderByEmail(email string) []pojo.Order {
 }
 
 func InitOrderDao() OrderDao {
-	dsn := "root:softwareengineering@tcp(34.73.22.78:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456@tcp(35.226.149.129:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")

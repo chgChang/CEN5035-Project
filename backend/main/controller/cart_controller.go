@@ -15,10 +15,34 @@ type CartController interface {
 	UpdateCart(c *gin.Context) error
 	RemoveCart(c *gin.Context) error
 	DeleteCartByItemId(c *gin.Context) error
+	DeleteCartByEmail(c *gin.Context) error
 }
 
 type cartController struct {
 	cartService service.CartService
+}
+
+func (controller *cartController) DeleteCartByEmail(c *gin.Context) error {
+	cookie, err := c.Request.Cookie("currentUser")
+	if err != nil {
+		err = errors.New("please login first")
+		return err
+	}
+
+	//Justify the admin authorization
+	currentEmail := cookie.Value
+	if currentEmail != "admin" {
+		err = errors.New("you don't have the authorization to do that")
+		return err
+	}
+
+	email := c.Query("email")
+
+	err = controller.cartService.RemoveCart(email)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (controller *cartController) DeleteCartByItemId(c *gin.Context) error {

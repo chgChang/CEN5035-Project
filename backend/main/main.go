@@ -10,7 +10,7 @@ import (
 
 var (
 	userDao        = dao.InitUserDao()
-	userService    = service.NewUserService(userDao)
+	userService    = service.NewUserService(userDao, cartDao, orderDao, orderItemDao)
 	userController = controller.NewUserController(userService)
 
 	itemDao        = dao.InitItemDao()
@@ -95,6 +95,21 @@ func setUpServer() *gin.Engine {
 				c.JSON(http.StatusOK, gin.H{
 					"status": "success",
 					"data":   user,
+				})
+			}
+		})
+
+		userApiGroup.GET("/deleteUser", func(context *gin.Context) {
+			err := userController.DeleteUser(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "delete user success",
 				})
 			}
 		})
@@ -230,6 +245,21 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
+
+		cartApiGroup.GET("/deleteCartByEmail", func(context *gin.Context) {
+			err := cartController.DeleteCartByEmail(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "delete cart by email success",
+				})
+			}
+		})
 	}
 
 	orderApiGroup := server.Group("/api/")
@@ -261,6 +291,21 @@ func setUpServer() *gin.Engine {
 					"status":    "success",
 					"msg":       "get order history success",
 					"histories": orderHistoryVoList,
+				})
+			}
+		})
+
+		orderApiGroup.GET("/deleteOrderByEmail", func(context *gin.Context) {
+			err := orderController.DeleteOrder(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "delete order by email success",
 				})
 			}
 		})

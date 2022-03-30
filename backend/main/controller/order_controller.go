@@ -12,10 +12,33 @@ import (
 type OrderController interface {
 	Checkout(c *gin.Context) error
 	GetHistory(c *gin.Context) ([]vo.OrderHistoryVo, error)
+	DeleteOrder(c *gin.Context) error
 }
 
 type orderController struct {
 	orderService service.OrderService
+}
+
+func (controller *orderController) DeleteOrder(c *gin.Context) error {
+	cookie, err := c.Request.Cookie("currentUser")
+	if err != nil {
+		err = errors.New("please login first")
+		return err
+	}
+
+	//Justify the admin authorization
+	currentEmail := cookie.Value
+	if currentEmail != "admin" {
+		err = errors.New("you don't have the authorization to do that")
+		return err
+	}
+
+	email := c.Query("email")
+	err = controller.orderService.DeleteOrderByEmail(email)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (controller *orderController) GetHistory(c *gin.Context) ([]vo.OrderHistoryVo, error) {

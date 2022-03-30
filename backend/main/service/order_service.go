@@ -13,6 +13,7 @@ import (
 type OrderService interface {
 	Checkout(checkoutForm form.CheckOutForm, email string) error
 	GetHistory(email string) ([]vo.OrderHistoryVo, error)
+	DeleteOrderByEmail(email string) error
 }
 
 type orderService struct {
@@ -20,6 +21,28 @@ type orderService struct {
 	orderItemDao dao.OrderItemDao
 	cartDao      dao.CartDao
 	itemDao      dao.ItemDao
+}
+
+func (service *orderService) DeleteOrderByEmail(email string) error {
+
+	//Justify if the order of this user is empty
+	orderList := service.orderDao.FindOrderByEmail(email)
+	if len(orderList) == 0 {
+		err := errors.New("order for this user is empty, email = " + email)
+		return err
+	}
+
+	//Justify if the orderItem of this user is empty
+	orderItemList := service.orderItemDao.FindOrderItemByEmail(email)
+	if len(orderItemList) == 0 {
+		err := errors.New("order for this user is empty, email = " + email)
+		return err
+	}
+
+	service.orderDao.DeleteOrderByEmail(email)
+	service.orderItemDao.DeleteOrderItemByEmail(email)
+	return nil
+
 }
 
 func (service *orderService) GetHistory(email string) ([]vo.OrderHistoryVo, error) {

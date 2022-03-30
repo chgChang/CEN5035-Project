@@ -9,7 +9,19 @@ import (
 type UserDao interface {
 	InsertUser(user pojo.User)
 	FindUserByEmail(email string) pojo.User
+	DeleteUserById(id int)
+	FindUserById(id int) pojo.User
 	CloseDB()
+}
+
+func (db *Database) FindUserById(id int) pojo.User {
+	var user pojo.User
+	db.connection.Where("id = ?", id).First(&user)
+	return user
+}
+
+func (db *Database) DeleteUserById(id int) {
+	db.connection.Where("id = ?", id).Delete(pojo.User{})
 }
 
 func (db *Database) InsertUser(user pojo.User) {

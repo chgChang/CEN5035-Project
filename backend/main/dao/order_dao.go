@@ -9,6 +9,11 @@ import (
 type OrderDao interface {
 	InsertOrder(order pojo.Order)
 	FindOrderByEmail(email string) []pojo.Order
+	DeleteOrderByEmail(email string)
+}
+
+func (db *Database) DeleteOrderByEmail(email string) {
+	db.connection.Where("email = ?", email).Delete(pojo.Order{})
 }
 
 func (db *Database) InsertOrder(order pojo.Order) {

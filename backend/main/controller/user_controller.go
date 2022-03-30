@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -15,10 +16,35 @@ type UserController interface {
 	Login(c *gin.Context) error
 	Logout(c *gin.Context) error
 	GetUserInfo(c *gin.Context) (pojo.User, error)
+	DeleteUser(c *gin.Context) error
 }
 
 type userController struct {
 	userService service.UserService
+}
+
+func (controller *userController) DeleteUser(c *gin.Context) error {
+	cookie, err := c.Request.Cookie("currentUser")
+	if err != nil {
+		err = errors.New("user not logged in")
+		return err
+	}
+
+	//Justify the admin authorization
+	email := cookie.Value
+	if email != "admin" {
+		err = errors.New("you don't have the authorization to do that")
+		return err
+	}
+	id, err := strconv.Atoi(c.Query("id"))
+	if err != nil {
+		return err
+	}
+	err = controller.userService.DeleteUser(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (controller *userController) GetUserInfo(c *gin.Context) (pojo.User, error) {
@@ -98,7 +124,6 @@ func (controller *userController) Login(c *gin.Context) error {
 	if err != nil {
 		return err
 	}
-
 
 	currUser, err := controller.userService.Login(user)
 	if err != nil {

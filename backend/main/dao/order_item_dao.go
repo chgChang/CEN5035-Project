@@ -10,6 +10,11 @@ type OrderItemDao interface {
 	InsertOrderItem(orderItem pojo.OrderItem)
 	InsertOrderItemList(orderItemList []pojo.OrderItem)
 	FindOrderItemByEmail(email string) []pojo.OrderItem
+	DeleteOrderItemByEmail(email string)
+}
+
+func (db *Database) DeleteOrderItemByEmail(email string) {
+	db.connection.Where("email = ?", email).Delete(pojo.OrderItem{})
 }
 
 func (db *Database) InsertOrderItem(orderItem pojo.OrderItem) {

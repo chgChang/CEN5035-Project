@@ -47,6 +47,11 @@ func (controller *itemController) SearchItemById(c *gin.Context) (pojo.Item, err
 	return item, nil
 }
 
+//TODO
+func (controller *itemController) AddItem(c *gin.Context) {
+
+}
+
 func NewItemController(itemService service.ItemService) ItemController {
 	return &itemController{
 		itemService: itemService,

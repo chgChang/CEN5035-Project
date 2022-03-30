@@ -11,6 +11,9 @@ type ItemDao interface {
 	FindAllItems() []pojo.Item
 	FindItemByIdList(idList []int) []pojo.Item
 	FindItemByKeyword(keyword string) []pojo.Item
+	CreateItem(item pojo.Item)
+	UpdateItem(item pojo.Item)
+	DeleteItem(itemId int)
 }
 
 func (db *Database) FindItemByKeyword(keyword string) []pojo.Item {
@@ -35,6 +38,19 @@ func (db *Database) FindItemByIdList(idList []int) []pojo.Item {
 	var itemList []pojo.Item
 	db.connection.Where(idList).Find(&itemList)
 	return itemList
+}
+
+//TODO
+func (db *Database) CreateItem(item pojo.Item) {
+	db.connection.Create(&item)
+}
+
+func (db *Database) UpdateItem(item pojo.Item) {
+	db.connection.Save(&item)
+}
+
+func (db *Database) DeleteItem(itemId string) {
+	db.connection.Delete(&itemId)
 }
 
 func InitItemDao() ItemDao {

@@ -25,14 +25,14 @@ type orderService struct {
 
 func (service *orderService) DeleteOrderByEmail(email string) error {
 
-	//Justify if the order of this user is empty
+	//Check if the order of this user is empty
 	orderList := service.orderDao.FindOrderByEmail(email)
 	if len(orderList) == 0 {
 		err := errors.New("order for this user is empty, email = " + email)
 		return err
 	}
 
-	//Justify if the orderItem of this user is empty
+	//Check if the orderItem of this user is empty
 	orderItemList := service.orderItemDao.FindOrderItemByEmail(email)
 	if len(orderItemList) == 0 {
 		err := errors.New("order for this user is empty, email = " + email)
@@ -84,7 +84,7 @@ func (service *orderService) GetHistory(email string) ([]vo.OrderHistoryVo, erro
 func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email string) error {
 	cartItemList := service.cartDao.FindCartByEmail(email)
 
-	//cart must not be empty
+	//cart must be non-empty
 	if len(cartItemList) == 0 {
 		err := errors.New("cart is empty")
 		return err
@@ -93,7 +93,7 @@ func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email stri
 	var order pojo.Order
 	var orderItemList []pojo.OrderItem
 
-	//generate an order number randomly
+	//Randomly generate an order number
 	orderNo := uuid.New().String()
 
 	order.OrderNo = orderNo
@@ -131,7 +131,7 @@ func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email stri
 	}
 	service.orderItemDao.InsertOrderItemList(orderItemList)
 
-	//after place the order, remove all items in the cart
+	//Remove all the items from cart after placing this order
 	service.cartDao.DeleteCartByEmail(email)
 	return nil
 }

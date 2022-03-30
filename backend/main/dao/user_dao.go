@@ -35,7 +35,7 @@ func (db *Database) FindUserByEmail(email string) pojo.User {
 }
 
 func InitUserDao() UserDao {
-	dsn := "root:123456@tcp(35.226.149.129:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:chelsea11@tcp(35.196.203.186:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")

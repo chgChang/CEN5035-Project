@@ -23,13 +23,13 @@ type userService struct {
 
 func (service *userService) DeleteUser(id int) error {
 
-	//Admin user cannot be deleted
+	//Admin user is not deletable.
 	if id == 1 {
 		err := errors.New("cannot delete the admin user")
 		return err
 	}
 
-	//Justify if the user exists
+	//Check if the user exists
 	userInDB := service.userDao.FindUserById(id)
 	if userInDB == (pojo.User{}) {
 		err := errors.New("user doesn't exist, userId = " + strconv.Itoa(id))
@@ -37,7 +37,7 @@ func (service *userService) DeleteUser(id int) error {
 	}
 	service.userDao.DeleteUserById(id)
 
-	//Delete all the information about this user
+	//Delete all the information of this user
 	email := userInDB.Email
 	//cartInDB := service.cartDao.FindCartByEmail(email)
 	//if len(cartInDB) == 0 {

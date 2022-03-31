@@ -30,10 +30,10 @@ func (controller *userController) DeleteUser(c *gin.Context) error {
 		return err
 	}
 
-	//Justify the admin authorization
+	//Check if having admin authorization
 	email := cookie.Value
 	if email != "admin" {
-		err = errors.New("you don't have the authorization to do that")
+		err = errors.New("you are not authorized")
 		return err
 	}
 	id, err := strconv.Atoi(c.Query("id"))

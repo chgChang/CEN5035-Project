@@ -10,6 +10,9 @@ type ItemService interface {
 	GetItemList() ([]pojo.Item, error)
 	SearchItem(keyword string) ([]pojo.Item, error)
 	SearchItemById(id int) (pojo.Item, error)
+	AddItem(item pojo.Item) error
+	UpdateItem(item pojo.Item) error
+	DeleteItem(itemId int) error
 }
 
 type itemService struct {
@@ -44,8 +47,9 @@ func (service *itemService) SearchItemById(id int) (pojo.Item, error) {
 }
 
 //TODO
-func (service *itemService) AddItem(item pojo.Item) {
+func (service *itemService) AddItem(item pojo.Item) error {
 	service.itemDao.CreateItem(item)
+	return nil
 }
 
 func (service *itemService) UpdateItem(item pojo.Item) error {

@@ -49,7 +49,7 @@ func (db *Database) UpdateItem(item pojo.Item) {
 	db.connection.Save(&item)
 }
 
-func (db *Database) DeleteItem(itemId string) {
+func (db *Database) DeleteItem(itemId int) {
 	db.connection.Delete(&itemId)
 }
 

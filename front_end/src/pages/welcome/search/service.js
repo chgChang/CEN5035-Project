@@ -6,14 +6,6 @@ export async function queryFakeList(params) {
   return res;
 }
 
-// export function queryItemList() {
-//   const res = request('/api/getItems', {
-//     method: 'GET',
-//   });
-//   console.log("items");
-//   console.log(res);
-//   return res;
-// }
 export async function queryItemList(options) {
   return request('/api/getItems', {
     method: 'GET',

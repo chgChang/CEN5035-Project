@@ -34,7 +34,13 @@ const Search = (props) => {
   const handleTabChange = (key) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
-    window.location.replace(`${url}/search/${key}`);
+    if (key === 'All') {
+      window.location.replace(`${url}/Items`);
+    } else {
+      console.log(key);
+      window.location.replace(`${url}/search/${key}`);
+    }
+    // window.location.replace(`${url}/search/${key}`);
   };
 
   const handleFormSubmit = (value) => {
@@ -43,6 +49,8 @@ const Search = (props) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
     window.location.replace(`${url}/search/${value}`);
+    
+    
     // history.push(`${url}/search/${value}`);
   };
 

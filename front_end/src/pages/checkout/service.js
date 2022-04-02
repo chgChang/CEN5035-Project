@@ -14,3 +14,14 @@ export async function queryCartList(options) {
   });
   return temp;
 }
+
+export async function doCheckout(body, options) {
+  return request('/api/checkout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

@@ -18,7 +18,7 @@ import ProForm, {
   ProFormDatePicker,
 } from "@ant-design/pro-form";
 import useRequest from '@ahooksjs/use-request';
-import { queryCartList } from './service';
+import { queryCartList, doCheckout } from './service';
 import styles from "./style.less";
 
 
@@ -96,8 +96,7 @@ const StepForm = () => {
             render: (props, dom) => {
               if (props.step === 3) {
                 // console.log(props);
-                console.log(stepData);
-                // const { res } = useRequest(deleteCartByItemId(params));
+                
                 return null;
               }
 
@@ -105,97 +104,47 @@ const StepForm = () => {
             },
           }}
         >
+
           <StepsForm.StepForm
-            title="Shipping address"
-            onFinish={async (values) => {
-              // setStepData(values.shipAddress);
-              temp = values;
-              // temp = values;
-              // console.log(values.shipAddress);
-              // // setAddress(values["shipAddress"]);
-              // console.log(values);
-              // console.log(stepData);
-              console.log(temp);
-              return true;
-            }}
+            // onFinish={async (values) => {
+            //   setStepData(values);
+            //   return true;
+            // }}
+            title="Check your order"
           >
-            <ProFormSelect
-              label="Country"
-              width="md"
-              name="country"
-              rules={[
-                {
-                  required: true,
-                  message: "Please choose your country",
-                },
-              ]}
-              valueEnum={{
-                "united-states": "United States",
-              }}
-            />
-            <ProFormText
-              label="Full name"
-              name="full-name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name",
-                },
-              ]}
-            />
-            <ProFormText
-              label="Phone number"
-              name="phone-number"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your number",
-                },
-                {
-                  pattern: /^\d{10}$/,
-                  message: "Phone number invalid",
-                },
-              ]}
-            />
-            <ProFormText
-              label="Address"
-              name="shipAddress"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your address",
-                },
-              ]}
-              placeholder="Street address or P.O. Box"
-            />
-            <ProFormText label="City" name="city" />
-            <ProForm.Group size={8}>
-              <ProFormSelect
-                label="State"
-                name="state"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please choose your state",
-                  },
-                ]}
-                valueEnum={states_hash}
+            <div className={styles.result}>
+              <Alert
+                closable
+                showIcon
+                message="Once you place your order, you are not able to edit it"
+                style={{
+                  marginBottom: 24,
+                }}
               />
-              <ProFormText
-                label="ZIP Code"
-                name="zip-code"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input zip code",
-                  },
-                  {
-                    pattern: /^\d{5}$/,
-                    message: "ZIP code invalid",
-                  },
-                ]}
+              <List
+                size="large"
+                rowKey="id"
+                dataSource={list}
+                renderItem={(item) => (
+                  <List.Item>
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar src={item.picUrl} shape="square" size="large" />
+                      }
+                      title={<a href={item.href}>{item.itemName}</a>}
+                      description={item.description}
+                    />
+                    <div>Qty:{item.quantity}</div>
+                  </List.Item>
+                )}
               />
-            </ProForm.Group>
+              {/* <StepDescriptions stepData={stepData} bordered /> */}
+              <Divider
+                style={{
+                  margin: "24px 0",
+                }}
+              />
+            </div>
           </StepsForm.StepForm>
 
           <StepsForm.StepForm
@@ -247,46 +196,105 @@ const StepForm = () => {
           </StepsForm.StepForm>
 
           <StepsForm.StepForm
-            // onFinish={async (values) => {
-            //   setStepData(values);
-            //   return true;
-            // }}
-            title="Check your order"
+            title="Shipping address"
+            onFinish={async (values) => {
+              const params = {
+                address: values.address,
+                phone: values.phone,
+                name: values.fullname,
+              };
+              console.log(params);
+              const res = await doCheckout(params);
+              console.log(res);
+              if (res.status === "success") {
+                return true;
+              } else {
+                return false;
+              }
+            }}
           >
-            <div className={styles.result}>
-              <Alert
-                closable
-                showIcon
-                message="Once you place your order, you are not able to edit it"
-                style={{
-                  marginBottom: 24,
-                }}
+            <ProFormSelect
+              label="Country"
+              width="md"
+              name="country"
+              rules={[
+                {
+                  required: true,
+                  message: "Please choose your country",
+                },
+              ]}
+              valueEnum={{
+                "united-states": "United States",
+              }}
+            />
+            <ProFormText
+              label="Full name"
+              name="fullname"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your name",
+                },
+              ]}
+            />
+            <ProFormText
+              label="Phone number"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your number",
+                },
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number invalid",
+                },
+              ]}
+            />
+            <ProFormText
+              label="Address"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your address",
+                },
+              ]}
+              placeholder="Street address or P.O. Box"
+            />
+            <ProFormText label="City" name="city" />
+            <ProForm.Group size={8}>
+              <ProFormSelect
+                label="State"
+                name="state"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please choose your state",
+                  },
+                ]}
+                valueEnum={states_hash}
               />
-              <List
-                size="large"
-                rowKey="id"
-                dataSource={list}
-                renderItem={(item) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <Avatar src={item.picUrl} shape="square" size="large" />
-                      }
-                      title={<a href={item.href}>{item.itemName}</a>}
-                      description={item.description}
-                    />
-                    <div>Qty:{item.quantity}</div>
-                  </List.Item>
-                )}
+              <ProFormText
+                label="ZIP Code"
+                name="zipcode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input zip code",
+                  },
+                  {
+                    pattern: /^\d{5}$/,
+                    message: "ZIP code invalid",
+                  },
+                ]}
               />
-              {/* <StepDescriptions stepData={stepData} bordered /> */}
-              <Divider
-                style={{
-                  margin: "24px 0",
-                }}
-              />
-            </div>
+            </ProForm.Group>
           </StepsForm.StepForm>
+
+          
+
+          
           <StepsForm.StepForm title="Success">
             <StepResult
               onFinish={async () => {

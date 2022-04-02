@@ -17,11 +17,12 @@ import ProForm, {
   StepsForm,
   ProFormDatePicker,
 } from "@ant-design/pro-form";
+import { history } from 'umi';
+import useRequest from '@ahooksjs/use-request';
+import { queryCartList, doCheckout } from './service';
 import styles from "./style.less";
 
-const lists = require("./res_cartItem.json");
-const list = lists["cart"]["itemList"];
-const amount = lists["cart"]["totalPrice"];
+
 
 const StepDescriptions = ({ stepData, bordered }) => {
   const { shipAddress, payAccount, receiverAccount, receiverName } = stepData;
@@ -49,7 +50,21 @@ const StepDescriptions = ({ stepData, bordered }) => {
   );
 };
 
+
+
 const StepResult = (props) => {
+  const jump2main = () => {
+    const { match } = props;
+    // const url = match.url === '/' ? '' : match.url;
+    history.push(`/welcome/Items`);
+  }
+  
+  const jump2history = () => {
+    const { match } = props;
+    // const url = match.url === '/' ? '' : match.url;
+    history.push(`/history`);
+  }
+
   return (
     <Result
       status="success"
@@ -57,10 +72,12 @@ const StepResult = (props) => {
       subTitle="Estimated dilivery: Two days after purchase"
       extra={
         <>
-          <Button type="primary" onClick={props.onFinish}>
+          <Button type="primary" onClick={jump2main}>
             Continue shopping
           </Button>
-          <Button>See order history</Button>
+          <Button onClick={jump2history}>
+            See order history
+          </Button>
         </>
       }
       className={styles.result}
@@ -75,6 +92,9 @@ const StepForm = () => {
   //   receiverAccount: "test@example.com",
   //   receiverName: "Alex",
   // });
+  const { data, loading, mutate } = useRequest(queryCartList);
+  const amount = data?.cart.totalPrice || "";
+  const list = data?.cart.itemList || [];
   const [stepData, setStepData] = useState('');
   const [current, setCurrent] = useState(0);
   const formRef = useRef();
@@ -92,6 +112,8 @@ const StepForm = () => {
           submitter={{
             render: (props, dom) => {
               if (props.step === 3) {
+                // console.log(props);
+                
                 return null;
               }
 
@@ -99,143 +121,6 @@ const StepForm = () => {
             },
           }}
         >
-          <StepsForm.StepForm
-            title="Shipping address"
-            onFinish={async (values) => {
-              setStepData(values.shipAddress);
-              console.log(values.shipAddress);
-              // setAddress(values["shipAddress"]);
-              console.log(values);
-              console.log(stepData);
-              return true;
-            }}
-          >
-            <ProFormSelect
-              label="Country"
-              width="md"
-              name="country"
-              rules={[
-                {
-                  required: true,
-                  message: "Please choose your country",
-                },
-              ]}
-              valueEnum={{
-                "united-states": "United States",
-              }}
-            />
-            <ProFormText
-              label="Full name"
-              name="full-name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name",
-                },
-              ]}
-            />
-            <ProFormText
-              label="Phone number"
-              name="phone-number"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your number",
-                },
-                {
-                  pattern: /^\d{10}$/,
-                  message: "Phone number invalid",
-                },
-              ]}
-            />
-            <ProFormText
-              label="Address"
-              name="shipAddress"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your address",
-                },
-              ]}
-              placeholder="Street address or P.O. Box"
-            />
-            <ProFormText label="City" name="city" />
-            <ProForm.Group size={8}>
-              <ProFormSelect
-                label="State"
-                name="state"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please choose your state",
-                  },
-                ]}
-                valueEnum={states_hash}
-              />
-              <ProFormText
-                label="ZIP Code"
-                name="zip-code"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input zip code",
-                  },
-                  {
-                    pattern: /^\d{5}$/,
-                    message: "ZIP code invalid",
-                  },
-                ]}
-              />
-            </ProForm.Group>
-          </StepsForm.StepForm>
-
-          <StepsForm.StepForm
-            formRef={formRef}
-            title="Payment method"
-            // initialValues={stepData}
-            // onFinish={async (values) => {
-            //   setStepData(values);
-            //   return true;
-            // }}
-          >
-            <ProFormText
-              label="Card number"
-              width="md"
-              name="card-number"
-              rules={[
-                {
-                  required: true,
-                  message: "Please enter card number",
-                },
-              ]}
-            />
-            <ProFormText
-              label="Name"
-              width="md"
-              name="name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your name",
-                },
-              ]}
-            />
-            <ProForm.Group title="Expiration date" size={8}>
-              <ProFormDatePicker.Month name="month" />
-              <ProFormDatePicker.Year name="year" />
-            </ProForm.Group>
-            <ProFormText
-              label="CVV"
-              width="md"
-              name="cvv"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input CVV",
-                },
-              ]}
-            />
-          </StepsForm.StepForm>
 
           <StepsForm.StepForm
             // onFinish={async (values) => {
@@ -278,6 +163,152 @@ const StepForm = () => {
               />
             </div>
           </StepsForm.StepForm>
+
+          <StepsForm.StepForm
+            formRef={formRef}
+            title="Payment method"
+            // initialValues={stepData}
+            // onFinish={async (values) => {
+            //   setStepData(values);
+            //   return true;
+            // }}
+          >
+            <ProFormText
+              label="Card number"
+              width="md"
+              name="card-number"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter card number",
+                },
+              ]}
+            />
+            <ProFormText
+              label="Name"
+              width="md"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your name",
+                },
+              ]}
+            />
+            <ProForm.Group title="Expiration date" size={8}>
+              <ProFormDatePicker.Month name="month" />
+              {/* <ProFormDatePicker.Year name="year" /> */}
+            </ProForm.Group>
+            <ProFormText
+              label="CVV"
+              width="md"
+              name="cvv"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input CVV",
+                },
+              ]}
+            />
+          </StepsForm.StepForm>
+
+          <StepsForm.StepForm
+            title="Shipping address"
+            onFinish={async (values) => {
+              const params = {
+                address: values.address,
+                phone: values.phone,
+                name: values.fullname,
+              };
+              console.log(params);
+              const res = await doCheckout(params);
+              console.log(res);
+              if (res.status === "success") {
+                return true;
+              } else {
+                return false;
+              }
+            }}
+          >
+            <ProFormSelect
+              label="Country"
+              width="md"
+              name="country"
+              rules={[
+                {
+                  required: true,
+                  message: "Please choose your country",
+                },
+              ]}
+              valueEnum={{
+                "united-states": "United States",
+              }}
+            />
+            <ProFormText
+              label="Full name"
+              name="fullname"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your name",
+                },
+              ]}
+            />
+            <ProFormText
+              label="Phone number"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your number",
+                },
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number invalid",
+                },
+              ]}
+            />
+            <ProFormText
+              label="Address"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your address",
+                },
+              ]}
+              placeholder="Street address or P.O. Box"
+            />
+            <ProFormText label="City" name="city" />
+            <ProForm.Group size={8}>
+              <ProFormSelect
+                label="State"
+                name="state"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please choose your state",
+                  },
+                ]}
+                valueEnum={states_hash}
+              />
+              <ProFormText
+                label="ZIP Code"
+                name="zipcode"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input zip code",
+                  },
+                  {
+                    pattern: /^\d{5}$/,
+                    message: "ZIP code invalid",
+                  },
+                ]}
+              />
+            </ProForm.Group>
+          </StepsForm.StepForm>
+
           <StepsForm.StepForm title="Success">
             <StepResult
               onFinish={async () => {
@@ -285,7 +316,6 @@ const StepForm = () => {
                 formRef.current?.resetFields();
               }}
             >
-              {/* <StepDescriptions stepData={stepData} /> */}
             </StepResult>
           </StepsForm.StepForm>
         </StepsForm>

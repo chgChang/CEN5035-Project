@@ -10,22 +10,22 @@ const tabList = [
     key: 'Apple',
     tab: 'Apple',
   },
-  {
-    key: 'Clothing',
-    tab: 'Clothing',
-  },
-  {
-    key: 'Shoes',
-    tab: 'Shoes',
-  },
-  {
-    key: 'Books',
-    tab: 'Books',
-  },
-  {
-    key: 'Electronics',
-    tab: 'Electronics',
-  },
+  // {
+  //   key: 'Clothing',
+  //   tab: 'Clothing',
+  // },
+  // {
+  //   key: 'Shoes',
+  //   tab: 'Shoes',
+  // },
+  // {
+  //   key: 'Books',
+  //   tab: 'Books',
+  // },
+  // {
+  //   key: 'Electronics',
+  //   tab: 'Electronics',
+  // },
 ];
 
 const searchval = "";
@@ -35,12 +35,12 @@ const Search = (props) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
     if (key === 'All') {
-      window.location.replace(`${url}/Items`);
+      history.push(`${url}/Items`);
     } else {
       console.log(key);
-      window.location.replace(`${url}/search/${key}`);
+      history.push(`${url}/search/${key}`);
+      
     }
-    // window.location.replace(`${url}/search/${key}`);
   };
 
   const handleFormSubmit = (value) => {
@@ -48,10 +48,8 @@ const Search = (props) => {
     console.log(value);
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
-    window.location.replace(`${url}/search/${value}`);
-    
-    
-    // history.push(`${url}/search/${value}`);
+    // window.location.replace(`${url}/search/${value}`);
+    history.push(`${url}/search/${value}`);
   };
 
   const getTabKey = () => {

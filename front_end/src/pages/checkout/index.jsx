@@ -17,11 +17,11 @@ import ProForm, {
   StepsForm,
   ProFormDatePicker,
 } from "@ant-design/pro-form";
+import useRequest from '@ahooksjs/use-request';
+import { queryCartList } from './service';
 import styles from "./style.less";
 
-const lists = require("./res_cartItem.json");
-const list = lists["cart"]["itemList"];
-const amount = lists["cart"]["totalPrice"];
+
 
 const StepDescriptions = ({ stepData, bordered }) => {
   const { shipAddress, payAccount, receiverAccount, receiverName } = stepData;
@@ -75,6 +75,9 @@ const StepForm = () => {
   //   receiverAccount: "test@example.com",
   //   receiverName: "Alex",
   // });
+  const { data, loading, mutate } = useRequest(queryCartList);
+  const amount = data?.cart.totalPrice || "";
+  const list = data?.cart.itemList || [];
   const [stepData, setStepData] = useState('');
   const [current, setCurrent] = useState(0);
   const formRef = useRef();
@@ -92,6 +95,9 @@ const StepForm = () => {
           submitter={{
             render: (props, dom) => {
               if (props.step === 3) {
+                // console.log(props);
+                console.log(stepData);
+                // const { res } = useRequest(deleteCartByItemId(params));
                 return null;
               }
 
@@ -102,11 +108,14 @@ const StepForm = () => {
           <StepsForm.StepForm
             title="Shipping address"
             onFinish={async (values) => {
-              setStepData(values.shipAddress);
-              console.log(values.shipAddress);
-              // setAddress(values["shipAddress"]);
-              console.log(values);
-              console.log(stepData);
+              // setStepData(values.shipAddress);
+              temp = values;
+              // temp = values;
+              // console.log(values.shipAddress);
+              // // setAddress(values["shipAddress"]);
+              // console.log(values);
+              // console.log(stepData);
+              console.log(temp);
               return true;
             }}
           >
@@ -222,7 +231,7 @@ const StepForm = () => {
             />
             <ProForm.Group title="Expiration date" size={8}>
               <ProFormDatePicker.Month name="month" />
-              <ProFormDatePicker.Year name="year" />
+              {/* <ProFormDatePicker.Year name="year" /> */}
             </ProForm.Group>
             <ProFormText
               label="CVV"

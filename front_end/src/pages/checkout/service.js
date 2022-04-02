@@ -5,3 +5,12 @@ export async function fakeSubmitForm(params) {
     data: params,
   });
 }
+
+
+export async function queryCartList(options) {
+  const temp = request('/api/getCartItems', {
+    method: 'GET',
+    ...(options || {}),
+  });
+  return temp;
+}

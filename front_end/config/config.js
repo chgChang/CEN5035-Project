@@ -99,71 +99,71 @@ export default defineConfig({
       path: '/history',
       component: './history',
     },
-    // {
-    //   path: '/form',
-    //   icon: 'form',
-    //   name: 'form',
-    //   routes: [
-    //     {
-    //       path: '/form',
-    //       redirect: '/form/step-form',
-    //     },
-    //     {
-    //       name: 'step-form',
-    //       icon: 'smile',
-    //       path: '/form/step-form',
-    //       component: './form/step-form',
-    //     },
-    //     {
-    //       name: 'advanced-form',
-    //       icon: 'smile',
-    //       path: '/form/advanced-form',
-    //       component: './form/advanced-form',
-    //     },
-    //   ],
-    // },
     {
-      path: '/list',
-      icon: 'table',
-      name: 'list',
+      path: '/form',
+      icon: 'form',
+      name: 'form',
       routes: [
         {
-          path: '/list/search',
-          name: 'search-list',
-          component: './list/search',
-          routes: [
-            {
-              name: 'projects',
-              icon: 'smile',
-              path: '/list/search/projects',
-              component: './list/search/projects',
-            },
-            {
-              name: 'applications',
-              icon: 'smile',
-              path: '/list/search/applications',
-              component: './list/search/applications',
-            },
-          ],
+          path: '/form',
+          redirect: '/form/step-form',
         },
         {
-          path: '/list',
-          redirect: '/list/card-list',
-        },
-        {
-          name: 'card-list',
+          name: 'step-form',
           icon: 'smile',
-          path: '/list/card-list',
-          component: './list/card-list',
+          path: '/form/step-form',
+          component: './form/step-form',
         },
         {
-          name: 'basic-list',
+          name: 'advanced-form',
           icon: 'smile',
-          path: '/list/basic-list',
-          component: './list/basic-list',
+          path: '/form/advanced-form',
+          component: './form/advanced-form',
         },
       ],
     },
+    // {
+    //   path: '/list',
+    //   icon: 'table',
+    //   name: 'list',
+    //   routes: [
+    //     {
+    //       path: '/list/search',
+    //       name: 'search-list',
+    //       component: './list/search',
+    //       routes: [
+    //         {
+    //           name: 'projects',
+    //           icon: 'smile',
+    //           path: '/list/search/projects',
+    //           component: './list/search/projects',
+    //         },
+    //         {
+    //           name: 'applications',
+    //           icon: 'smile',
+    //           path: '/list/search/applications',
+    //           component: './list/search/applications',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       path: '/list',
+    //       redirect: '/list/card-list',
+    //     },
+    //     {
+    //       name: 'card-list',
+    //       icon: 'smile',
+    //       path: '/list/card-list',
+    //       component: './list/card-list',
+    //     },
+    //     {
+    //       name: 'basic-list',
+    //       icon: 'smile',
+    //       path: '/list/basic-list',
+    //       component: './list/basic-list',
+    //     },
+    //   ],
+    // },
     // {
     //   path: '/profile',
     //   name: 'profile',

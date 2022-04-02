@@ -13,7 +13,7 @@
 ```
 ```
 
-## front-end
+## What we did
 1. Fixed a bug in the search function
 2. Optimized the search interface jump
 3. Optimized the interaction when deleting shopping items

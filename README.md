@@ -13,6 +13,13 @@
 ```
 ```
 
+## front-end
+1. Fixed a bug in the search function
+2. Optimized the search interface jump
+3. Optimized the interaction when deleting shopping items
+4. The checkout page and the historical order page are successfully connected to the backend
+5. Tested the search function, add to cart function, checkout function
+
 ## How to run frontend:
 
 ### Compile the code

@@ -1,9 +1,4 @@
 # CEN5035-Project Software Engineering
-## Sprint 3 
-### Application Demo Video:
-```
-```
-
 
 ## Group Members:
 ### Frontend:
@@ -13,7 +8,11 @@
 - Jianan He
 - Chi Zhang
 
-## Sprint 2 
+## Sprint 3 
+### Application Demo Video:
+```
+```
+
 ## How to run frontend:
 
 ### Compile the code

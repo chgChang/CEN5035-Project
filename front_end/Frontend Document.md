@@ -66,15 +66,15 @@ You can view full document on our [official website](https://pro.ant.design). An
 
 ## Visit Website
 
-User should login or register account first. After this, user is able to visit our welcome page. We privide pages for this web application. 
+User should login or register account first. After this, user is able to visit our welcome page. We privide 4 pages for this web application. 
 
 ### Welcome Page
 
-We provide a dashboard for commodities overview and a search funtion that could be used to find items the user wants by key word.
+We provide a dashboard for commodities overview and a search funtion that could be used to find items the user wants by key word. We show each item with the information of item picture, item name, item discription. We provide a funtion to add item to cart.
 
 ### Cart List
 
-User could check his/her items in the cart, change the number of the items, delete the items and checkout here.
+We show each item with the information of item picture, item name, item discription and item number. User could check his/her items in the cart, change the number of the items, delete the items and checkout here.
 
 ### Checkout Page
 
@@ -85,3 +85,6 @@ Shipping address include information: country, full name, phone number, address,
 Payment method include information: card number, name, expiration date, CVV.
 After inputting these information, user goes to the 3rd part for checking the order. Once the order is placed, he/she is not able to change the order.
 
+### Order History
+
+User could find previous orders here. We show each order with the information of items picture, items name, items discription, order time and total price. We also provide a funtion to add item to cart.

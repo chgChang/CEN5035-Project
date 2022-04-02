@@ -24,7 +24,7 @@ const Projects = (props) => {
       message.error(res.msg);
     } 
   };
-  const keywords = props.match.params.key;
+  const keywords = props.match.params.keywords;
   // console.log("this is search pahe + key :");
   // console.log(keywords);
   const { data, loading, run } = useRequest(() => {

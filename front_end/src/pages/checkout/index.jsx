@@ -17,6 +17,8 @@ import ProForm, {
   StepsForm,
   ProFormDatePicker,
 } from "@ant-design/pro-form";
+
+import { history } from 'umi';
 import useRequest from '@ahooksjs/use-request';
 import { queryCartList, doCheckout } from './service';
 import styles from "./style.less";
@@ -49,7 +51,21 @@ const StepDescriptions = ({ stepData, bordered }) => {
   );
 };
 
+
+
 const StepResult = (props) => {
+  const jump2main = () => {
+    const { match } = props;
+    // const url = match.url === '/' ? '' : match.url;
+    history.push(`/welcome/Items`);
+  }
+  
+  const jump2history = () => {
+    const { match } = props;
+    // const url = match.url === '/' ? '' : match.url;
+    history.push(`/history`);
+  }
+
   return (
     <Result
       status="success"
@@ -57,10 +73,12 @@ const StepResult = (props) => {
       subTitle="Estimated dilivery: Two days after purchase"
       extra={
         <>
-          <Button type="primary" onClick={props.onFinish}>
+          <Button type="primary" onClick={jump2main}>
             Continue shopping
           </Button>
-          <Button>See order history</Button>
+          <Button onClick={jump2history}>
+            See order history
+          </Button>
         </>
       }
       className={styles.result}
@@ -292,9 +310,7 @@ const StepForm = () => {
             </ProForm.Group>
           </StepsForm.StepForm>
 
-          
 
-          
           <StepsForm.StepForm title="Success">
             <StepResult
               onFinish={async () => {
@@ -302,7 +318,6 @@ const StepForm = () => {
                 formRef.current?.resetFields();
               }}
             >
-              {/* <StepDescriptions stepData={stepData} /> */}
             </StepResult>
           </StepsForm.StepForm>
         </StepsForm>

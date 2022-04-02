@@ -29,7 +29,7 @@ import {
   updateCart,
 } from "./service";
 import styles from "./style.less";
-import { method } from "lodash";
+import { sumBy } from "lodash";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
@@ -38,12 +38,15 @@ export const BasicList = () => {
   const [done, setDone] = useState(false);
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
+  const [idnum, setIdnum] = useState(0);
   const { data, loading, mutate } = useRequest(queryCartList);
-
+  console.log(data);
+  
   const { run: postRun } = useRequest(
     (method, params) => {
       if (method === "remove") {
-        console.log("remove");
+        setIdnum(params.itemId);
+        console.log("remove" + idnum);
         return deleteCartByItemId(params);
       }
       if (method === "update") {
@@ -53,15 +56,26 @@ export const BasicList = () => {
     {
       manual: true,
       onSuccess: (result) => {
-        window.location.reload();
-  
-        // console.log(data);
-        // mutate(data);
+        console.log(data);
+        const temp = data.cart.itemList.filter((item) => item.itemId !== idnum);
+        const delitem = {
+          cart: data.cart.itemList.filter((item) => item.itemId === idnum),
+        };
+        const sumPrice = sumBy(temp, (item) => item.price * item.quantity);
+        const delData = {
+          cart: {
+            itemList: temp,
+            totalPrice: sumPrice,
+          },
+          msg: data.msg,
+          status: data.status,
+        }
+        mutate(delData);
       },
     }
   );
-  // console.log(data);
   const list = data?.cart.itemList || [];
+  const price = data?.cart.totalPrice || 0; 
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
@@ -74,7 +88,7 @@ export const BasicList = () => {
   };
 
   const deleteItem = (id) => {
-    console.log(id);
+    // console.log(id);
     postRun("remove", {
       itemId: id,
     });
@@ -96,10 +110,10 @@ export const BasicList = () => {
 
   const extraContent = (
     <div className={styles.extraContent}>
-      <Button type="primary" onClick={handleClick}>
+      <div style={{fontSize: 16, fontWeight: 600, float: 'left'}}> Total Price: {price} </div>
+      <Button type="primary" style={{ marginLeft: 20}} onClick={handleClick}>
         Proceed to checkout
       </Button>
-      {/* <Search className={styles.extraContentSearch} placeholder="Input item name" onSearch={() => ({})} /> */}
     </div>
   );
 

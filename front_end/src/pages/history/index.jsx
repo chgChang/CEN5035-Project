@@ -1,47 +1,44 @@
-import { CloseCircleOutlined } from '@ant-design/icons';
 import { Avatar, Card, Col, Popover, Row, message, List, Typography, Button } from 'antd';
-import { useState } from 'react';
-import { useRequest } from 'umi';
-import ProForm, {
-  ProFormDateRangePicker,
-  ProFormSelect,
-  ProFormText,
-  ProFormTimePicker,
-} from '@ant-design/pro-form';
-import { EditableProTable } from '@ant-design/pro-table';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import styles from './style.less';
+import useRequest from '@ahooksjs/use-request';
+import { getOrderHis, add2Cart } from './service';
 const { Paragraph } = Typography;
 
 const AdvancedForm = () => {
-  // const onFinish = async (values) => {
-  //   setError([]);
+  const { data, loading, mutate } = useRequest(getOrderHis);
+  const list = data?.histories || [];
 
-  //   try {
-  //     await fakeSubmitForm(values);
-  //     message.success('提交成功');
-  //   } catch {
-  //     // console.log
-  //   }
-  // };
+  const addCart = async (id) => {
+    const res = await add2Cart({itemid: id, quantity: 1});
+    if (res.status === "success") {
+      message.success(res.msg);
+      return;
+    } else {
+      message.error(res.msg);
+    } 
+  };
 
-  // const onFinishFailed = (errorInfo) => {
-  //   setError(errorInfo.errorFields);
-  // };
-  const lists = require("./res_getOderHis_sus.json");
-  const list = lists?.histories || [];
+  const extraContent = (item) => (
+    <div className={styles.extraContent}>
+      {/* <div style={{fontSize: 16, fontWeight: 600, float: 'left'}}> Order#: {item.orderId} </div> */}
+      <div style={{fontSize: 16, fontWeight: 600}}> Order Date: {item.orderDate} </div>
+    </div>
+  );
 
   const orderList = list && (
     <List
       itemLayout="horizontal"
+      loading={loading}
       dataSource={list}
       renderItem={(item) => (
         <List.Item>
           <Card
-            title = {item.orderDate}
+            title = {"Order#: " + item.orderId}
             bordered={false}
             className={styles.card}
             style={{ width: '100%' }}
+            extra={extraContent(item)}
             hoverable
           >
             <Card.Meta
@@ -51,7 +48,7 @@ const AdvancedForm = () => {
                   renderItem={(orderItem) => (
                     <List.Item
                       actions={[
-                        <Button shape="round" className={styles.addcartbtn}>
+                        <Button shape="round" className={styles.addcartbtn} onClick = {() => addCart(orderItem.itemId)}>
                           Add to Cart
                         </Button>,
                       ]}

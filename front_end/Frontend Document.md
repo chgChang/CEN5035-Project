@@ -1,8 +1,8 @@
 # Frontend Document
 
-| User Document | Develope Document | Management Document |
+| User Document | Develop Document | Management Document |
 | ------------- |:-----------------:|--------------------:|
-| User Manual   | Develope Plan     | Test Plan(STP) |
+| User Manual   | Develop Plan     | Test Plan(STP) |
 |               |                   | Test Report(STR)|
 
 # User Manual
@@ -32,8 +32,14 @@ Scripts provided in `package.json`. It's safe to modify or add additional script
 
 #### Start project
 
+To start mock mode: 
 ```bash
 npm start
+```
+
+To start dev mode:
+```bash
+npm start:dev
 ```
 
 #### Build project
@@ -88,3 +94,17 @@ After inputting these information, user goes to the 3rd part for checking the or
 ### Order History
 
 User could find previous orders here. We show each order with the information of items picture, items name, items discription, order time and total price. We also provide a funtion to add item to cart.
+
+# Develop Plan
+
+## Sprint 1
+Backend API document, user stories, front-back communication law, sprint 1 instructions and development law
+
+## Sprint 2
+Integration frontend and backend, writing some unit test, authentication requirement and backend API module.
+
+## Sprint 3 
+More test cases and frontend document
+
+## Sprint 4
+To be continued...

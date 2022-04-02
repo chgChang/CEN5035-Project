@@ -67,6 +67,11 @@ export default defineConfig({
           path: '/welcome/Items',
           component: './welcome/projects',
         },
+        {
+          // path: '/welcome/search/:keywords',
+          path: '/welcome/search',
+          component: './welcome/search',
+        },
       ],
     },
     {
@@ -85,29 +90,29 @@ export default defineConfig({
       path: '/history',
       component: './history',
     },
-    // {
-    //   path: '/form',
-    //   icon: 'form',
-    //   name: 'form',
-    //   routes: [
-    //     {
-    //       path: '/form',
-    //       redirect: '/form/step-form',
-    //     },
-    //     {
-    //       name: 'step-form',
-    //       icon: 'smile',
-    //       path: '/form/step-form',
-    //       component: './form/step-form',
-    //     },
-    //     {
-    //       name: 'advanced-form',
-    //       icon: 'smile',
-    //       path: '/form/advanced-form',
-    //       component: './form/advanced-form',
-    //     },
-    //   ],
-    // },
+    {
+      path: '/form',
+      icon: 'form',
+      name: 'form',
+      routes: [
+        {
+          path: '/form',
+          redirect: '/form/step-form',
+        },
+        {
+          name: 'step-form',
+          icon: 'smile',
+          path: '/form/step-form',
+          component: './form/step-form',
+        },
+        {
+          name: 'advanced-form',
+          icon: 'smile',
+          path: '/form/advanced-form',
+          component: './form/advanced-form',
+        },
+      ],
+    },
     // {
     //   path: '/list',
     //   icon: 'table',
@@ -141,6 +146,12 @@ export default defineConfig({
     //       icon: 'smile',
     //       path: '/list/card-list',
     //       component: './list/card-list',
+    //     },
+    //     {
+    //       name: 'basic-list',
+    //       icon: 'smile',
+    //       path: '/list/basic-list',
+    //       component: './list/basic-list',
     //     },
     //   ],
     // },
@@ -242,10 +253,10 @@ export default defineConfig({
         },
       ],
     },
-    // {
-    //   path: '/',
-    //   redirect: '/list/card-list',
-    // },
+    {
+      path: '/',
+      redirect: '/welcome',
+    },
     // {
     //   component: '404',
     // },

@@ -68,6 +68,7 @@ export default defineConfig({
           component: './welcome/projects',
         },
         {
+
           path: '/welcome/search/:keywords',
           // path: '/welcome/search',
           component: './welcome/search',

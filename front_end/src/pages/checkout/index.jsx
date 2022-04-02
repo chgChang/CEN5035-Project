@@ -17,6 +17,7 @@ import ProForm, {
   StepsForm,
   ProFormDatePicker,
 } from "@ant-design/pro-form";
+
 import { history } from 'umi';
 import useRequest from '@ahooksjs/use-request';
 import { queryCartList, doCheckout } from './service';
@@ -308,6 +309,7 @@ const StepForm = () => {
               />
             </ProForm.Group>
           </StepsForm.StepForm>
+
 
           <StepsForm.StepForm title="Success">
             <StepResult

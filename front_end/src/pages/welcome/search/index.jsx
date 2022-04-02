@@ -13,6 +13,7 @@ const { Paragraph } = Typography;
 const getKey = (id, index) => `${id}-${index}`;
 
 const Projects = (props) => {
+  // const {state, setState} = useState(props);
 
   const addCart = async (id) => {
     const res = await add2Cart({itemid: id, quantity: 1});

@@ -108,3 +108,26 @@ More test cases and frontend document
 
 ## Sprint 4
 To be continued...
+
+# Test Plan(STP)
+
+We use Cypress to test our web application. We have four pages for shopping and login/register page. Thus we have 6 Test code four each: login, register, welcome, order history, cartlist and checkout.
+
+## Use Cypress
+
+### Install Cypress
+
+```bash
+npm install cypress --save-dev
+```
+
+### Open Cypress
+
+```bash
+node_modules/.bin/cypress open
+```
+# Test Report(STR)
+
+By using cypress, 6 test code are run successful. We will add more test cases if needed.
+
+

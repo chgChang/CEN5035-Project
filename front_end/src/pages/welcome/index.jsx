@@ -19,8 +19,6 @@ const tabList = [
 
 const { Paragraph } = Typography;
 
-const searchval = "";
-
 const Search = (props) => {
   const [showDetail, setShowDetail] = useState(false);
   const [currentItem, setCurrentItem] = useState();

@@ -100,29 +100,29 @@ export default defineConfig({
       path: '/history',
       component: './history',
     },
-    {
-      path: '/form',
-      icon: 'form',
-      name: 'form',
-      routes: [
-        {
-          path: '/form',
-          redirect: '/form/step-form',
-        },
-        {
-          name: 'step-form',
-          icon: 'smile',
-          path: '/form/step-form',
-          component: './form/step-form',
-        },
-        {
-          name: 'advanced-form',
-          icon: 'smile',
-          path: '/form/advanced-form',
-          component: './form/advanced-form',
-        },
-      ],
-    },
+    // {
+    //   path: '/form',
+    //   icon: 'form',
+    //   name: 'form',
+    //   routes: [
+    //     {
+    //       path: '/form',
+    //       redirect: '/form/step-form',
+    //     },
+    //     {
+    //       name: 'step-form',
+    //       icon: 'smile',
+    //       path: '/form/step-form',
+    //       component: './form/step-form',
+    //     },
+    //     {
+    //       name: 'advanced-form',
+    //       icon: 'smile',
+    //       path: '/form/advanced-form',
+    //       component: './form/advanced-form',
+    //     },
+    //   ],
+    // },
     // {
     //   path: '/list',
     //   icon: 'table',
@@ -247,14 +247,14 @@ export default defineConfig({
       routes: [
         {
           path: '/account',
-          redirect: '/account/center',
+          redirect: '/account/settings',
         },
-        {
-          name: 'center',
-          icon: 'smile',
-          path: '/account/center',
-          component: './account/center',
-        },
+        // {
+        //   name: 'center',
+        //   icon: 'smile',
+        //   path: '/account/center',
+        //   component: './account/center',
+        // },
         {
           name: 'settings',
           icon: 'smile',

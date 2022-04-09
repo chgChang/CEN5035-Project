@@ -9,7 +9,7 @@
 - Chi Zhang
 
 ## Sprint 4 
-## Description of Our Project
+### Description of Our Project
 E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems.
 In this project is an Amazon-like E-commercial web application in which we use React and Go to implement the frontend and backend. 
 

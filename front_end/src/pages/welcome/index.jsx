@@ -1,5 +1,6 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import { Input, Card, Col, Form, List, Row, Select, Typography, Button, message } from 'antd';
+import { Input, Card, Col, Form, List, Row, Select, Typography, Button, message, Drawer } from 'antd';
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { useEffect, useState, useRef } from 'react';
 import useRequest from '@ahooksjs/use-request';
 import { queryItemList, searchItem, add2Cart } from './service';
@@ -21,6 +22,9 @@ const { Paragraph } = Typography;
 const searchval = "";
 
 const Search = (props) => {
+  const [showDetail, setShowDetail] = useState(false);
+  const [currentItem, setCurrentItem] = useState();
+
 
   const addCart = async (id) => {
     const res = await add2Cart({itemid: id, quantity: 1});
@@ -104,7 +108,15 @@ const Search = (props) => {
             }
           >
             <Card.Meta
-              title={<a>{item.name}</a>}
+              title={
+                <a onClick={() => {
+                  console.log(item);
+                  setCurrentItem(item);
+                  setShowDetail(true);
+                }}>
+                  {item.name}
+                </a>
+              }
               description={
                 <Paragraph
                   className={styles.item}
@@ -165,6 +177,49 @@ const Search = (props) => {
       <div className={styles.coverCardList}>
         <div className={styles.cardList}>{cardList}</div>
       </div>
+      <Drawer
+        width={800}
+        visible={showDetail}
+        onClose={() => {
+          setCurrentItem(undefined);
+          setShowDetail(false);
+        }}
+        closable={false}
+      >
+        {currentItem?.name && (
+          <ProDescriptions
+            column={1}
+            title={currentItem?.name}
+            request={async () => ({
+              data: currentItem || {},
+            })}
+            params={{
+              id: currentItem?.name,
+            }}
+          >
+            <ProDescriptions.Item>
+              <p className={styles.pPic}>
+                <img
+                  className={styles.drawPic}
+                  alt={currentItem.name}
+                  src={currentItem.pic_url}
+                />
+              </p>
+            </ProDescriptions.Item>
+            <ProDescriptions.Item dataIndex="price" label="Price" valueType="price">
+              {currentItem?.price}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item dataIndex="description" label="Description" valueType="textarea">
+              {currentItem?.price}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item>
+              <Button shape="round" className={styles.addcartbtn} onClick = {() => addCart(currentItem.id)}>
+                Add to Cart
+              </Button>
+            </ProDescriptions.Item>
+          </ProDescriptions>
+        )}
+      </Drawer>
     </PageContainer>
   );
 };

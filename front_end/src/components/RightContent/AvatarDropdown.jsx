@@ -73,13 +73,13 @@ const AvatarDropdown = ({ menu }) => {
           <UserOutlined />
           个人中心
         </Menu.Item>
-      )}
+      )} */}
       {menu && (
         <Menu.Item key="settings">
           <SettingOutlined />
-          个人设置
+          Account Setting
         </Menu.Item>
-      )} */}
+      )}
       {menu && <Menu.Divider />}
 
       <Menu.Item key="logout">

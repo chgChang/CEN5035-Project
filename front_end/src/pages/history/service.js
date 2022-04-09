@@ -5,3 +5,23 @@ export async function fakeSubmitForm(params) {
     data: params,
   });
 }
+
+
+export async function getOrderHis(options) {
+  const temp = request('/api/getOrderHistory', {
+    method: 'GET',
+    ...(options || {}),
+  });
+  return temp;
+}
+
+export async function add2Cart(body, options) {
+  return request('/api/addtoCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

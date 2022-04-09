@@ -55,3 +55,13 @@ export async function deleteCartByItemId(body, options) {
   });
 }
 
+export async function removeCart(body, options) {
+  return request('/api/removeCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

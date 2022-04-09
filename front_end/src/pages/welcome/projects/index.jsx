@@ -5,12 +5,8 @@ import useRequest from '@ahooksjs/use-request';
 import AvatarList from './components/AvatarList';
 import { queryItemList, add2Cart } from './service';
 import styles from './style.less';
-import { useState } from 'react';
-const { Option } = Select;
-const FormItem = Form.Item;
-const { Paragraph } = Typography;
 
-const getKey = (id, index) => `${id}-${index}`;
+const { Paragraph } = Typography;
 
 const Projects = (props) => {
 

@@ -8,22 +8,10 @@ import ProForm, {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-form';
-import { useRequest } from 'umi';
-import { queryCurrent } from '../service';
-import { queryProvince, queryCity } from '../service';
+import useRequest from '@ahooksjs/use-request';
+import { getcurrentUser } from '../service';
 import styles from './BaseView.less';
 
-const validatorPhone = (rule, value, callback) => {
-  if (!value[0]) {
-    callback('Please input your area code!');
-  }
-
-  if (!value[1]) {
-    callback('Please input your phone number!');
-  }
-
-  callback();
-}; // 头像组件 方便以后独立，增加裁剪之类的功能
 
 const AvatarView = ({ avatar }) => (
   <>
@@ -31,34 +19,38 @@ const AvatarView = ({ avatar }) => (
     <div className={styles.avatar}>
       <img src={avatar} alt="avatar" />
     </div>
-    <Upload showUploadList={false}>
+    {/* <Upload showUploadList={false}>
       <div className={styles.button_view}>
         <Button>
           <UploadOutlined />
           Update Image
         </Button>
       </div>
-    </Upload>
+    </Upload> */}
   </>
 );
 
 const BaseView = () => {
-  const { data: currentUser, loading } = useRequest(() => {
-    return queryCurrent();
+  const { data:currentUser, loading } = useRequest(() => {
+    return getcurrentUser();
   });
 
-  const getAvatarURL = () => {
-    if (currentUser) {
-      if (currentUser.avatar) {
-        return currentUser.avatar;
-      }
 
-      const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-      return url;
-    }
+  console.log(currentUser);
+  console.log(currentUser?.data || []);
 
-    return '';
-  };
+  // const getAvatarURL = () => {
+  //   if (currentUser) {
+  //     if (currentUser.avatar) {
+  //       return currentUser.avatar;
+  //     }
+
+  //     const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
+  //     return url;
+  //   }
+
+  //   return '';
+  // };
 
   const handleFinish = async () => {
     message.success('Update Successfully!');
@@ -82,13 +74,13 @@ const BaseView = () => {
                   children: 'Update',
                 },
               }}
-              initialValues={{ ...currentUser, phone: currentUser?.phone.split('-') }}
+              initialValues={{...currentUser.data}}
               hideRequiredMark
             >
               <ProFormText
                 width="md"
                 name="email"
-                label="email"
+                label="Email"
                 rules={[
                   {
                     required: true,
@@ -98,8 +90,8 @@ const BaseView = () => {
               />
               <ProFormText
                 width="md"
-                name="name"
-                label="name"
+                name="username"
+                label="Name"
                 rules={[
                   {
                     required: true,
@@ -107,127 +99,23 @@ const BaseView = () => {
                   },
                 ]}
               />
-              <ProFormTextArea
-                name="profile"
-                label="Profile"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your Profile!',
-                  },
-                ]}
-                placeholder="Profile"
-              />
-              <ProFormSelect
-                width="sm"
-                name="country"
-                label="country"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your country!',
-                  },
-                ]}
-                options={[
-                  {
-                    label: 'China',
-                    value: 'China',
-                  },
-                ]}
-              />
-
-              <ProForm.Group title="State" size={8}>
-                <ProFormSelect
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input the state!',
-                    },
-                  ]}
-                  width="sm"
-                  fieldProps={{
-                    labelInValue: true,
-                  }}
-                  name="province"
-                  className={styles.item}
-                  request={async () => {
-                    return queryProvince().then(({ data }) => {
-                      return data.map((item) => {
-                        return {
-                          label: item.name,
-                          value: item.id,
-                        };
-                      });
-                    });
-                  }}
-                />
-                <ProFormDependency name={['province']}>
-                  {({ province }) => {
-                    return (
-                      <ProFormSelect
-                        params={{
-                          key: province?.value,
-                        }}
-                        name="city"
-                        width="sm"
-                        rules={[
-                          {
-                            required: true,
-                            message: 'Please input your city!',
-                          },
-                        ]}
-                        disabled={!province}
-                        className={styles.item}
-                        request={async () => {
-                          if (!province?.key) {
-                            return [];
-                          }
-
-                          return queryCity(province.key || '').then(({ data }) => {
-                            return data.map((item) => {
-                              return {
-                                label: item.name,
-                                value: item.id,
-                              };
-                            });
-                          });
-                        }}
-                      />
-                    );
-                  }}
-                </ProFormDependency>
-              </ProForm.Group>
-              <ProFormText
+              
+              {/* <ProFormText
                 width="md"
-                name="address"
-                label="address"
+                name="password"
+                label="Password"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your address!',
+                    message: 'please input your password!',
                   },
                 ]}
-              />
-              <ProFormFieldSet
-                name="phone"
-                label="phone"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your phone!',
-                  },
-                  {
-                    validator: validatorPhone,
-                  },
-                ]}
-              >
-                <Input className={styles.area_code} />
-                <Input className={styles.phone_number} />
-              </ProFormFieldSet>
+              /> */}
+         
             </ProForm>
           </div>
           <div className={styles.right}>
-            <AvatarView avatar={getAvatarURL()} />
+            <AvatarView avatar={'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'} />
           </div>
         </>
       )}

@@ -29,7 +29,7 @@ import {
   updateCart,
 } from "./service";
 import styles from "./style.less";
-import { sumBy } from "lodash";
+import { sumBy, forEach, map } from "lodash";
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
@@ -39,38 +39,58 @@ export const BasicList = () => {
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(undefined);
   const [idnum, setIdnum] = useState(0);
+  const [itemQuantity, setItemQuantity] = useState(0);
+  const [methodType, setMethodType] = useState("");
   const { data, loading, mutate } = useRequest(queryCartList);
   console.log(data);
   
   const { run: postRun } = useRequest(
     (method, params) => {
+      setIdnum(params.itemId);
       if (method === "remove") {
-        setIdnum(params.itemId);
-        console.log("remove" + idnum);
+        setMethodType("remove");
         return deleteCartByItemId(params);
       }
       if (method === "update") {
-        return updateFakeList(params);
+        setMethodType("update");
+        setItemQuantity(params.quantity);
+        return updateCart(params);
       }
     },
     {
       manual: true,
       onSuccess: (result) => {
         console.log(data);
-        const temp = data.cart.itemList.filter((item) => item.itemId !== idnum);
-        const delitem = {
-          cart: data.cart.itemList.filter((item) => item.itemId === idnum),
-        };
-        const sumPrice = sumBy(temp, (item) => item.price * item.quantity);
-        const delData = {
-          cart: {
-            itemList: temp,
-            totalPrice: sumPrice,
-          },
-          msg: data.msg,
-          status: data.status,
+        if (methodType == "remove") {
+          const temp = data.cart.itemList.filter((item) => item.itemId !== idnum);
+          const sumPrice = sumBy(temp, (item) => item.price * item.quantity);
+          const delData = {
+            cart: {
+              itemList: temp,
+              totalPrice: sumPrice,
+            },
+            msg: data.msg,
+            status: data.status,
+          }
+          mutate(delData);
+        } else {
+          const upitem = map(data.cart.itemList, (item) => {
+            if (item.itemId === idnum) {
+              item.quantity = itemQuantity;
+            }
+            return item;
+          });
+          const sumPrice = sumBy(upitem, (item) => item.price * item.quantity);
+          const upData = {
+            cart: {
+              itemList: upitem,
+              totalPrice: sumPrice,
+            },
+            msg: data.msg,
+            status: data.status,
+          }
+          mutate(upData);
         }
-        mutate(delData);
       },
     }
   );
@@ -88,10 +108,18 @@ export const BasicList = () => {
   };
 
   const deleteItem = (id) => {
-    // console.log(id);
     postRun("remove", {
       itemId: id,
     });
+  };
+
+  const updateItem = (id, value) => {
+    console.log("id" + id);
+    console.log("quantity" + value);
+    postRun("update", {
+      itemId: id,
+      quantity: value,
+    })
   };
 
   const doDelete = (item) => {
@@ -144,15 +172,7 @@ export const BasicList = () => {
     postRun(method, values);
   };
 
-  const updateItem = (id, value) => {
-    console.log("id" + id);
-    console.log("quantity" + value);
-    const info = {
-      itemId: id,
-      quantity: value,
-    }
-    updateCart(info);
-  };
+
 
   return (
     <div>

@@ -10,7 +10,22 @@
 
 ## Sprint 4 
 ## Description of Our Project
+E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems.
+In this project is an Amazon-like E-commercial web application in which we use React and Go to implement the frontend and backend. 
 
+In the final version of this project, the functions we implemented are listed below.
+1. Login
+2. Sign out
+3. Registeration
+4. Add products to the cart
+5. Search products using keywords
+6. Clear the cart
+7. Delete items in the cart
+8. Change the number of items in the cart
+9. View product details
+10. place an order and checkout
+11. View order history
+12. View personal information
 
 
 ### Deployment Web URL

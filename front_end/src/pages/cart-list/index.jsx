@@ -20,10 +20,7 @@ import { PageContainer } from "@ant-design/pro-layout";
 import useRequest from '@ahooksjs/use-request';
 import OperationModal from "./components/OperationModal";
 import {
-  addFakeList,
-  queryFakeList,
-  removeFakeList,
-  updateFakeList,
+  removeCart,
   queryCartList,
   deleteCartByItemId,
   updateCart,
@@ -56,6 +53,10 @@ export const BasicList = () => {
         setItemQuantity(params.quantity);
         return updateCart(params);
       }
+      if (method === "clear") {
+        setMethodType("clear");
+        return removeCart(params);
+      }
     },
     {
       manual: true,
@@ -73,7 +74,7 @@ export const BasicList = () => {
             status: data.status,
           }
           mutate(delData);
-        } else {
+        } else if (methodType == "update") {
           const upitem = map(data.cart.itemList, (item) => {
             if (item.itemId === idnum) {
               item.quantity = itemQuantity;
@@ -90,12 +91,15 @@ export const BasicList = () => {
             status: data.status,
           }
           mutate(upData);
+        } else {
+          mutate({});
         }
       },
     }
   );
-  const list = data?.cart.itemList || [];
-  const price = data?.cart.totalPrice || 0; 
+  const cart = data?.cart || [];
+  const list = cart?.itemList || [];
+  const price = cart?.totalPrice || 0; 
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
@@ -136,11 +140,18 @@ export const BasicList = () => {
     history.push("/checkout");
   }
 
+  function doClear() {
+    postRun("clear", {});
+  }
+
   const extraContent = (
     <div className={styles.extraContent}>
       <div style={{fontSize: 16, fontWeight: 600, float: 'left'}}> Total Price: {price} </div>
+      <Button style={{ marginLeft: 20}} onClick={doClear}>
+        Clear Cart
+      </Button>
       <Button type="primary" style={{ marginLeft: 20}} onClick={handleClick}>
-        Proceed to checkout
+        Check Out
       </Button>
     </div>
   );

@@ -64,6 +64,6 @@ https://github.com/chgChang/CEN5035-Project/projects
 ```
 source code: https://github.com/chgChang/CEN5035-Project
 back release: https://github.com/chgChang/CEN5035-Project/releases/tag/backend
-front release: 
+front release: https://github.com/chgChang/CEN5035-Project/releases/tag/frontend
 ```
 

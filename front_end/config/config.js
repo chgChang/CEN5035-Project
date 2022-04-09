@@ -68,7 +68,9 @@ export default defineConfig({
           component: './welcome/projects',
         },
         {
+
           path: '/welcome/search/:keywords',
+          // path: '/welcome/search',
           component: './welcome/search',
         },
       ],
@@ -112,48 +114,54 @@ export default defineConfig({
     //     },
     //   ],
     // },
-    {
-      path: '/list',
-      icon: 'table',
-      name: 'list',
-      routes: [
-        {
-          path: '/list/search',
-          name: 'search-list',
-          component: './list/search',
-          routes: [
-            {
-              name: 'projects',
-              icon: 'smile',
-              path: '/list/search/projects',
-              component: './list/search/projects',
-            },
-            {
-              name: 'applications',
-              icon: 'smile',
-              path: '/list/search/applications',
-              component: './list/search/applications',
-            },
-          ],
-        },
-        {
-          path: '/list',
-          redirect: '/list/card-list',
-        },
-        {
-          name: 'card-list',
-          icon: 'smile',
-          path: '/list/card-list',
-          component: './list/card-list',
-        },
-        {
-          name: 'basic-list',
-          icon: 'smile',
-          path: '/list/basic-list',
-          component: './list/basic-list',
-        },
-      ],
-    },
+    // {
+    //   path: '/list',
+    //   icon: 'table',
+    //   name: 'list',
+    //   routes: [
+    //     {
+    //       path: '/list/search',
+    //       name: 'search-list',
+    //       component: './list/search',
+    //       routes: [
+    //         {
+    //           name: 'projects',
+    //           icon: 'smile',
+    //           path: '/list/search/projects',
+    //           component: './list/search/projects',
+    //         },
+    //         {
+    //           name: 'applications',
+    //           icon: 'smile',
+    //           path: '/list/search/applications',
+    //           component: './list/search/applications',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       path: '/list',
+    //       redirect: '/list/table-list',
+    //     },
+    //     {
+    //       name: 'card-list',
+    //       icon: 'smile',
+    //       path: '/list/card-list',
+    //       component: './list/card-list',
+    //     },
+    //     {
+    //       name: 'basic-list',
+    //       icon: 'smile',
+    //       path: '/list/basic-list',
+    //       component: './list/basic-list',
+    //     },
+    //     {
+    //       name: 'table-list',
+    //       icon: 'smile',
+    //       path: '/list/table-list',
+    //       component: './list/table-list',
+    //     },
+    //   ],
+    // },
     // {
     //   path: '/profile',
     //   name: 'profile',
@@ -236,14 +244,14 @@ export default defineConfig({
       routes: [
         {
           path: '/account',
-          redirect: '/account/center',
+          redirect: '/account/settings',
         },
-        {
-          name: 'center',
-          icon: 'smile',
-          path: '/account/center',
-          component: './account/center',
-        },
+        // {
+        //   name: 'center',
+        //   icon: 'smile',
+        //   path: '/account/center',
+        //   component: './account/center',
+        // },
         {
           name: 'settings',
           icon: 'smile',

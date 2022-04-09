@@ -13,6 +13,7 @@ const { Paragraph } = Typography;
 const getKey = (id, index) => `${id}-${index}`;
 
 const Projects = (props) => {
+  // const {state, setState} = useState(props);
 
   const addCart = async (id) => {
     const res = await add2Cart({itemid: id, quantity: 1});
@@ -23,6 +24,9 @@ const Projects = (props) => {
       message.error(res.msg);
     } 
   };
+  const keywords = props.match.params.keywords;
+  // console.log("this is search pahe + key :");
+  // console.log(keywords);
   const { data, loading, run } = useRequest(() => {
     console.log("loading" + keywords);
     return searchItem(keywords)

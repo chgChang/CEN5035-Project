@@ -1,0 +1,96 @@
+@import '~antd/es/style/themes/default.less';
+@import './utils/utils.less';
+
+.coverCardList {
+  .card {
+    :global {
+      .ant-card-meta-title {
+        margin-bottom: 4px;
+        & > a {
+          display: inline-block;
+          max-width: 100%;
+          color: @heading-color;
+        }
+      }
+      .ant-card-meta-description {
+        height: 44px;
+        overflow: hidden;
+        line-height: 22px;
+      }
+    }
+
+    &:hover {
+      :global {
+        .ant-card-meta-title > a {
+          color: @primary-color;
+        }
+      }
+    }
+  }
+
+  .cardItemContent {
+    display: flex;
+    height: 20px;
+    margin-top: 16px;
+    margin-bottom: -4px;
+    line-height: 20px;
+    & > span {
+      flex: 1;
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+    .avatarList {
+      flex: 0 1 auto;
+    }
+  }
+  .cardList {
+    margin-top: 24px;
+  }
+
+  :global {
+    .ant-list .ant-list-item-content-single {
+      max-width: 100%;
+    }
+  }
+}
+
+.addcartbtn {
+  width: 90%;
+  height: 30px;
+  margin: 0 auto;
+  color: black;
+  font-size: 13px;
+  background: #ffd814;
+  border-color: #fcd200;
+}
+
+.addcartbtn:focus {
+  color: black;
+  background: #ffd814;
+  border-color: #fcd200;
+  // font-size: 13px;
+  // height: 30px;
+  // width: 90%;
+  // margin: 0 auto;
+}
+
+.addcartbtn:hover {
+  color: black;
+  background: #ddbc18;
+  border-color: #fcd200;
+  // font-size: 13px;
+  // height: 30px;
+  // width: 90%;
+  // margin: 0 auto;
+}
+
+
+.drawPic {
+  max-height: 640px;
+  max-width: 760px;
+}
+
+.pPic {
+  text-align: center;
+  width: 100%;
+}

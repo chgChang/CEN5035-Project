@@ -1,83 +1,107 @@
 import React, { useState } from "react";
 import { history } from "umi";
 import { DownOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Card,
-  Col,
-  Dropdown,
-  Input,
-  InputNumber,
-  List,
-  Menu,
-  Modal,
-  Progress,
-  Radio,
-  Row,
-} from "antd";
+import { Avatar, Button, Card, Col, Dropdown, Input, InputNumber, List, Menu, Modal, Progress, Radio, Row, Drawer} from "antd";
+import ProDescriptions from '@ant-design/pro-descriptions';
 import { PageContainer } from "@ant-design/pro-layout";
 import useRequest from '@ahooksjs/use-request';
-import OperationModal from "./components/OperationModal";
 import {
-  addFakeList,
-  queryFakeList,
-  removeFakeList,
-  updateFakeList,
+  removeCart,
   queryCartList,
   deleteCartByItemId,
   updateCart,
 } from "./service";
 import styles from "./style.less";
-import { method } from "lodash";
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const { Search } = Input;
+import { sumBy, map } from "lodash";
+
 
 export const BasicList = () => {
-  const [done, setDone] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [current, setCurrent] = useState(undefined);
+  const [curId, setcurId] = useState("");
+  const [curName, setcurName] = useState("");
+  const [curDes, setcurDes] = useState("");
+  const [curPrice, setcurPrice] = useState("");
+  const [curPic, setcurPic] = useState("");
+  const [showDetail, setShowDetail] = useState(false);
+  const [idnum, setIdnum] = useState(0);
+  const [itemQuantity, setItemQuantity] = useState(0);
+  const [methodType, setMethodType] = useState("");
   const { data, loading, mutate } = useRequest(queryCartList);
-
+  
   const { run: postRun } = useRequest(
     (method, params) => {
+      setIdnum(params.itemId);
       if (method === "remove") {
-        console.log("remove");
+        setMethodType("remove");
         return deleteCartByItemId(params);
       }
       if (method === "update") {
-        return updateFakeList(params);
+        setMethodType("update");
+        setItemQuantity(params.quantity);
+        return updateCart(params);
+      }
+      if (method === "clear") {
+        setMethodType("clear");
+        return removeCart(params);
       }
     },
     {
       manual: true,
       onSuccess: (result) => {
-        window.location.reload();
-  
-        // console.log(data);
-        // mutate(data);
+        if (methodType == "remove") {
+          const temp = data.cart.itemList.filter((item) => item.itemId !== idnum);
+          const sumPrice = sumBy(temp, (item) => item.price * item.quantity);
+          const delData = {
+            cart: {
+              itemList: temp,
+              totalPrice: sumPrice,
+            },
+            msg: data.msg,
+            status: data.status,
+          }
+          mutate(delData);
+        } else if (methodType == "update") {
+          const upitem = map(data.cart.itemList, (item) => {
+            if (item.itemId === idnum) {
+              item.quantity = itemQuantity;
+            }
+            return item;
+          });
+          const sumPrice = sumBy(upitem, (item) => item.price * item.quantity);
+          const upData = {
+            cart: {
+              itemList: upitem,
+              totalPrice: sumPrice,
+            },
+            msg: data.msg,
+            status: data.status,
+          }
+          mutate(upData);
+        } else {
+          mutate({});
+        }
       },
     }
   );
-  // console.log(data);
-  const list = data?.cart.itemList || [];
+  const cart = data?.cart || [];
+  const list = cart?.itemList || [];
+  const price = cart?.totalPrice || 0; 
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
     total: list.length,
   };
 
-  const showEditModal = (item) => {
-    setVisible(true);
-    setCurrent(item);
-  };
-
   const deleteItem = (id) => {
-    console.log(id);
     postRun("remove", {
       itemId: id,
     });
+  };
+
+  const updateItem = (id, value) => {
+    postRun("update", {
+      itemId: id,
+      quantity: value,
+    })
   };
 
   const doDelete = (item) => {
@@ -94,12 +118,19 @@ export const BasicList = () => {
     history.push("/checkout");
   }
 
+  function doClear() {
+    postRun("clear", {});
+  }
+
   const extraContent = (
     <div className={styles.extraContent}>
-      <Button type="primary" onClick={handleClick}>
-        Proceed to checkout
+      <div style={{fontSize: 16, fontWeight: 600, float: 'left'}}> Total Price: {price} </div>
+      <Button style={{ marginLeft: 20}} onClick={doClear}>
+        Clear Cart
       </Button>
-      {/* <Search className={styles.extraContentSearch} placeholder="Input item name" onSearch={() => ({})} /> */}
+      <Button type="primary" style={{ marginLeft: 20}} onClick={handleClick}>
+        Check Out
+      </Button>
     </div>
   );
 
@@ -118,27 +149,53 @@ export const BasicList = () => {
     </Dropdown>
   );
 
-  const handleDone = () => {
-    setDone(false);
-    setVisible(false);
-    setCurrent({});
-  };
-
-  const handleSubmit = (values) => {
-    setDone(true);
-    const method = values?.id ? "update" : "add";
-    postRun(method, values);
-  };
-
-  const updateItem = (id, value) => {
-    console.log("id" + id);
-    console.log("quantity" + value);
-    const info = {
-      itemId: id,
-      quantity: value,
-    }
-    updateCart(info);
-  };
+  const cardList = list && (
+    <List
+      size="large"
+      rowKey="id"
+      loading={loading}
+      pagination={paginationProps}
+      dataSource={list}
+      renderItem={(item) => (
+        <List.Item
+          actions={[
+            <a
+              key="edit"
+              onClick={() => {
+                setcurId(item.id);
+                setcurName(item.itemName);
+                setcurPrice(item.price);
+                setcurDes(item.description);
+                setcurPic(item.picUrl);
+                setShowDetail(true);
+              }}
+            >
+              Details
+            </a>,
+            <MoreBtn key="more" item={item} />,
+          ]}
+        >
+          <List.Item.Meta
+            avatar={
+              <Avatar src={item.picUrl} shape="square" size="large" />
+            }
+            title={
+              <a onClick={() => {
+                setcurId(item.id);
+                setcurName(item.itemName);
+                setcurPrice(item.price);
+                setcurDes(item.description);
+                setcurPic(item.picUrl);
+                setShowDetail(true);
+              }}>{item.itemName}</a>
+            }
+            description={item.description}
+          />
+          <InputNumber min={1} max={100} defaultValue={item.quantity} onChange = {(value) => updateItem(item.itemId, value)}/>
+        </List.Item>
+      )}
+    />
+  );
 
   return (
     <div>
@@ -156,48 +213,64 @@ export const BasicList = () => {
             }}
             extra={extraContent}
           >
-            <List
-              size="large"
-              rowKey="id"
-              loading={loading}
-              pagination={paginationProps}
-              dataSource={list}
-              renderItem={(item) => (
-                <List.Item
-                  actions={[
-                    <a
-                      key="edit"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        //showEditModal(item);
-                      }}
-                    >
-                      Details
-                    </a>,
-                    <MoreBtn key="more" item={item} />,
-                  ]}
-                >
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar src={item.picUrl} shape="square" size="large" />
-                    }
-                    title={<a href={item.href}>{item.itemName}</a>}
-                    description={item.description}
-                  />
-                  <InputNumber min={1} max={100} defaultValue={item.quantity} onChange = {(value) => updateItem(item.itemId, value)}/>
-                </List.Item>
-              )}
-            />
+            {cardList}
           </Card>
         </div>
+        <Drawer
+          width={800}
+          visible={showDetail}
+          onClose={() => {
+            setcurId("");
+            setcurName("");
+            setcurPrice("");
+            setcurDes("");
+            setcurPic("");
+            setShowDetail(false);
+         }}
+          closable={false}
+        >
+          {curName && (
+            <ProDescriptions
+              column={1}
+              title={curName}
+              // request={async () => ({
+              //   data: cItem || {},
+              // })}
+              params={{
+                id: curName,
+              }}
+            >
+              <ProDescriptions.Item>
+                <p className={styles.pPic}>
+                  <img
+                    className={styles.drawPic}
+                    alt={curName}
+                    src={curPic}
+                  />
+                </p>
+              </ProDescriptions.Item>
+              <ProDescriptions.Item dataIndex="price" label="Price" valueType="price">
+                {curPrice}
+              </ProDescriptions.Item>
+              <ProDescriptions.Item dataIndex="description" label="Description" valueType="textarea">
+                {curDes}
+              </ProDescriptions.Item>
+              <ProDescriptions.Item>
+                <Button shape="round" className={styles.addcartbtn} onClick = {() => addCart(curId)}>
+                  Add to Cart
+                </Button>
+              </ProDescriptions.Item>
+            </ProDescriptions>
+          )}
+        </Drawer>
       </PageContainer>
-      <OperationModal
+      {/* <OperationModal
         done={done}
         visible={visible}
         current={current}
         onDone={handleDone}
         onSubmit={handleSubmit}
-      />
+      /> */}
     </div>
   );
 };

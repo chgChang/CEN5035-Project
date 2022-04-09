@@ -118,6 +118,51 @@ func setUpServer() *gin.Engine {
 
 	itemApiGroup := server.Group("/api/")
 	{
+		itemApiGroup.POST("/addItems", func(context *gin.Context) {
+			err := itemController.AddItem(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "add item success",
+				})
+			}
+		})
+
+		itemApiGroup.POST("/updateItems", func(context *gin.Context) {
+			err := itemController.UpdateItem(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "update item success",
+				})
+			}
+		})
+
+		itemApiGroup.POST("/deleteItems", func(context *gin.Context) {
+			err := itemController.DeleteItem(context)
+			if err != nil {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "error",
+					"msg":    err.Error(),
+				})
+			} else {
+				context.JSON(http.StatusOK, gin.H{
+					"status": "success",
+					"msg":    "update item success",
+				})
+			}
+		})
+
 		itemApiGroup.GET("/getItems", func(context *gin.Context) {
 			itemList, err := itemController.GetItemList(context)
 			if err != nil {

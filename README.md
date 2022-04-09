@@ -8,57 +8,62 @@
 - Jianan He
 - Chi Zhang
 
-## Sprint 2 
-## How to run frontend:
+## Sprint 4 
+### Description of Our Project
+E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems.
+In this project is an Amazon-like E-commercial web application in which we use React and Go to implement the frontend and backend. 
 
-### Compile the code
-```bash
-npm install
-```
-### Run mock mode
-```bash
-npm run start
-```
-### Run dev mode
-```bash
-npm run start:dev
-```
-## Test for frontend:
-### Install cypress
-```bash
-npm install cypress --save-dev
-```
-### open cypress
-```bash
-node_modules/.bin/cypress open
+In the final version of this project, the functions we implemented are listed below.
+1. Login
+2. Sign out
+3. Registeration
+4. Add products to the cart
+5. Search products using keywords
+6. Clear the cart
+7. Delete items in the cart
+8. Change the number of items in the cart
+9. View product details
+10. place an order and checkout
+11. View order history
+12. View personal information
+
+
+### Deployment Web URL
 ```
 
-1. front end integrate with back end successfully
-2. use cypress to test the login logout register search and so on
-
-## How to run backend:
-
-### Download the file in the release
-
-- If your operating system is `Windows`, please download `main.exe`.
-- If your operating system is `MacOS`, please download `main`.
-
-### Start the backend
-
-- For `MacOS`, go into the directory of `main`, then run the command below:
-
-  ```shell
-  ./main
-  ```
-
-- For `Windows`, go into the directory of `main.exe`, then run the command below:
-
-  ```shell
-  start main.exe
-  ```
-  
+```
 
 
-## Sprint 1 video
-- backend demo video: https://youtu.be/l16GmmpDJmc
-- frontend demo video: https://youtu.be/-T3KiU0mx1Q
+### Demo Functionality Video:
+```
+
+```
+
+### Cypress Test Video:
+```
+
+```
+
+### Backend Unit Test Video:
+```
+
+```
+
+
+### Link to API Documentation:
+```
+https://github.com/chgChang/CEN5035-Project/issues/24
+```
+
+### Link to Project board:
+```
+https://github.com/chgChang/CEN5035-Project/projects
+```
+
+### Link to Sprint4 deliverables:
+```
+source code: https://github.com/chgChang/CEN5035-Project
+back release: https://github.com/chgChang/CEN5035-Project/releases/tag/backend
+front release: https://github.com/chgChang/CEN5035-Project/releases/tag/frontend
+```
+

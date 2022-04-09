@@ -11,3 +11,11 @@ export async function queryCity(province) {
 export async function query() {
   return request('/api/users');
 }
+
+
+export async function getcurrentUser(options) {
+  return request('/api/currentUser', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}

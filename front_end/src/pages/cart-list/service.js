@@ -65,3 +65,14 @@ export async function removeCart(body, options) {
     ...(options || {}),
   });
 }
+
+export async function add2Cart(body, options) {
+  return request('/api/addtoCart', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: body,
+    ...(options || {}),
+  });
+}

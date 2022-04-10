@@ -67,7 +67,7 @@ const AdvancedForm = () => {
                           <Avatar src={orderItem.picUrl} shape="square" size="large" />
                         }
                         title={<a onClick={() => {
-                          setcurId(orderItem.id);
+                          setcurId(orderItem.itemId);
                           setcurName(orderItem.itemName);
                           setcurPrice(orderItem.price);
                           setcurDes(orderItem.description);

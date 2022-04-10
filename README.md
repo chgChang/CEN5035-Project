@@ -62,8 +62,6 @@ https://github.com/chgChang/CEN5035-Project/projects
 
 ### Link to Sprint4 deliverables:
 ```
-source code: https://github.com/chgChang/CEN5035-Project
-back release: https://github.com/chgChang/CEN5035-Project/releases/tag/backend
-front release: https://github.com/chgChang/CEN5035-Project/releases/tag/frontend
+https://github.com/chgChang/CEN5035-Project/releases/tag/integrated
 ```
 

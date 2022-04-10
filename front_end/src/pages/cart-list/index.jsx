@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { history } from "umi";
 import { DownOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Dropdown, Input, InputNumber, List, Menu, Modal, Progress, Radio, Row, Drawer} from "antd";
+import { Avatar, Button, Card, Col, Dropdown, Input, InputNumber, List, Menu, Modal, message, Drawer} from "antd";
 import ProDescriptions from '@ant-design/pro-descriptions';
 import { PageContainer } from "@ant-design/pro-layout";
 import useRequest from '@ahooksjs/use-request';
@@ -10,6 +10,7 @@ import {
   queryCartList,
   deleteCartByItemId,
   updateCart,
+  add2Cart,
 } from "./service";
 import styles from "./style.less";
 import { sumBy, map } from "lodash";
@@ -149,6 +150,16 @@ export const BasicList = () => {
     </Dropdown>
   );
 
+  const addCart = async (id) => {
+    const res = await add2Cart({itemid: id, quantity: 1});
+    if (res.status === "success") {
+      message.success(res.msg);
+      return;
+    } else {
+      message.error(res.msg);
+    } 
+  };
+
   const cardList = list && (
     <List
       size="large"
@@ -162,7 +173,7 @@ export const BasicList = () => {
             <a
               key="edit"
               onClick={() => {
-                setcurId(item.id);
+                setcurId(item.itemId);
                 setcurName(item.itemName);
                 setcurPrice(item.price);
                 setcurDes(item.description);
@@ -181,7 +192,7 @@ export const BasicList = () => {
             }
             title={
               <a onClick={() => {
-                setcurId(item.id);
+                setcurId(item.itemId);
                 setcurName(item.itemName);
                 setcurPrice(item.price);
                 setcurDes(item.description);

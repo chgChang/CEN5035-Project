@@ -30,7 +30,7 @@ In the final version of this project, the functions we implemented are listed be
 
 ### Deployment Web URL
 ```
-
+http://3.144.225.130/
 ```
 
 

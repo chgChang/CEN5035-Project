@@ -36,7 +36,7 @@ http://3.144.225.130/
 
 ### Demo Functionality Video:
 ```
-
+https://youtu.be/UghZN2aBiPI
 ```
 
 ### Cypress Test Video:

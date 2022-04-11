@@ -37,7 +37,7 @@ func setUpServer() *gin.Engine {
 	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 
 	server.Use(gin.Recovery(), gin.Logger())
-	server.Use(static.Serve("/", static.LocalFile("./resources/build", true)))
+	server.Use(static.Serve("/", static.LocalFile("./build", true)))
 
 	userApiGroup := server.Group("/api/")
 	{

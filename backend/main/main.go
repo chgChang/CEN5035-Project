@@ -4,6 +4,7 @@ import (
 	"backend/main/controller"
 	"backend/main/dao"
 	"backend/main/service"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -36,6 +37,7 @@ func setUpServer() *gin.Engine {
 	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 
 	server.Use(gin.Recovery(), gin.Logger())
+	server.Use(static.Serve("/", static.LocalFile("./resources/build", true)))
 
 	userApiGroup := server.Group("/api/")
 	{

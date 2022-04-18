@@ -22,7 +22,6 @@ type userService struct {
 }
 
 func (service *userService) DeleteUser(id int) error {
-
 	//Admin user is not deletable.
 	if id == 1 {
 		err := errors.New("cannot delete the admin user")
@@ -66,6 +65,8 @@ func (service *userService) DeleteUser(id int) error {
 func (service *userService) Logout(user pojo.User) error {
 	email := user.Email
 	userInDB := service.userDao.FindUserByEmail(email)
+
+	//Check if the user exists
 	if userInDB == (pojo.User{}) {
 		err := errors.New("user doesn't exist")
 		return err
@@ -77,6 +78,8 @@ func (service *userService) Logout(user pojo.User) error {
 func (service *userService) Register(user pojo.User) error {
 	email := user.Email
 	userInDB := service.userDao.FindUserByEmail(email)
+
+	//Check if the user exists
 	if userInDB != (pojo.User{}) {
 		err := errors.New("email already exists")
 		return err
@@ -91,6 +94,7 @@ func (service *userService) Login(user pojo.User) (pojo.User, error) {
 	password := user.Password
 	userInDB := service.userDao.FindUserByEmail(email)
 
+	//Check if the infos are correct
 	if userInDB == (pojo.User{}) {
 		err := errors.New("email or password is wrong")
 		return pojo.User{}, err

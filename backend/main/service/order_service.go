@@ -49,6 +49,7 @@ func (service *orderService) GetHistory(email string) ([]vo.OrderHistoryVo, erro
 	orderList := service.orderDao.FindOrderByEmail(email)
 	orderItemList := service.orderItemDao.FindOrderItemByEmail(email)
 
+	//Check if order history is empty
 	if len(orderList) == 0 && len(orderItemList) == 0 {
 		err := errors.New("order history is empty")
 		return nil, err
@@ -84,7 +85,7 @@ func (service *orderService) GetHistory(email string) ([]vo.OrderHistoryVo, erro
 func (service *orderService) Checkout(checkoutForm form.CheckOutForm, email string) error {
 	cartItemList := service.cartDao.FindCartByEmail(email)
 
-	//cart must be non-empty
+	//Check if the cart is empty
 	if len(cartItemList) == 0 {
 		err := errors.New("cart is empty")
 		return err

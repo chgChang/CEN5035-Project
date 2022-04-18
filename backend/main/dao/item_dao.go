@@ -40,7 +40,6 @@ func (db *Database) FindItemByIdList(idList []int) []pojo.Item {
 	return itemList
 }
 
-//TODO
 func (db *Database) CreateItem(item pojo.Item) {
 	db.connection.Create(&item)
 }

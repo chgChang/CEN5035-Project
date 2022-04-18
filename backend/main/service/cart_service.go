@@ -61,7 +61,7 @@ func (service *cartService) DeleteCartByItemId(email string, cartDeleteForm form
 func (service *cartService) RemoveCart(email string) error {
 	cartList := service.cartDao.FindCartByEmail(email)
 
-	//The cart must be non-empty
+	//Check if the cart is empty
 	if len(cartList) == 0 {
 		err := errors.New("cart is empty, cannot remove")
 		return err
@@ -77,7 +77,7 @@ func (service *cartService) GetCartList(email string) vo.CartVo {
 	var itemVoList []vo.ItemVo
 	var totalPrice float64 = 0
 
-	//If cart is empty
+	//Check if the cart is empty
 	if len(cartList) == 0 {
 		return vo.CartVo{
 			ItemList:   itemVoList,

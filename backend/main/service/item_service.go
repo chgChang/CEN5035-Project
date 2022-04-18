@@ -30,6 +30,8 @@ func (service *itemService) GetItemList() ([]pojo.Item, error) {
 
 func (service *itemService) SearchItem(keyword string) ([]pojo.Item, error) {
 	itemList := service.itemDao.FindItemByKeyword(keyword)
+
+	//Check if the item exists
 	if len(itemList) == 0 {
 		err := errors.New("the search result is empty")
 		return nil, err
@@ -39,6 +41,8 @@ func (service *itemService) SearchItem(keyword string) ([]pojo.Item, error) {
 
 func (service *itemService) SearchItemById(id int) (pojo.Item, error) {
 	item := service.itemDao.FindItemById(id)
+
+	//Check if the id exists
 	if item == (pojo.Item{}) {
 		err := errors.New("id doesn't exist")
 		return pojo.Item{}, err
@@ -46,7 +50,6 @@ func (service *itemService) SearchItemById(id int) (pojo.Item, error) {
 	return item, nil
 }
 
-//TODO
 func (service *itemService) AddItem(item pojo.Item) error {
 	service.itemDao.CreateItem(item)
 	return nil
@@ -55,6 +58,8 @@ func (service *itemService) AddItem(item pojo.Item) error {
 func (service *itemService) UpdateItem(item pojo.Item) error {
 	itemId := item.Id
 	originItem := service.itemDao.FindItemById(itemId)
+
+	//Check if thei id exists
 	if originItem == (pojo.Item{}) {
 		err := errors.New("id doesn't exist")
 		return err
@@ -65,6 +70,8 @@ func (service *itemService) UpdateItem(item pojo.Item) error {
 
 func (service *itemService) DeleteItem(itemId int) error {
 	originItem := service.itemDao.FindItemById(itemId)
+
+	//Check if the item exists
 	if originItem == (pojo.Item{}) {
 		err := errors.New("item doesn't exist")
 		return err

@@ -115,7 +115,6 @@ func setUpServer() *gin.Engine {
 				})
 			}
 		})
-
 	}
 
 	itemApiGroup := server.Group("/api/")

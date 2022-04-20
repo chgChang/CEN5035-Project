@@ -53,7 +53,7 @@ func (db *Database) DeleteItem(itemId int) {
 }
 
 func InitItemDao() ItemDao {
-	dsn := "root:chelsea11@tcp(35.196.203.186:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:softwareengineering@tcp(34.73.130.106:3306)/amazon?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")

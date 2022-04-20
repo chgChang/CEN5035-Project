@@ -29,12 +29,7 @@ var (
 )
 
 func setUpServer() *gin.Engine {
-	//defer userDao.CloseDB()
 	server := gin.New()
-
-	//store := cookie.NewStore([]byte("amazon"))
-	//userSession := sessions.Sessions("userSession", store)
-	//server.Use(gin.Recovery(), gin.Logger(), userSession)
 
 	server.Use(gin.Recovery(), gin.Logger())
 	server.Use(static.Serve("/", static.LocalFile("./build", true)))

@@ -35,9 +35,10 @@ http://3.144.225.130/
 
 
 ### Demo Functionality Video:
-```
-https://youtu.be/UghZN2aBiPI
-```
+
+https://user-images.githubusercontent.com/60840626/164366273-cfcd9953-2736-46e4-92e9-4cafe863c2f5.mp4
+
+
 
 ### Cypress Test Video:
 https://user-images.githubusercontent.com/29847734/164365743-57b2f77a-dc78-42bf-b0a6-e7a7fa77bd6f.mp4

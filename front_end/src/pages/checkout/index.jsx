@@ -237,7 +237,7 @@ const StepForm = () => {
               name="country"
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "Please choose your country",
                 },
               ]}
@@ -260,7 +260,7 @@ const StepForm = () => {
               name="phone"
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: "Please input your number",
                 },
                 {
@@ -287,7 +287,7 @@ const StepForm = () => {
                 name="state"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please choose your state",
                   },
                 ]}

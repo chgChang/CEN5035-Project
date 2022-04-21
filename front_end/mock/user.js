@@ -72,7 +72,7 @@ export default {
     await waitTime(2000);
 
 
-    if (password === '123456' && email === '11@111.com') {
+    if (password === '123456' && email === 'cz@cz.com') {
       res.send({
         status: 'success',
         msg: 'Login successful!'

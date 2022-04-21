@@ -41,7 +41,7 @@ https://youtu.be/UghZN2aBiPI
 
 ### Cypress Test Video:
 ```
-https://youtu.be/Py-DM1EGiaQ
+https://user-images.githubusercontent.com/29847734/164365743-57b2f77a-dc78-42bf-b0a6-e7a7fa77bd6f.mp4
 ```
 
 ### Backend Unit Test Video:

@@ -4,7 +4,7 @@ describe('register', function(){
         cy.get('.ant-tabs-tab:contains("Register")').click()
     })
     it('newTest', function(){
-        cy.get('.ant-pro-form-login-main').get('#email').type('123@111.com')
+        cy.get('.ant-pro-form-login-main').get('#email').type('1212345@111.com')
         cy.get('.ant-pro-form-login-main').get('#username').type('cc')
         cy.get('.ant-pro-form-login-main').get('#registerPassword').type('zc1234')
         cy.get('.ant-pro-form-login-main').get('#confirmPassword').type('zc1234')
